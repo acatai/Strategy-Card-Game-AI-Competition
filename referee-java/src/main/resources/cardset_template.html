@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <title>Legends of Code and Magic</title>
+
+    <style type="text/css">
+        * {
+            box-sizing: content-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: #009933;
+        }
+
+        a .enlarge {
+            position: fixed;
+            left: 1em;
+            top: 50%%;
+            transform: translateY(-50%%);
+        }
+
+        td:not(:hover) .enlarge {
+            display: none;
+        }
+
+        body, html {
+            width: 100%%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        table {
+            color: #333;
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        td, th {
+            border: 1px solid #CCC;
+            height: 30px;
+            min-width:50px;
+        }
+
+        td {
+            background: #FAFAFA;
+            text-align: center;
+        }
+
+        th {
+            background: #F3F3F3;
+            cursor: pointer;
+            font-weight: bold;
+            position: sticky;
+            top: -1px;
+            padding:3px;
+        }
+
+        th .asc,
+        th .dsc {
+            display: none;
+        }
+
+        th.asc .asc,
+        th.dsc .dsc {
+            display: inline;
+        }
+
+        .keywords
+        {
+            font-family: monospace;
+            font-size: 18px;
+        }
+    </style>
+    <meta charset="utf-8">
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Id</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Image</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Name</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Type</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Cost</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Attack</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Defense</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Abilities</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>PlayerHP</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>EnemyHP</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>CardDraw</b></th>
+        <th><b class="asc">&#9650;</b><b class="dsc">&#9660;</b><b>Text description</b></th>
+    </tr>
+    </thead>
+    <tbody>
+    %s
+    </tbody>
+</table>
+<script>
+    var headers = document.getElementsByTagName('th');
+    var columns = headers.length;
+
+    var currentCol;
+    var currentDir;
+
+    for (var column = 0; column < columns; ++column) {
+        headers[column].addEventListener('click', (function (column) {
+            return function () {
+                var list = document.getElementsByTagName('tbody')[0];
+
+                if (currentCol !== undefined)
+                    headers[currentCol].className = undefined;
+
+                currentDir = currentCol === column ? -currentDir : 1;
+                currentCol = column;
+
+                headers[currentCol].className = currentDir === 1 ? 'asc' : 'dsc';
+
+                Array.prototype.slice
+                    .call(list.children)
+                    .sort(function (a, b) {
+                        a = a.children[column].innerHTML;
+                        b = b.children[column].innerHTML;
+
+                        return currentDir * (+a === +a ? a - b : a.localeCompare(b));
+                    })
+                    .forEach(function (row) {
+                        list.appendChild(row);
+                    });
+            };
+        })(column));
+    }
+
+    headers[0].click();
+</script>
+</body>
+</html>
