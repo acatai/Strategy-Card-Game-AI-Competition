@@ -15,7 +15,7 @@ All cards effects are deterministic, thus the nondeterminism is introduced only 
 The game board consists of two lines (similarly as in TES:Legends), so it favors deeper strategic thinking.
 Also, LOCM is based on the fair arena mode, i.e., before every game, both players create their decks secretly from the symmetrical yet limited choices. Because of that, the deckbuilding is dynamic and cannot be simply reduced to using human-created top-meta decks.
   
-This competition aims to play the same role for [Hearthstone AI Competition](https://dockhorn.antares.uberspace.de/wordpress/) as [microRTS](https://sites.google.com/site/micrortsaicompetition/home) plays for variuos StarCraft AI contests.
+This competition aims to play the same role for [Hearthstone AI Competition](https://dockhorn.antares.uberspace.de/wordpress/) as [microRTS](https://sites.google.com/site/micrortsaicompetition/home) plays for various StarCraft AI contests.
 Encourage advanced research, free of drawbacks of working with the full-fledged game. In this domain, it means i.a. embedding deckbuilding into the game itself (limiting the usage of premade decks), and allowing efficient search beyond the one turn depth.
   
 The contest is based on the LOCM 1.2. One-lane, 1.0 version of the game, has been used for [CodinGame contest](https://www.codingame.com/leaderboards/challenge/legends-of-code-and-magic-marathon/global) in August 2018.
