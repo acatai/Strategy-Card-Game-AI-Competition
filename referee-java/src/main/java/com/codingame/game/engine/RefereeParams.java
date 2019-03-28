@@ -52,7 +52,7 @@ public class RefereeParams
     if ( params.getProperty("predefinedDraftIds")!=null)
     {
       predefinedDraftIds = new Integer[Constants.CARDS_IN_DECK][3];
-      String[] picks = params.getProperty("predefinedDraftIds").split(",");
+      String[] picks = params.getProperty("predefinedDraftIds").replace('_', ' ').split(",");
 
       assert (picks.length >= Constants.CARDS_IN_DECK);
 

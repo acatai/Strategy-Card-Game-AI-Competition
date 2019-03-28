@@ -143,6 +143,7 @@ To setup the game in a repeatable way there is a possibility to set a number of 
 * `shufflePlayer0Seed` controls the ordering within the deck for the cards chosen by the first player during the draft phase 
 * `shufflePlayer1Seed` controls the ordering within the deck for the cards chosen by the second player during the draft phase
 * `predefinedDraftIds` allows to manually specify all choices available during the draft phase (overrides the effect of `draftChoicesSeed`). There have to be 30 comma-separated triplets, each containing 3 space-separated integers with card's `baseId'`s.
+**Important note:** When setting this option via the command line interface using `-d` option separate numbers using underscores (`_`) instead of spaces. There cannot be any spaces within the `predefinedDraftIds` content! 
 
 
 Example of all parameters used. Note that in this case the result will be the same regardless of the values of `seed` and `draftChoicesSeed`, as more concrete options were directly specified.   
@@ -153,4 +154,6 @@ draftChoicesSeed=-5113144502819146988
 shufflePlayer0Seed=127
 shufflePlayer1Seed=333
 predefinedDraftIds=1 2 3 , 3 2 1 , 2 2 2 ,160 160 160, 150 151 152, 130 131 132, 7 7 7, 8 8 8, 9 9 9, 10 10 10, 11 11 11, 12 12 12, 13 13 13, 14 14 14, 15 15 15, 16 16 16, 17 17 17, 18 18 18, 19 19 19, 20 20 20, 11 11 11, 12 12 12, 13 13 13, 14 14 14, 15 15 15, 16 16 16, 17 17 17, 18 18 18, 19 19 19, 30 30 30
+
+predefinedDraftIds=1_2_3_,_3_2_1_,_2_2_2_,160_160_160,_150_151_152,_130_131_132,_7_7_7,_8_8_8,_9_9_9,_10_10_10,_11_11_11,_12_12_12,_13_13_13,_14_14_14,_15_15_15,_16_16_16,_17_17_17,_18_18_18,_19_19_19,_20_20_20,_11_11_11,_12_12_12,_13_13_13,_14_14_14,_15_15_15,_16_16_16,_17_17_17,_18_18_18,_19_19_19,_30_30_30
 ```
