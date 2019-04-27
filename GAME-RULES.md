@@ -170,7 +170,7 @@ Always **0** during the Draft phase.
 - String `abilities` of size **6**: the abilities of a card. Each letter representing an ability (**B** for Breakthrough, **C** for Charge and **G** for Guard, **D** for Drain, **L** for Lethal and **W** for Ward).
 - Integer `myHealthChange`: the health change for the player.
 - Integer `opponentHealthChange`: the health change for the opponent.
-= Integer `cardDraw`: the additional number of cards drawn next turn for the player.
+- Integer `cardDraw`: the additional number of cards drawn next turn for the player.
 - Integer `lane`:
   - Creature on board: 0 - left, 1 - right
   - Other: -1
