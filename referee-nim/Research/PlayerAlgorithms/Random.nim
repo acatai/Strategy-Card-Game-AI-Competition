@@ -8,7 +8,7 @@ proc playerAlgorithmRandom * (config: Config, root: State): SearchResult =
   var legal = state.computeActions
 
   while legal.len > 0:
-    let action = legal.rand
+    let action = legal.sample
     result.actions.add(action)
     state.applyAction(action)
     legal = state.computeActions

@@ -16,7 +16,7 @@ proc playerAlgorithmBBMCTS * (config: Config, state: State): SearchResult =
 
       var legal = state.computeActions
       while legal.len > 0:
-        state.applyAction(legal.rand)
+        state.applyAction(legal.sample)
         legal = state.computeActions
         score = score.min(config.evalState(state.swap))
 

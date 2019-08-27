@@ -7,7 +7,7 @@ proc simulate (config: Config, root: State): SearchResult =
   var actions: seq[Action]
 
   while legals.len > 0:
-    let action = legals.rand
+    let action = legals.sample
     actions.add(action)
     state.applyAction(action)
     legals = state.computeActions

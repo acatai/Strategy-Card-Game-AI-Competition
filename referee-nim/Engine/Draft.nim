@@ -12,7 +12,7 @@ func `$` * (draftResult: DraftResult): string =
 
 func evaluateDraftWith * (
   state: State,
-  evaluate: func (card: Card): float
+  evaluate: proc (card: Card): float {.noSideEffect.}
 ): DraftResult {.inline.} =
   result = DraftResult(score: NegInf)
 
