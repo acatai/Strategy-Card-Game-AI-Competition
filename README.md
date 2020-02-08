@@ -1,9 +1,11 @@
 # Strategy Card Game AI Competition
 
-Strategy Card Game AI Competition is organized for [IEEE CEC 2019](http://www.cec2019.org/index.html) conference.
+Strategy Card Game AI Competition is organized for [IEEE CEC 2020](https://wcci2020.org/) and [IEEE COG 2020](http://ieee-cog.org/2020/) conference.
 
-- **[Competition website](https://jakubkowalski.tech/Projects/LOCM/CEC19/index.html)**
-- Submission deadline: **19 May 2019, 23:59 GMT**
+- **[CEC Competition website](https://jakubkowalski.tech/Projects/LOCM/CEC20/index.html)**
+- CEC Submission deadline: **24th May 2020, 23:59 GMT**
+- **[COG Competition website](https://jakubkowalski.tech/Projects/LOCM/COG20/index.html)**
+- COG Submission deadline: **1st August 2020, 23:59 GMT**
 
 ![/game artwork/](https://jakubkowalski.tech/Projects/LOCM/CEC19/artwork_small.jpg)
 
