@@ -35,7 +35,7 @@ proc pick * (node: MCTSNode): MCTSNode =
     if not node.nodes[index].opened:
       notOpened.add(index)
   if notOpened.len > 0:
-    return node.nodes[notOpened.rand]
+    return node.nodes[notOpened.sample]
 
   # Best.
   var bestIndex = 0
