@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Strategy Card Game AI Competition - Introduction to the Game</title>
+  <meta charset="utf-8">
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="../../style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+
+    <div align="center">
+      <a href="index.html"><img src="../logo.png" width="220" alt="Legends of Code and Magic"></a>
+      <br/><br/>
+      <strong><a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/blob/master/GAME-RULES.md">Full game rules</a></strong><br/><br/>
+      
+    </div>
+    
+    <hr>
+    
+  <h2>Cards</h2>
+  
+  <h3>Creatures</h3>
+  
+  <div align="center">
+    <img src="info_creature.png" width="800" alt="Creature card info">
+  </div>
+  
+  There are 6 keywords:
+  <ul class="tightlist">
+		<li><strong>Breakthrough</strong>: deal excess damage to the opponent.</li>
+    <li><strong>Charge</strong>: can attack the same turn it is summoned.</li>
+    <li><strong>Drain</strong>: when attacking, heals the player when doing damage.</li>
+    <li><strong>Guard</strong>: must be attacked first.</li>
+    <li><strong>Lethal</strong>: kills any creature it damages.</li>
+    <li><strong>Ward</strong>: prevent first damage to the creature.</li>
+   </ul>
+   And 3 possible additional abilities:
+  <ul class="tightlist">
+		<li>Modify player's health.</li>
+    <li>Modify opponent's health.</li>
+    <li>Increase number of cards player draws next turn.</li>
+   </ul>
+  
+  <h3>Items</h3>
+  
+  <div align="center">
+    <img src="info_item.png" width="800" alt="Item card info">
+  </div>
+  
+  There are 3 types of items:
+  <ul class="tightlist">
+		<li><strong>Green</strong>: which can be used on the player's creatures - they usually increase their stats and/or add keywords.</li>
+    <li><strong>Red</strong>: which can be used on the opponent's creatures - they usually reduce their stats and/or remove keywords.</li>
+    <li><strong>Blue</strong>: which can be used on the opponent's creatures or directly on the opponent.</li>
+   </ul>
+   
+   <strong><a href="../cardlist.html">List of Cards</a></strong><br/><br/>
+   
+  <hr>
+  <h2>Draft Phase</h2>
+  
+    <div align="center">
+    <img src="info_draft.png" width="900" alt="Draft info">
+  </div>
+  <br/>
+  During the draft phase (first 30 turns) player constructs their decks by choosing one of the three proposed cards each turn. The choices of the opponent are unknown.
+   
+   <br/><br/>
+  <hr>
+  <h2>Battle Phase</h2>
+
+	<div align="center">
+    <img src="info_battle.png" width="900" alt="Battle info">
+  </div>
+  <br/>
+  During the battle phase (all remaining turns), both player takes their turns alternatively, red first. During its turn the player can do any number of the following action types (asumming the actions are legal):
+  <ul class="tightlist">
+		<li>Summon a creature from the hand to the chosen lane of the board (which costs mana).</li>
+    <li>Use an item on an appropriate target (friendly creature, opponent's creature, or the opponent itself), which also costs mana.</li>
+    <li>Make friendly creature on board attack opponent creature on the same lane or the opponent (which is free).</li>
+   </ul>
+ 
+  Cards which are legal to play from the hand depend on the actual amount of mana points, which restores to the maximum at the beginning of every turn. This maximum increases each turn up to 12. Second player has one bonus mana point that he can spend at any turn.
+  <br/><br/>
+  At the beginning of each turn, the current player draws cards from the deck (usually one) if his hand is not full (8 cards max). The content of the hand is visible only to the hand's owner. Content of the board and player data (health, mana, etc.) is visible to everyone.
+  <br/><br/>
+  Each creature can only attack once per turn and (unless it has the <i>charge</i> keyword) it cannot attack the same turn it is placed.
+  When creature attacks other creature both defenses are reduced by opponent's attack values. Creatures with defense 0 or less are immediately removed from the board. When creature directly attacks the player, its attack is substracted from the player's health.
+  <br/><br/>
+  The goal of the game is to reduce opponent's health to 0.
+  <br/><br/>
+</body>
+</html>

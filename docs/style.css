@@ -1,0 +1,170 @@
+﻿body
+{
+	/*width: 850px;*/
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family:  "Ubuntu", "Lucida Console", "Comic Sans MS", "URW Chancery L", "Purisa", fantasy;
+	text-align: left;
+	font-size: medium;
+	background-color: #fff;
+	color: #000;
+}
+
+a:link, a:visited, a:hover  
+{
+	text-decoration: none;
+	color: #080;
+}
+
+hr {
+	height: 2px;
+	color: #000;
+	background-color: #000;
+    border: 0 none;
+} 
+
+h1
+{
+    font-weight: normal;
+}
+
+h2
+{
+    font-weight: normal;
+}
+
+.menu
+{
+    /*border:1px solid #ccc;*/
+    border-width:1px 0;
+    list-style:none;
+    margin:0;
+    padding:0;
+    text-align:center;
+}
+.menu li
+{
+    display:inline;
+}
+.menu a
+{
+    display:inline-block;
+	padding:10px 20px 10px 20px;
+
+	border:1px solid #fff;
+}
+.menu a:hover 
+{
+	background-color: #fff;
+	/*border:1px solid #999;*/
+}
+.menu .active 
+{
+	color: #808080;;
+	/*background-color: #4CAF50;*/
+	/*border:1px solid #000;*/
+}
+
+.header h1
+{
+	text-align:center;
+	color: #000;
+    font-weight: normal;
+}
+
+.header h5
+{
+	text-align:center;
+	color: #000;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.header a:link, .header a:visited, .header a:hover  
+{
+	color: #000;
+}
+
+#footnote
+{
+	text-align:center;
+	font-style: italic;
+	font-size: small;
+}
+
+.list
+{
+    list-style:none;
+}
+
+.list li
+{
+	padding-bottom: 20px;
+}
+
+.tightlist li
+{
+	padding-bottom: 0px;
+}
+
+.shortlist
+{
+    list-style:none;
+}
+
+.shortlist li
+{
+	padding-bottom: 5px;
+}
+
+.shortlist img
+{
+	margin-right:5px;
+}
+
+.taglist
+{
+	list-style:none;
+	margin:0;
+    padding:0;
+	text-align:left;
+	padding-left: 40px;
+}
+
+.taglist li
+{
+	display:inline;
+	padding-right: 10px;
+	color: #808080;
+	/*background-color: #666;*/
+}
+
+.taglist .inprogress
+{
+	color: #ff6600;
+}
+
+.smallindent
+{
+	padding-left: 20px;
+}
+
+#leftcol 
+{
+	margin-top: 10px;
+  width: 250px;
+  float: left;
+}
+#rightcol 
+{
+	margin-left: 250px;
+	line-height: 160%;
+	padding-top: 40px;
+}
+
+.clearcol 
+{
+	clear: both;
+}
+		
