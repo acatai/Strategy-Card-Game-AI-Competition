@@ -1,0 +1,18 @@
+[package]
+name = "agent"
+version = "0.1.0"
+authors = ["MarWit <contact@marwit.rs>", "Wojciech Meller <wojmel97@gmail.com>", "Łukasz Klasiński <lukasklasinski@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bitmask = "0.5"
+shrinkwraprs = "0.3"
+smallbitvec = "2.4"
+num_enum = "0.4"
+rand = "0.7"
+petgraph = "0.5"
+derive-new = "0.5"
+failure = "0.1"
+structopt = "0.3.8"
