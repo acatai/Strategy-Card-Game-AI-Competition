@@ -156,4 +156,4 @@ def times_new():
 
 if __name__ == '__main__':
   files = sorted(glob('out-*.txt'))
-  score(*graph(files, 6 * 6, 2500))
+  score(*graph(files, 6 * 6, 5000))
