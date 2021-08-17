@@ -281,10 +281,10 @@ public class CardUI {
         image.setImage("atlas-" + (card.baseId - 1))
                 .setTint(tint)
 //                .setRotation((double)(base.attack+base.defense-12)/100*(Math.PI*2))
-                .setScale(scale)
+                .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))
+                .setScaleY(Math.abs(scale))
                 .setX((int) (ConstantsUI.CARD_DIM.x * (card.baseId%2 == 0 ? ((1-scale)/2) : ((1 + scale)/2))))
 //                .setY((int) (ConstantsUI.CARD_DIM.y * (1-scale)/2))
-                .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))
         ;
         overlay.setImage(isOnBoard && card.keywords.hasGuard ? "guard_overlay.png" : "basic_overlay.png");
         ward.setAlpha(isOnBoard && card.keywords.hasWard ? 1 : 0);
