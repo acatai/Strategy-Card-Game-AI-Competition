@@ -152,7 +152,7 @@ public class ConstructPhase {
     }
 
 
-    public ChoiceResultPair PlayerChoice(String action, int player) throws InvalidActionHard
+    public Card PlayerChoice(String action, int player) throws InvalidActionHard
     {
         Card choice = null;
         String text = "";
@@ -175,8 +175,26 @@ public class ConstructPhase {
         }
         chosenCards[player].add(choice);
         chosenQuantities[player][choice.baseId] += 1;
+        if (!text.isEmpty())
+            this.text[player] += text + " ";
 
-        return new ChoiceResultPair(choice, text);
+        return choice;
+    }
+
+    public String HandlePlayerChoices(String actions, int player) throws InvalidActionHard {
+        StringJoiner logMessage = new StringJoiner(", \n");
+        for (String action : actions.split(";")) {
+            action = action.trim();
+            if (action.isEmpty())
+                continue; // empty action is a valid action
+            if (action.equals("PASS"))
+                while (chosenCards[player].size() < Constants.CARDS_IN_DECK)
+                    logMessage.add(PlayerChoice("PASS", player).toDescriptiveString());
+            else
+                logMessage.add(PlayerChoice(action, player).toDescriptiveString());
+
+        }
+        return logMessage.toString();
     }
 
     public void ShuffleDecks()

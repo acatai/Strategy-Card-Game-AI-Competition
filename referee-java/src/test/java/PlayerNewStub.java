@@ -7,7 +7,6 @@ import java.math.*;
  * the standard input according to the problem statement.
  **/
 class Player {
-
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 
@@ -41,7 +40,7 @@ class Player {
                 int myHealthChange = in.nextInt();
                 int opponentHealthChange = in.nextInt();
                 int cardDraw = in.nextInt();
-                int lane = in.nextInt();
+//                int lane = in.nextInt();
             }
 
             // Write an action using System.out.println()

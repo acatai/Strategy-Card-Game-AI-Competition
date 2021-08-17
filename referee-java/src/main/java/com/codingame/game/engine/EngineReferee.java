@@ -165,17 +165,10 @@ public class EngineReferee {
             Player sdkplayer = gameManager.getPlayer(player);
             try {
                 String output = sdkplayer.getOutputs().get(0);
-                for (String action : output.split(";")) {
-                    action = action.trim();
-                    if (action.isEmpty())
-                        continue; // empty action is a valid action
-                    ConstructPhase.ChoiceResultPair choice = constr.PlayerChoice(action, player);
-                    if (!choice.text.isEmpty())
-                        constr.text[player] += choice.text + " ";
-                    gameManager.addToGameSummary(
-                            String.format("Player %s chose %s", sdkplayer.getNicknameToken(), choice.card.toDescriptiveString())
-                    );
-                }
+                String summary = constr.HandlePlayerChoices(output, player);
+                gameManager.addToGameSummary(
+                        String.format("Player %s chose %s", sdkplayer.getNicknameToken(), summary.substring(0,380))
+                );
             } catch (TimeoutException e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");
                 return;

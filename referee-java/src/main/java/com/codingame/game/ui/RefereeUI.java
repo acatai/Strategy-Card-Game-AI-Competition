@@ -37,7 +37,7 @@ public class RefereeUI {
     private Map<Integer, CardUI> cardsPool = new HashMap<>();
     private static PlayerUI[] players = new PlayerUI[2];
 
-    private Text[][] draftCardsQuantity = new Text[2][Constants.CARDS_IN_CONSTRUCTED];
+    private Text[][] draftCardsQuantity = new Text[2][Constants.MAX_CARDS_IN_FRAME];
 
     private Text[] deck = new Text[2];
 
@@ -463,11 +463,11 @@ public class RefereeUI {
                 manaCurve[p][m].setAlpha(0);
                 manaCurveQuantity[p][m].setAlpha(0);
             }
-            for (int i = 0; i < Constants.CARDS_IN_CONSTRUCTED; i++)
-                if (draftCardsQuantity[p][i] != null)
-                    draftCardsQuantity[p][i].setAlpha(0);
-            for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index)
+            for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index) {
                 getCardFromPool(-(index + 1)).setVisible(false);
+                if (draftCardsQuantity[p][index] != null)
+                    draftCardsQuantity[p][index].setAlpha(0);
+            }
         }
     }
 

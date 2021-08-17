@@ -3,7 +3,7 @@ import java.util.stream.Stream;
 
 /** AI description
  * Draft phase:
- *  - 30x choose default card
+ *  - use default deck creation
  * Game phase:
  *  - do nothing (outputs single ';')
  */
@@ -11,7 +11,7 @@ class Player
 {
   public static void main(String[] args)
   {
-    System.out.println(Stream.generate(() -> "PASS _").limit(30).collect(Collectors.joining(" ; "))+" lvl4");
+    System.out.println("PASS");
 
     while (true)
       System.out.println(";");
