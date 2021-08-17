@@ -28,6 +28,8 @@ public final class Constants
   public static final int CARDS_IN_CONSTRUCTED = 40; // 40;
   public static final int CONSTRUCTED_MAX_COPY = 3;
 
+  public static final int MAX_CARDS_IN_FRAME = 40; // 40;
+
   public static final int INITIAL_HAND_SIZE = 4;
   public static final int MAX_CARDS_IN_HAND = 8; // was 10
   public static final int SECOND_PLAYER_CARD_BONUS = 1;
@@ -54,6 +56,7 @@ public final class Constants
   public static final int FRAME_DURATION_SHOWDRAFT = 1;
   public static final int FRAME_DURATION_SHOWDRAFT_LAST = 2500;
   public static final int FRAME_DURATION_DRAFT = 500;
+  public static final int FRAME_DURATION_CONSTRUCTED = 2500;
   public static final int FRAME_DURATION_BATTLE = 750;
   public static final int FRAME_DURATION_SUMMON = 600;
 

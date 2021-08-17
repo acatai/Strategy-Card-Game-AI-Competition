@@ -21,11 +21,11 @@ public class EngineReferee {
     public int initGameTurn = 0;
 
     public List<Action> actionsToHandle = new ArrayList<>();
-    public List<String>[] constrActionsToHandle = new ArrayList[] {new ArrayList<>(), new ArrayList<>()};
 
     private boolean showBattleStart = true;
     private boolean showDraftStart = true;
     public int showdraftSizechoice = 0;
+    public int expectedConstructionFrames = 0;
 
     static final int ILLEGAL_ACTION_SUMMARY_LIMIT =3;
 
@@ -72,6 +72,8 @@ public class EngineReferee {
         gameTurn = -1 - (int)Math.ceil(Math.max(0,(constr.cardsForConstruction.size() - ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice])) / (double)ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice]);
         initGameTurn = gameTurn;
 
+        expectedConstructionFrames = (int) Math.ceil(Constants.CARDS_IN_CONSTRUCTED/Constants.MAX_CARDS_IN_FRAME);
+
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Draw Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the draft.");
 
@@ -86,7 +88,7 @@ public class EngineReferee {
             if (Constants.HANDLE_UI)
                 gameManager.addTooltip(gameManager.getPlayer(0), "Draft phase.");
         }
-        if (showBattleStart && gameTurn == Constants.CARDS_IN_DECK) {
+        if (showBattleStart && gameTurn == expectedConstructionFrames) {
             showBattleStart = false;
             if (Constants.HANDLE_UI)
                 gameManager.addTooltip(gameManager.getPlayer(0), "Battle phase.");
@@ -109,7 +111,7 @@ public class EngineReferee {
         }
 
 
-        if (gameTurn < Constants.CARDS_IN_DECK)
+        if (gameTurn < expectedConstructionFrames+1)
         {
             ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
@@ -125,61 +127,46 @@ public class EngineReferee {
         if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
         if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
 
+        gameManager.setFrameDuration(Constants.FRAME_DURATION_CONSTRUCTED);
+
         if (Constants.IS_HUMAN_PLAYING)
             gameManager.setTurnMaxTime(20 * Constants.TIMELIMIT_CONSTRUCTPHASE);
         else
             gameManager.setTurnMaxTime(Constants.TIMELIMIT_CONSTRUCTPHASE);
 
-        if (!constrActionsToHandle[0].isEmpty()) { // there is a legal action on top of the list
-            for (int player = 0; player < 2; player++) {
-                Player sdkplayer = gameManager.getPlayer(player);
-                //gameManager.setTurnMaxTime(1); // weird try but works ^^
-                sdkplayer.expectedOutputLines = 0;
-                sdkplayer.execute();
-                sdkplayer.expectedOutputLines = 1;
+        for (int player = 0; player < 2; player++) {
+            Player sdkplayer = gameManager.getPlayer(player);
+            for (String line : constr.getMockPlayersInput(player, gameTurn)) {
+                sdkplayer.sendInputLine(line);
             }
-        } else {
-            for (int player = 0; player < 2; player++) {
-                Player sdkplayer = gameManager.getPlayer(player);
-                for (String line : constr.getMockPlayersInput(player, gameTurn)) {
-                    sdkplayer.sendInputLine(line);
-                }
-                for (Card card : constr.cardsForConstruction)
-                    sdkplayer.sendInputLine(card.getAsInput());
-                sdkplayer.execute();
-            }
-            for (int player = 0; player < 2; player++) {
-                Player sdkplayer = gameManager.getPlayer(player);
-                try {
-                    String output = sdkplayer.getOutputs().get(0);
-                    for (String str : output.split(";")) {
-                        str = str.trim();
-                        if (str.isEmpty())
-                            continue; // empty action is a valid action
-                        constrActionsToHandle[player].add(str);
-                    }
-                } catch (TimeoutException e) {
-                    HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");
-                    return;
-                }
-                if (constrActionsToHandle[player].size() != Constants.CARDS_IN_DECK){
-                    HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " didn't choose correct number of cards!");
-                    return;
-                }
-            }
+            for (Card card : constr.cardsForConstruction)
+                sdkplayer.sendInputLine(card.getAsInput());
+            sdkplayer.execute();
         }
-
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
             try {
-                String action = constrActionsToHandle[player].remove(0);
-                ConstructPhase.ChoiceResultPair choice = constr.PlayerChoice_CHANGED(action, player);
-                constr.text[player] = choice.text;
-                gameManager.addToGameSummary(
-                        String.format("Player %s chose %s", sdkplayer.getNicknameToken(), choice.card.toDescriptiveString())
-                );
+                String output = sdkplayer.getOutputs().get(0);
+                for (String action : output.split(";")) {
+                    action = action.trim();
+                    if (action.isEmpty())
+                        continue; // empty action is a valid action
+                    ConstructPhase.ChoiceResultPair choice = constr.PlayerChoice(action, player);
+                    if (!choice.text.isEmpty())
+                        constr.text[player] += choice.text + " ";
+                    gameManager.addToGameSummary(
+                            String.format("Player %s chose %s", sdkplayer.getNicknameToken(), choice.card.toDescriptiveString())
+                    );
+                }
+            } catch (TimeoutException e) {
+                HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");
+                return;
             } catch (InvalidActionHard e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + ": " + e.getMessage());
+                return;
+            }
+            if (constr.chosenCards[player].size() != Constants.CARDS_IN_DECK){
+                HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " didn't choose correct number of cards!");
                 return;
             }
         }
@@ -303,7 +290,7 @@ public class EngineReferee {
 
         //gameManager.addToGameSummary("!\n" + state.toString());
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + (gameTurn - Constants.CARDS_IN_DECK) + ".");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + Math.round(((float)gameTurn - expectedConstructionFrames) / 2) + ".");
         if (Constants.VERBOSE_LEVEL > 1) System.out.print("   Scores: ");
         if (Constants.VERBOSE_LEVEL > 0) System.out.println((state.winner == 0 ? "1" : "0") + " " + (state.winner == 1 ? "1" : "0"));
 

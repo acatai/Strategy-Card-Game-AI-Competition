@@ -37,6 +37,9 @@ public class ConstructPhase {
         decks = new ArrayList[] {new ArrayList<Card>(), new ArrayList<Card>()};
         chosenQuantities = new int[2][Constants.CARDSET.size()+1];
 
+        for (int player = 0; player < 2; player++)
+            text[player] = "";
+
         choicesRNG = params.draftChoicesRNG;
         shufflesRNG = new Random[] {params.shufflePlayer0RNG, params.shufflePlayer1RNG};
     }
@@ -69,6 +72,7 @@ public class ConstructPhase {
                     .collect(Collectors.toList());
         }
     }
+
     public void PrepareConstructed()
     {
         prepareAllowedCards();
@@ -148,7 +152,7 @@ public class ConstructPhase {
     }
 
 
-    public ConstructPhase.ChoiceResultPair PlayerChoice_CHANGED(String action, int player) throws InvalidActionHard
+    public ChoiceResultPair PlayerChoice(String action, int player) throws InvalidActionHard
     {
         Card choice = null;
         String text = "";
