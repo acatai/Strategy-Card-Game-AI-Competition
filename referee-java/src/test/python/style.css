@@ -1,0 +1,17 @@
+button:hover {
+  background: #0F0;
+}
+button:focus {
+    background: #00F;
+}
+
+label#health {
+    background: #0B0;
+}
+label#attack {
+    background: #F00;
+}
+
+label#mana {
+    background: #00F;
+}

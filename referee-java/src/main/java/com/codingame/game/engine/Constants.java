@@ -57,6 +57,8 @@ public final class Constants
   public static final int FRAME_DURATION_BATTLE = 750;
   public static final int FRAME_DURATION_SUMMON = 600;
 
+  public static boolean IS_HUMAN_PLAYING = false;
+
   public static void LoadCardlist(String cardsetPath)
   {
     BufferedReader bufferedReader = null;

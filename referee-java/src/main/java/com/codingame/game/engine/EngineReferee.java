@@ -120,12 +120,15 @@ public class EngineReferee {
         }
     }
 
-        private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render)
-        {
-            if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
-            if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
+    private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render)
+    {
+        if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
+        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
 
-        gameManager.setTurnMaxTime(gameTurn == 0 ? Constants.TIMELIMIT_FIRSTDRAFTTURN : Constants.TIMELIMIT_DRAFTTURN);
+        if (Constants.IS_HUMAN_PLAYING)
+            gameManager.setTurnMaxTime(20 * Constants.TIMELIMIT_CONSTRUCTPHASE);
+        else
+            gameManager.setTurnMaxTime(Constants.TIMELIMIT_CONSTRUCTPHASE);
 
         if (!constrActionsToHandle[0].isEmpty()) { // there is a legal action on top of the list
             for (int player = 0; player < 2; player++) {
@@ -225,7 +228,10 @@ public class EngineReferee {
         {
             if (Constants.VERBOSE_LEVEL > 2) System.out.print("      Game turn " + (gameTurn - Constants.CARDS_IN_DECK) + ", player " + gamePlayer);
 
-            gameManager.setTurnMaxTime(gameTurn <= Constants.CARDS_IN_DECK + 1 ? Constants.TIMELIMIT_FIRSTGAMETURN : Constants.TIMELIMIT_GAMETURN);
+            if (Constants.IS_HUMAN_PLAYING)
+                gameManager.setTurnMaxTime(200 * Constants.TIMELIMIT_GAMETURN);
+            else
+                gameManager.setTurnMaxTime(gameTurn <= Constants.CARDS_IN_DECK + 1 ? Constants.TIMELIMIT_FIRSTGAMETURN : Constants.TIMELIMIT_GAMETURN);
 
             state.AdvanceState();
 
