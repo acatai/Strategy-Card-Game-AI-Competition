@@ -18,6 +18,7 @@ public class CardUI {
 
     private Group group;
     private Sprite background;
+    private Sprite image;
     private Sprite overlay;
     private Sprite ward;
     private Sprite lethal;
@@ -46,6 +47,11 @@ public class CardUI {
             .setZIndex(2);
 
         background = graphicEntityModule.createSprite()
+            .setBaseWidth(ConstantsUI.CARD_DIM.x)
+            .setBaseHeight(ConstantsUI.CARD_DIM.y)
+            .setZIndex(0);
+
+        image = graphicEntityModule.createSprite()
             .setBaseWidth(ConstantsUI.CARD_DIM.x)
             .setBaseHeight(ConstantsUI.CARD_DIM.y)
             .setZIndex(1);
@@ -101,7 +107,7 @@ public class CardUI {
             .setBaseWidth(ConstantsUI.CARD_DIM.x)
             .setImage("shadow.png")
             //.setTint(0x808080)
-            .setZIndex(0);
+            .setZIndex(-1);
 
         impact = graphicEntityModule.createSprite()
             .setAlpha(0)
@@ -140,8 +146,8 @@ public class CardUI {
             .setX(ConstantsUI.CARD_DIM.x / 2)
             .setY(80);
 
-        group = graphicEntityModule.createGroup(shadow, background, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup)
-            .setScale(1.0);
+        group = graphicEntityModule.createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup)
+                .setScale(1.0);
 
         extraIcons = new Sprite[3];
         for (int index = 0; index < 3; ++index) {
@@ -242,7 +248,44 @@ public class CardUI {
         attack.setVisible(base.type == Card.Type.CREATURE || card.attack != 0);
         defense.setVisible(base.type == Card.Type.CREATURE || card.defense != 0);
 
-        background.setImage("atlas-" + (card.baseId - 1));
+        switch(base.type){
+            case CREATURE:
+                background.setImage("Card_creature.png");
+                break;
+            case ITEM_BLUE:
+                background.setImage("Card_item_blue.png");
+                break;
+            case ITEM_GREEN:
+                background.setImage("Card_item_green.png");
+                break;
+            case ITEM_RED:
+                background.setImage("Card_item_red.png");
+                break;
+        }
+
+        int tint = 0;
+        if (base.attack > 0)
+            tint += 256*256*22*(Math.pow(base.attack, 0.9) + 2);
+        else
+            tint += 256*256*255;
+        if (base.defense > 0)
+            tint += 256*22*(Math.pow(base.defense, 0.9) + 2);
+        else
+            tint += 256*255;
+        if (base.cost > 0)
+            tint += 22*(Math.pow(base.cost, 0.9) + 2);
+        else
+            tint += 255;
+
+        double scale = 1+(double)(base.attack+base.defense-12)/12/5;
+        image.setImage("atlas-" + (card.baseId - 1))
+                .setTint(tint)
+//                .setRotation((double)(base.attack+base.defense-12)/100*(Math.PI*2))
+                .setScale(scale)
+                .setX((int) (ConstantsUI.CARD_DIM.x * (card.baseId%2 == 0 ? ((1-scale)/2) : ((1 + scale)/2))))
+//                .setY((int) (ConstantsUI.CARD_DIM.y * (1-scale)/2))
+                .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))
+        ;
         overlay.setImage(isOnBoard && card.keywords.hasGuard ? "guard_overlay.png" : "basic_overlay.png");
         ward.setAlpha(isOnBoard && card.keywords.hasWard ? 1 : 0);
         lethal.setAlpha(isOnBoard && card.keywords.hasLethal ? 1 : 0);
@@ -375,6 +418,7 @@ public class CardUI {
             extraIcons[1],
             extraIcons[2],
             group,
+            image,
             overlay,
             ward,
             lethal,
