@@ -111,20 +111,18 @@ public class RefereeUI {
         deck[1] = graphicEntityModule.createText("");
         initManaCurve();
 
-        for (int index = 0; index < Constants.CARDS_IN_CONSTRUCTED; ++index)
-        {
+        for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index) {
             getCardFromPool(-(index + 1)).setVisible(false);
 
-            for (Player player : gameManager.getPlayers())
-            {
+            for (Player player : gameManager.getPlayers()) {
                 int playerIndex = player.getIndex();
                 draftCardsQuantity[playerIndex][index] =
                     graphicEntityModule.createText("")
-                    .setAnchor(0.5)
+                    .setAnchorX(0.5)
                     .setFontSize(20)
                     .setFillColor(player.getColorToken())
-                    .setStrokeColor(0x000000)
-                    .setStrokeThickness(0.5)
+                    .setStrokeColor(0xffffff)
+                    .setStrokeThickness(1.5)
                     .setVisible(false);
             }
         }
@@ -263,66 +261,95 @@ public class RefereeUI {
 
         ArrayList<Card> picks = engine.constr.cardsForConstruction;
 
-        for (int index = 0; index < Constants.CARDS_IN_CONSTRUCTED; ++index) {
-            int cardX = draftX + (int) (draftCardSpaceX * ((index) % 10)) - ConstantsUI.CARD_BOARD_SPACE;
-            int cardY = draftY + (int) (draftCardSpaceY * Math.floor((index) / 10)) + ConstantsUI.CARD_HAND_SPACE;
+        for (int frameIndex = 0; frameIndex < Constants.MAX_CARDS_IN_FRAME; ++frameIndex) {
+            int index = turn * Constants.MAX_CARDS_IN_FRAME + frameIndex;
+            int cardX = draftX + (int) (draftCardSpaceX * ((frameIndex) % 10)) - ConstantsUI.CARD_BOARD_SPACE;
+            int cardY = draftY + (int) (draftCardSpaceY * Math.floor((frameIndex) / 10)) + ConstantsUI.CARD_HAND_SPACE;
 
-            Card card = picks.get(index);
+            CardUI cardUi = getCardFromPool(-(frameIndex+1));
+            if (index >= Constants.CARDS_IN_CONSTRUCTED) {
+                for (Player player : gameManager.getPlayers()) {
+                    int playerIndex = player.getIndex();
+                    draftCardsQuantity[playerIndex][frameIndex]
+                        .setVisible(false)
+                        .setAlpha(0);
+                    graphicEntityModule.commitEntityState(0.0, draftCardsQuantity[playerIndex][frameIndex]);
+                }
+                cardUi
+                    .setVisible(false)
+                    .commit(0.0);
+            }
+            else {
+                Card card = picks.get(index);
+                for (Player player : gameManager.getPlayers()) {
+                    int playerIndex = player.getIndex();
+                    draftCardsQuantity[playerIndex][frameIndex]
+                        .setVisible(false);
+                    graphicEntityModule.commitEntityState(0.0, draftCardsQuantity[playerIndex][frameIndex]);
+                    if (engine.constr.chosenQuantities[playerIndex][card.baseId] > 0) {
+                        draftCardsQuantity[playerIndex][frameIndex]
+                            .setText("x" + engine.constr.chosenQuantities[playerIndex][card.baseId])
+                            .setX(cardX + (playerIndex * 2 - 1) * (ConstantsUI.CARD_BOARD_SPACE - 20) + 42)
+                            .setY(cardY-5)
+                            .setScaleY(0.0)
+                            .setVisible(true);
+                        graphicEntityModule.commitEntityState(0.0, draftCardsQuantity[playerIndex][frameIndex]);
+                        draftCardsQuantity[playerIndex][frameIndex]
+                            .setScaleY(1.0);
+                        graphicEntityModule.commitEntityState(0.2, draftCardsQuantity[playerIndex][frameIndex]);
+                    }
+                    getCardFromPool(-(frameIndex+1))
+                        .setScaleY(0)
+                        .setScaleX(ConstantsUI.CARD_CONSTRUCTED_SCALE)
+                        .move(cardX, cardY, card)
+                        .commit(0.0)
+                        .setScaleY(ConstantsUI.CARD_CONSTRUCTED_SCALE)
+                        .commit(0.2);
+                }
+            }
 
-            getCardFromPool(-(index+1))
-                .setScale(ConstantsUI.CARD_CONSTRUCTED_SCALE)
-                .move(cardX, cardY, card)
-                .commit(0.0);
-
+        }
+        if (turn == 0)
+        {
             for (Player player : gameManager.getPlayers()) {
                 int playerIndex = player.getIndex();
-                if (engine.constr.chosenQuantities[playerIndex][card.baseId] > 0)
-                    draftCardsQuantity[playerIndex][index]
-                        .setText("x"+engine.constr.chosenQuantities[playerIndex][card.baseId])
-                        .setX(cardX + (playerIndex * 2 - 1) * (ConstantsUI.CARD_BOARD_SPACE - 20) + 45)
-                        .setY(cardY)
-                        .setVisible(true);
+                Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
+
+                if (!engine.constr.text[playerIndex].isEmpty()) {
+                    players[playerIndex].talk(engine.constr.text[playerIndex], true);
+                } else {
+                    players[playerIndex].hideBubble();
+                }
+
+                deck[1 - playerIndex]
+                        .setText(Integer.toString(Constants.CARDS_IN_DECK))
+                        .setAnchor(0.5)
+                        .setFillColor(0xffffff)
+                        .setFontSize(40)
+                        .setStrokeColor(0x000000)
+                        .setStrokeThickness(4.0)
+                        .setX(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).x)
+                        .setY(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).y);
             }
+
+            newTurnBackground
+                    .setX(78)
+                    .setY(482)
+                    .setAlpha(1);
+
+            newTurn
+                    .setText("Cards: " + Integer.toString(Constants.CARDS_IN_DECK))
+                    .setAnchor(0.5)
+                    .setFontSize(50)
+                    .setFillColor(0xffffff)
+                    .setStrokeColor(0x000000)
+                    .setStrokeThickness(4.0)
+                    .setX(78+314/2)
+                    .setY(ConstantsUI.BOARD.y);
+
+            graphicEntityModule.commitEntityState(0,  newTurnBackground, newTurn);
+            drawManaCurve();
         }
-
-        for (Player player : gameManager.getPlayers()) {
-            int playerIndex = player.getIndex();
-            Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
-
-            if (!engine.constr.text[playerIndex].isEmpty()) {
-                players[playerIndex].talk(engine.constr.text[playerIndex], true);
-            } else {
-                players[playerIndex].hideBubble();
-            }
-
-            deck[1 - playerIndex]
-                .setText(Integer.toString(Constants.CARDS_IN_DECK))
-                .setAnchor(0.5)
-                .setFillColor(0xffffff)
-                .setFontSize(40)
-                .setStrokeColor(0x000000)
-                .setStrokeThickness(4.0)
-                .setX(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).x)
-                .setY(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).y);
-        }
-
-        newTurnBackground
-                .setX(78)
-                .setY(482)
-                .setAlpha(1);
-
-        newTurn
-            .setText("Cards: " + Integer.toString(Constants.CARDS_IN_DECK))
-            .setAnchor(0.5)
-            .setFontSize(50)
-            .setFillColor(0xffffff)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(78+314/2)
-            .setY(ConstantsUI.BOARD.y);
-
-        graphicEntityModule.commitEntityState(0,  newTurnBackground, newTurn);
-        drawManaCurve();
     }
 
     private void initManaCurve()
@@ -440,7 +467,7 @@ public class RefereeUI {
             for (Sprite separator : separators)
                 separator.setAlpha(1);
 
-        if (turn == engine.expectedConstructionFrames+1) {
+        if (turn == engine.expectedConstructionFrames) {
             for (int p=0; p<2; p++)
             {
                 cardTypesInfo[p].setAlpha(0);
@@ -454,10 +481,8 @@ public class RefereeUI {
                 for (int i = 0; i<Constants.CARDS_IN_CONSTRUCTED; i++)
                     if (draftCardsQuantity[p][i] != null)
                         draftCardsQuantity[p][i].setAlpha(0);
-                for (int index = 0; index < Constants.CARDS_IN_CONSTRUCTED; ++index)
-                    getCardFromPool(-(index+1))
-                            .setVisible(false)
-                            .commit(0.0);
+                for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index)
+                    getCardFromPool(-(index + 1)).setVisible(false);
             }
         }
 

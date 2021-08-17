@@ -72,8 +72,7 @@ public class EngineReferee {
         gameTurn = -1 - (int)Math.ceil(Math.max(0,(constr.cardsForConstruction.size() - ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice])) / (double)ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice]);
         initGameTurn = gameTurn;
 
-        expectedConstructionFrames = (int) Math.ceil(Constants.CARDS_IN_CONSTRUCTED/Constants.MAX_CARDS_IN_FRAME);
-
+        expectedConstructionFrames = (int) Math.ceil((double)Constants.CARDS_IN_CONSTRUCTED/Constants.MAX_CARDS_IN_FRAME);
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Draw Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the draft.");
 
@@ -111,15 +110,29 @@ public class EngineReferee {
         }
 
 
-        if (gameTurn < expectedConstructionFrames+1)
+        if (gameTurn < expectedConstructionFrames)
         {
-            ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
+            if (gameTurn == 0)
+                ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
+            else
+                VisualTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
         }
         else
         {
             return GameTurn(gameManager, () -> ui.battle(gameTurn));
         }
+    }
+
+    private void VisualTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
+        for (int player = 0; player < 2; player++) {
+            Player sdkplayer = gameManager.getPlayer(player);
+            sdkplayer.expectedOutputLines = 0;
+            sdkplayer.execute();
+            sdkplayer.expectedOutputLines = 1;
+        }
+        render.run();
+        gameTurn++;
     }
 
     private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render)
@@ -290,7 +303,7 @@ public class EngineReferee {
 
         //gameManager.addToGameSummary("!\n" + state.toString());
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + Math.round(((float)gameTurn - expectedConstructionFrames) / 2) + ".");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + (int)Math.ceil(((float)gameTurn - expectedConstructionFrames + 1) / 2) + ".");
         if (Constants.VERBOSE_LEVEL > 1) System.out.print("   Scores: ");
         if (Constants.VERBOSE_LEVEL > 0) System.out.println((state.winner == 0 ? "1" : "0") + " " + (state.winner == 1 ? "1" : "0"));
 

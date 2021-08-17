@@ -25,7 +25,7 @@ public final class Constants
 
   public static final int CARDS_IN_DECK = 30; // 30;
   public static final int CARDS_IN_DRAFT = 60; // 60;
-  public static final int CARDS_IN_CONSTRUCTED = 40; // 40;
+  public static final int CARDS_IN_CONSTRUCTED = 80; // 40;
   public static final int CONSTRUCTED_MAX_COPY = 3;
 
   public static final int MAX_CARDS_IN_FRAME = 40; // 40;
