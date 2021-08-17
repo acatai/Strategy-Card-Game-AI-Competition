@@ -106,21 +106,6 @@ class CardUI(Gtk.Button):
         self.grid.attach(self.draw, 0, 6, 6, 1)
 
 
-        # self.box.pack_start(self.id, True, True, 0)
-        # self.box.pack_start(self.instID, True, True, 0)
-        # self.box.pack_start(self.type, True, True, 0)
-        # self.box.pack_start(self.cost, True, True, 0)
-        # self.box.pack_start(self.att, True, True, 0)
-        # self.box.pack_start(self.hp, True, True, 0)
-        # self.box.pack_start(self.keywords, True, True, 0)
-        # self.box.pack_start(self.my_hp, True, True, 0)
-        # self.box.pack_start(self.opp_hp, True, True, 0)
-        # self.box.pack_start(self.draw, True, True, 0)
-    # def mark(self):
-    #     css = 'button { background-color: #f00; }'
-
-
-
 
 
 class Game(Gtk.Window):
@@ -164,7 +149,7 @@ class Game(Gtk.Window):
         self.stat_box.pack_end(self.player0_box, True, True, 0)
 
         self.player0_avatar = Gtk.Button(label= "PLAYER")
-        self.player0_avatar.connect("clicked", self.playerChoosen)
+        self.player0_avatar.set_sensitive(False);
         self.stat_box.pack_end(self.player0_avatar, True, True, 0)
 
         self.player0_ui = {}
@@ -179,6 +164,7 @@ class Game(Gtk.Window):
 
 
         self.player1_avatar = Gtk.Button(label= "OPPONENT")
+        self.player1_avatar.set_relief(Gtk.ReliefStyle.NORMAL)
         self.player1_avatar.connect("clicked", self.playerChoosen)
         self.stat_box.pack_start(self.player1_avatar, True, True, 0)
 
@@ -209,13 +195,13 @@ class Game(Gtk.Window):
         self.box.pack_end(self.playarea_box, True, True, 0)
 
         self.player0_ui["hand"] = Gtk.HBox(spacing=6)
-        self.playarea_box.pack_end(self.player0_ui["hand"], True, False, 5)
+        self.playarea_box.pack_end(self.player0_ui["hand"], False, False, 5)
         self.player0_ui["board"] = Gtk.HBox(spacing=6)
-        self.playarea_box.pack_end(self.player0_ui["board"], True, False, 5)
+        self.playarea_box.pack_end(self.player0_ui["board"], False, False, 5)
         self.player1_ui["hand"] = Gtk.HBox(spacing=6)
-        self.playarea_box.pack_start(self.player1_ui["hand"], True, False, 5)
+        self.playarea_box.pack_start(self.player1_ui["hand"], False, False, 5)
         self.player1_ui["board"] = Gtk.HBox(spacing=6)
-        self.playarea_box.pack_start(self.player1_ui["board"], True, False, 5)
+        self.playarea_box.pack_start(self.player1_ui["board"], False, False, 5)
 
 
         self.updateView()
@@ -254,17 +240,17 @@ class Game(Gtk.Window):
         for card in cards:
             cardUI = CardUI(card)
             if card.location == "0":
-                 self.player0_ui["hand"].pack_start(cardUI, True, True, 5)
+                 self.player0_ui["hand"].pack_start(cardUI, True, False, 5)
             elif card.location == "1":
-                 self.player0_ui["board"].pack_start(cardUI, True, True, 5)
+                 self.player0_ui["board"].pack_start(cardUI, True, False, 5)
             elif card.location == "-1":
-                 self.player1_ui["board"].pack_start(cardUI, True, True, 5)
+                 self.player1_ui["board"].pack_start(cardUI, True, False, 5)
             else:
                 print("ERROR - bad location", card.id, card.location, file=sys.stderr, flush=True)
             cardUI.connect("clicked", self.cardClicked)
         for _ in range(opp_cards):
             cardUI = CardUI(Card.blankCard)
-            self.player1_ui["hand"].pack_start(cardUI, True, True, 5)
+            self.player1_ui["hand"].pack_start(cardUI, True, False, 5)
 
     def updateView(self):
         opp_cards, cards = self.updatePlayers()
@@ -323,15 +309,19 @@ class Game(Gtk.Window):
                 logAct = "C"
                 self.card1 = card
         else:
-            self.card2 = card
-            if self.card1.type == "0":
-                logAct = "D"
-                self.commands.append("ATTACK "+str(self.card1.instID)+" "+str(self.card2.instID))
+            if card.location == "1" or card.location == "-1":
+                self.card2 = card
+                if self.card1.type == "0":
+                    logAct = "D"
+                    self.commands.append("ATTACK "+str(self.card1.instID)+" "+str(self.card2.instID))
+                else:
+                    logAct = "E"
+                    self.commands.append("USE "+str(self.card1.instID)+" "+str(self.card2.instID))
+                self.card1 = None
+                self.card2 = None
             else:
-                logAct = "E"
-                self.commands.append("USE "+str(self.card1.instID)+" "+str(self.card2.instID))
-            self.card1 = None
-            self.card2 = None
+                logAct = "F"
+                self.card1 = card
 
         logAfter = (
             createLog(card)+" "+
