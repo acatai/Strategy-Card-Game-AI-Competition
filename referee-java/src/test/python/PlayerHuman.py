@@ -224,15 +224,17 @@ class Game(Gtk.Window):
         return opp_cards, cards
 
     def showCardsDraw(self, opp_cards, cards):
+        countCards = len(cards)
+        cardsPerRow = math.floor(countCards/4)
         for i,card in enumerate(cards):
             cardUI = CardUI(card, True)
-            if i//10 == 0:
+            if i//cardsPerRow == 0:
                 self.player1_ui["hand"].pack_start(cardUI, True, True, 5)
-            if i//10 == 1:
+            if i//cardsPerRow == 1:
                 self.player1_ui["board"].pack_start(cardUI, True, True, 5)
-            if i//10 == 2:
+            if i//cardsPerRow == 2:
                 self.player0_ui["board"].pack_start(cardUI, True, True, 5)
-            if i//10 == 3:
+            if i//cardsPerRow == 3:
                 self.player0_ui["hand"].pack_start(cardUI, True, True, 5)
             cardUI.connect("clicked", self.cardClicked)
 
