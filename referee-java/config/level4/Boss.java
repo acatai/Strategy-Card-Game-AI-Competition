@@ -3,15 +3,15 @@ import java.util.stream.Stream;
 
 /** AI description
  * Draft phase:
- *  - always pick the first card
+ *  - 30x choose default card
  * Game phase:
  *  - do nothing (outputs single ';')
  */
-public class PlayerEmpty
+class Player
 {
   public static void main(String[] args)
   {
-    System.out.println(Stream.generate(() -> "PASS").limit(30).collect(Collectors.joining(" ; ")));
+    System.out.println(Stream.generate(() -> "PASS _").limit(30).collect(Collectors.joining(" ; "))+" lvl4");
 
     while (true)
       System.out.println(";");

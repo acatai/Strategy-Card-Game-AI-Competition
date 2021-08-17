@@ -72,7 +72,9 @@ public class EngineReferee {
         gameTurn = -1 - (int)Math.ceil(Math.max(0,(constr.cardsForConstruction.size() - ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice])) / (double)ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice]);
         initGameTurn = gameTurn;
 
-        expectedConstructionFrames = (int) Math.ceil((double)Constants.CARDS_IN_CONSTRUCTED/Constants.MAX_CARDS_IN_FRAME);
+        expectedConstructionFrames = (int) Math.ceil(
+                (double) Math.min(Constants.CARDS_IN_CONSTRUCTED, constr.allowedCards.size())
+                        / Constants.MAX_CARDS_IN_FRAME);
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Draw Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the draft.");
 
@@ -109,17 +111,20 @@ public class EngineReferee {
             return false;
         }
 
-
-        if (gameTurn < expectedConstructionFrames)
-        {
-            if (gameTurn == 0)
-                ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
-            else
-                VisualTurn(gameManager, () -> ui.constructPhase(gameTurn));
+        if (gameTurn == 0) {
+            ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
         }
-        else
-        {
+        else if (gameTurn < expectedConstructionFrames) {
+            VisualTurn(gameManager, () -> ui.constructPhase(gameTurn));
+            return false;
+        }
+        else if (gameTurn <= Math.max(3, expectedConstructionFrames + 1)) {
+            gameManager.setFrameDuration(10);
+            VisualTurn(gameManager, ui::cleanupAfterConstruction);
+            return false;
+        }
+        else {
             return GameTurn(gameManager, () -> ui.battle(gameTurn));
         }
     }
@@ -231,7 +236,7 @@ public class EngineReferee {
             if (Constants.IS_HUMAN_PLAYING)
                 gameManager.setTurnMaxTime(200 * Constants.TIMELIMIT_GAMETURN);
             else
-                gameManager.setTurnMaxTime(gameTurn <= Constants.CARDS_IN_DECK + 1 ? Constants.TIMELIMIT_FIRSTGAMETURN : Constants.TIMELIMIT_GAMETURN);
+                gameManager.setTurnMaxTime(gameTurn <= expectedConstructionFrames ? Constants.TIMELIMIT_FIRSTGAMETURN : Constants.TIMELIMIT_GAMETURN);
 
             state.AdvanceState();
 

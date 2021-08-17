@@ -1,7 +1,7 @@
 //import com.codingame.gameengine.runner.Constants;
 import com.codingame.game.engine.Constants;
-import com.codingame.gameengine.runner.dto.GameResult;
 import com.codingame.gameengine.runner.MultiplayerGameRunner;
+import com.codingame.gameengine.runner.simulate.GameResult;
 
 import java.util.Properties;
 

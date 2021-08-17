@@ -7,13 +7,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 
+import com.codingame.gameengine.runner.simulate.GameResult;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 
 import com.codingame.game.engine.Constants;
-import com.codingame.gameengine.runner.dto.GameResult;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 
@@ -65,7 +65,7 @@ public class CommandLineInterface {
           System.out.println(gameResult.scores.get(0));
           System.out.println(gameResult.scores.get(1));
 
-          for (String line : gameResult.uinput) {
+          for (String line : gameResult.gameParameters) {
             System.out.println(line);
           }
         }

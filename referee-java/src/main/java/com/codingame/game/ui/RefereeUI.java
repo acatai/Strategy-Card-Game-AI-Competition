@@ -63,7 +63,7 @@ public class RefereeUI {
         tooltipModule = new TooltipModule(gameManager);
         gameManager.setFrameDuration(Constants.FRAME_DURATION_SHOWDRAFT);
 
-        graphicEntityModule.createSpriteSheetLoader()
+        graphicEntityModule.createSpriteSheetSplitter()
             .setName("atlas-")
             .setSourceImage("atlas.png")
             .setWidth(600 / 4)
@@ -72,7 +72,7 @@ public class RefereeUI {
             .setOrigCol(0)
             .setImageCount(160)
             .setImagesPerRow(10)
-            .load();
+            .split();
 
         graphicEntityModule.createSprite()
             .setAnchor(0)
@@ -121,8 +121,8 @@ public class RefereeUI {
                     .setAnchorX(0.5)
                     .setFontSize(20)
                     .setFillColor(player.getColorToken())
-                    .setStrokeColor(0xffffff)
-                    .setStrokeThickness(1.5)
+                    .setStrokeColor(0x000000)
+                    .setStrokeThickness(3.5)
                     .setVisible(false);
             }
         }
@@ -267,7 +267,7 @@ public class RefereeUI {
             int cardY = draftY + (int) (draftCardSpaceY * Math.floor((frameIndex) / 10)) + ConstantsUI.CARD_HAND_SPACE;
 
             CardUI cardUi = getCardFromPool(-(frameIndex+1));
-            if (index >= Constants.CARDS_IN_CONSTRUCTED) {
+            if (index >= picks.size()) {
                 for (Player player : gameManager.getPlayers()) {
                     int playerIndex = player.getIndex();
                     draftCardsQuantity[playerIndex][frameIndex]
@@ -454,6 +454,23 @@ public class RefereeUI {
         }
     }
 
+    public void cleanupAfterConstruction() {
+        for (int p=0; p<2; p++) {
+            cardTypesInfo[p].setAlpha(0);
+            cardTypesQuantity[p].setAlpha(0);
+            for (int m = 0; m < 8; m++) {
+                manaCurveCosts[p][m].setAlpha(0);
+                manaCurve[p][m].setAlpha(0);
+                manaCurveQuantity[p][m].setAlpha(0);
+            }
+            for (int i = 0; i < Constants.CARDS_IN_CONSTRUCTED; i++)
+                if (draftCardsQuantity[p][i] != null)
+                    draftCardsQuantity[p][i].setAlpha(0);
+            for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index)
+                getCardFromPool(-(index + 1)).setVisible(false);
+        }
+    }
+
     public void battle(int turn) {
         for (int playerIndex = 0; playerIndex < 2; ++playerIndex) {
             players[playerIndex].hideBubble();
@@ -466,25 +483,6 @@ public class RefereeUI {
         if (Constants.LANES > 1)
             for (Sprite separator : separators)
                 separator.setAlpha(1);
-
-        if (turn == engine.expectedConstructionFrames) {
-            for (int p=0; p<2; p++)
-            {
-                cardTypesInfo[p].setAlpha(0);
-                cardTypesQuantity[p].setAlpha(0);
-                for (int m = 0; m < 8; m++)
-                {
-                    manaCurveCosts[p][m].setAlpha(0);
-                    manaCurve[p][m].setAlpha(0);
-                    manaCurveQuantity[p][m].setAlpha(0);
-                }
-                for (int i = 0; i<Constants.CARDS_IN_CONSTRUCTED; i++)
-                    if (draftCardsQuantity[p][i] != null)
-                        draftCardsQuantity[p][i].setAlpha(0);
-                for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index)
-                    getCardFromPool(-(index + 1)).setVisible(false);
-            }
-        }
 
         if (turn != lastturn)
         {
