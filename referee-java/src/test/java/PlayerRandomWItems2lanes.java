@@ -2,7 +2,7 @@ import java.util.*;
 
 /**
  * AI description
- * Draft phase:
+ * Construction phase:
  *  - pick random card
  * Game phase:
  *  - while there are onboard friendly creatures and inhand green items with cost less then current mana
@@ -116,24 +116,36 @@ public class PlayerRandomWItems2lanes
     }
   }
 
+  private static String constructionPhase(Random random, Scanner scanner)
+  {
+    SimplifiedState constructionState = new SimplifiedState(scanner);
+
+    int candidates = constructionState.HandCreaturesIds.size() + constructionState.HandGreenItemsIds.size() +
+                     constructionState.HandRedItemsIds.size() + constructionState.HandBlueItemsIds.size();
+    int[] countTimesChosen = new int[candidates];
+
+    for (int i = 0; i < 30; i++) {
+      int c;
+      do {
+        c = random.nextInt(candidates);
+      } while (countTimesChosen[c] >= 3);
+      countTimesChosen[c]++;
+    }
+
+    List<String> commands = new ArrayList<>();
+    for (int c = 0; c < candidates; c++) {
+      for (int i = 0; i < countTimesChosen[c]; i++)
+        commands.add("PICK " + c);
+    }
+    return String.join(" ; ", commands);
+  }
+
   public static void main(String[] args)
   {
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
-    for (int i=0; i < 30; i++)
-    {
-      SimplifiedState state = new SimplifiedState(scanner);
-      //for (int j=0; j < 3; j++)
-      //{
-      //  String card = scanner.nextLine();
-      //}
-
-      int choice = random.nextInt(3);
-      String text = "";// "I choose you ";
-
-      System.out.println(String.format("PICK %d %s", choice, text));
-    }
+    System.out.println(constructionPhase(random, scanner));
 
     while (true)
     {

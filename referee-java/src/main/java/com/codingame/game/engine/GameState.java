@@ -15,19 +15,19 @@ public class GameState
   public Gamer[] players;
   public HashMap<Integer, Card> cardIdMap;
 
-  public GameState(DraftPhase draft)
+  public GameState(ConstructPhase constr)
   {
-    assert( draft.decks[0].size()==Constants.CARDS_IN_DECK);
-    assert( draft.decks[1].size()==Constants.CARDS_IN_DECK);
+    assert( constr.decks[0].size()==Constants.CARDS_IN_DECK);
+    assert( constr.decks[1].size()==Constants.CARDS_IN_DECK);
 
     turn = -1;
     winner = -1;
     currentPlayer = 1;
-    players = new Gamer[] {new Gamer(0, draft.decks[0]), new Gamer(1, draft.decks[1])};
+    players = new Gamer[] {new Gamer(0, constr.decks[0]), new Gamer(1, constr.decks[1])};
 
     cardIdMap = new HashMap<>();
     for (int i=0; i < 2; i++)
-      for (Card c: draft.decks[i])
+      for (Card c: constr.decks[i])
         cardIdMap.put(c.id, c);
 
 

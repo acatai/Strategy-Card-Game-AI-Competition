@@ -25,6 +25,8 @@ public final class Constants
 
   public static final int CARDS_IN_DECK = 30; // 30;
   public static final int CARDS_IN_DRAFT = 60; // 60;
+  public static final int CARDS_IN_CONSTRUCTED = 40; // 40;
+  public static final int CONSTRUCTED_MAX_COPY = 3;
 
   public static final int INITIAL_HAND_SIZE = 4;
   public static final int MAX_CARDS_IN_HAND = 8; // was 10
@@ -40,6 +42,7 @@ public final class Constants
 
   public static final int TIMELIMIT_FIRSTDRAFTTURN = 1000;
   public static final int TIMELIMIT_DRAFTTURN = 100;
+  public static final int TIMELIMIT_CONSTRUCTPHASE = 4000;
   public static final int TIMELIMIT_FIRSTGAMETURN = 1000;
   public static int TIMELIMIT_GAMETURN = LANES==1 ?  100 : 200;
 

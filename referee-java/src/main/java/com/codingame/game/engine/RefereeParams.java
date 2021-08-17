@@ -12,6 +12,7 @@ public class RefereeParams
   public Random shufflePlayer0RNG;
   public Random shufflePlayer1RNG;
   public Integer[][] predefinedDraftIds = null;
+  public Integer[] predefinedConstructedIds = null;
   private Properties params;
 
   public RefereeParams(long draftChoicesSeed, long shufflePlayer0Seed, long shufflePlayer1Seed)
@@ -63,6 +64,19 @@ public class RefereeParams
         {
           predefinedDraftIds[pick][i] = Integer.parseInt(choice[i].trim());
         }
+      }
+    }
+
+    if ( params.getProperty("predefinedConstructedIds")!=null)
+    {
+      predefinedConstructedIds = new Integer[Constants.CARDS_IN_DECK];
+      String[] picks = params.getProperty("predefinedConstructedIds").split(",");
+
+      assert (picks.length >= Constants.CARDS_IN_DECK);
+
+      for(int pick=0; pick <  Constants.CARDS_IN_DECK; pick++)
+      {
+        predefinedConstructedIds[pick] = Integer.parseInt(picks[pick].trim());
       }
     }
 

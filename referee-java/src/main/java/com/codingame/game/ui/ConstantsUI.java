@@ -67,6 +67,7 @@ public class ConstantsUI {
     public static final double CARD_BOARD_SCALE = 1.0;
     public static final double LIFTED_CARD_BOARD_SCALE = 1.2;
     public static final double CARD_DRAFT_SCALE = 1.3;
+    public static final double CARD_CONSTRUCTED_SCALE = 0.4;
     public static final double CARD_DECK_SCALE  = (double) PLAYER_DECK_DIM.y / (double) CARD_DIM.y;
     public static final double CARD_HAND_SCALE  = 0.77;
 

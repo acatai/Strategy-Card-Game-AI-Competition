@@ -13,7 +13,7 @@ import com.codingame.gameengine.core.MultiplayerGameManager;
 public class EngineReferee {
     //private MultiplayerGameManager<Player> gameManager; // @Inject ?
 
-    public DraftPhase draft;
+    public ConstructPhase constr;
     public GameState state = null;
 
     public int gamePlayer = 0;
@@ -21,6 +21,7 @@ public class EngineReferee {
     public int initGameTurn = 0;
 
     public List<Action> actionsToHandle = new ArrayList<>();
+    public List<String>[] constrActionsToHandle = new ArrayList[] {new ArrayList<>(), new ArrayList<>()};
 
     private boolean showBattleStart = true;
     private boolean showDraftStart = true;
@@ -33,46 +34,46 @@ public class EngineReferee {
 
         RefereeParams params = new RefereeParams(gameManager);
 
-        DraftPhase.Difficulty difficulty;
+        ConstructPhase.Difficulty difficulty;
         switch (gameManager.getLeagueLevel()) {
-        case 1:
-            difficulty = DraftPhase.Difficulty.VERY_EASY;
-            break;
-        case 2:
-            difficulty = DraftPhase.Difficulty.EASY;
-            break;
-        case 3:
-            difficulty = DraftPhase.Difficulty.LESS_EASY;
-            break;
-        default:
-            difficulty = DraftPhase.Difficulty.NORMAL;
-            break;
+            case 1:
+                difficulty = ConstructPhase.Difficulty.VERY_EASY;
+                break;
+            case 2:
+                difficulty = ConstructPhase.Difficulty.EASY;
+                break;
+            case 3:
+                difficulty = ConstructPhase.Difficulty.LESS_EASY;
+                break;
+            default:
+                difficulty = ConstructPhase.Difficulty.NORMAL;
+                break;
         }
 
         if (Constants.LANES>1)
         {
-            difficulty = DraftPhase.Difficulty.NORMAL;
+            difficulty = ConstructPhase.Difficulty.NORMAL;
         }
 
         Constants.LoadCardlist("cardlist.txt");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Difficulty is set to: " + difficulty.name() + ".");
 
-        draft = new DraftPhase(difficulty, params);
-        draft.PrepareChoices();
+        constr = new ConstructPhase(difficulty, params);
+        constr.PrepareConstructed();
 
-      for (int i=0; i < ConstantsUI.SHOWDRAFT_SIZECHOICE.length; i++)
-      {
-        if (draft.showdraftCards.size() > ConstantsUI.SHOWDRAFT_SIZECHOICE[i])
-          break;
-        showdraftSizechoice = i;
-      }
-      //System.out.println(showdraftSizechoice);
-        gameTurn = -1 - (int)Math.ceil(Math.max(0,(draft.showdraftCards.size() - ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice])) / (double)ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice]);
+        for (int i=0; i < ConstantsUI.SHOWDRAFT_SIZECHOICE.length; i++)
+        {
+            if (constr.cardsForConstruction.size() > ConstantsUI.SHOWDRAFT_SIZECHOICE[i])
+              break;
+            showdraftSizechoice = i;
+        }
+        //System.out.println(showdraftSizechoice);
+        gameTurn = -1 - (int)Math.ceil(Math.max(0,(constr.cardsForConstruction.size() - ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice])) / (double)ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice]);
         initGameTurn = gameTurn;
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Draw Phase Prepared. " + draft.allowedCards.size() + " cards allowed. ");
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + draft.draftingCards.size() + " cards selected to the draft.");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Draw Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the draft.");
 
         gameManager.setMaxTurns(Constants.MAX_TURNS_HARDLIMIT); // should be never reached, not handled on the referee's side
     }
@@ -94,24 +95,23 @@ public class EngineReferee {
         if (gameTurn < 0)
         {
             //System.out.format("    /// %d\n", gameTurn);
-            if (Constants.HANDLE_UI)
-                ui.showDraftCards(gameTurn, false);
+//            if (Constants.HANDLE_UI)
+//                ui.showDraftCards(gameTurn, false);
             gameManager.getPlayer(0).expectedOutputLines = 0;
             gameManager.getPlayer(0).execute();
             gameManager.getPlayer(0).expectedOutputLines = 1;
             gameTurn++;
 
-            if (Constants.HANDLE_UI && gameTurn==0)
-                ui.showDraftCards(0, false); // clearing ??
+//            if (Constants.HANDLE_UI && gameTurn==0)
+//                ui.showDraftCards(0, false); // clearing ??
 
             return false;
         }
 
 
-
         if (gameTurn < Constants.CARDS_IN_DECK)
         {
-            DraftTurn(gameManager, () -> ui.draft(gameTurn));
+            ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
         }
         else
@@ -120,37 +120,63 @@ public class EngineReferee {
         }
     }
 
-    private void DraftTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
-        if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Draft phase");
-        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Draft turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
+        private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render)
+        {
+            if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
+            if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
 
         gameManager.setTurnMaxTime(gameTurn == 0 ? Constants.TIMELIMIT_FIRSTDRAFTTURN : Constants.TIMELIMIT_DRAFTTURN);
 
-        for (int player = 0; player < 2; player++) {
-            Player sdkplayer = gameManager.getPlayer(player);
-            for (String line : draft.getMockPlayersInput(player, gameTurn)) {
-                sdkplayer.sendInputLine(line);
+        if (!constrActionsToHandle[0].isEmpty()) { // there is a legal action on top of the list
+            for (int player = 0; player < 2; player++) {
+                Player sdkplayer = gameManager.getPlayer(player);
+                //gameManager.setTurnMaxTime(1); // weird try but works ^^
+                sdkplayer.expectedOutputLines = 0;
+                sdkplayer.execute();
+                sdkplayer.expectedOutputLines = 1;
             }
-
-            for (int card = 0; card < 3; card++)
-                sdkplayer.sendInputLine(draft.draft[gameTurn][card].getAsInput());
-            sdkplayer.execute();
+        } else {
+            for (int player = 0; player < 2; player++) {
+                Player sdkplayer = gameManager.getPlayer(player);
+                for (String line : constr.getMockPlayersInput(player, gameTurn)) {
+                    sdkplayer.sendInputLine(line);
+                }
+                for (Card card : constr.cardsForConstruction)
+                    sdkplayer.sendInputLine(card.getAsInput());
+                sdkplayer.execute();
+            }
+            for (int player = 0; player < 2; player++) {
+                Player sdkplayer = gameManager.getPlayer(player);
+                try {
+                    String output = sdkplayer.getOutputs().get(0);
+                    for (String str : output.split(";")) {
+                        str = str.trim();
+                        if (str.isEmpty())
+                            continue; // empty action is a valid action
+                        constrActionsToHandle[player].add(str);
+                    }
+                } catch (TimeoutException e) {
+                    HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");
+                    return;
+                }
+                if (constrActionsToHandle[player].size() != Constants.CARDS_IN_DECK){
+                    HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " didn't choose correct number of cards!");
+                    return;
+                }
+            }
         }
 
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
             try {
-                String output = sdkplayer.getOutputs().get(0);
-                DraftPhase.ChoiceResultPair choice = draft.PlayerChoice(gameTurn, output, player);
-                draft.text[player] = choice.text;
+                String action = constrActionsToHandle[player].remove(0);
+                ConstructPhase.ChoiceResultPair choice = constr.PlayerChoice_CHANGED(action, player);
+                constr.text[player] = choice.text;
                 gameManager.addToGameSummary(
-                    String.format("Player %s chose %s", sdkplayer.getNicknameToken(), choice.card.toDescriptiveString())
+                        String.format("Player %s chose %s", sdkplayer.getNicknameToken(), choice.card.toDescriptiveString())
                 );
             } catch (InvalidActionHard e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + ": " + e.getMessage());
-                return;
-            } catch (TimeoutException e) {
-                HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");
                 return;
             }
         }
@@ -166,10 +192,10 @@ public class EngineReferee {
 
         if (state == null) // frame-only turn for showing the initial state
         {
-            draft.ShuffleDecks();
+            constr.ShuffleDecks();
             if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Decks shuffled.");
             if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game phase");
-            state = new GameState(draft);
+            state = new GameState(constr);
 
             //gameManager.setTurnMaxTime(1); // weird try but works ^^
             sdkplayer.expectedOutputLines = 0;

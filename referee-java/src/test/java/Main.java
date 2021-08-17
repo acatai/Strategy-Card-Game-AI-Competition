@@ -2,7 +2,6 @@
 import com.codingame.game.engine.Constants;
 import com.codingame.gameengine.runner.dto.GameResult;
 import com.codingame.gameengine.runner.MultiplayerGameRunner;
-import org.omg.Dynamic.Parameter;
 
 import java.util.Properties;
 
@@ -21,10 +20,10 @@ public class Main
         }
 
         Constants.VERBOSE_LEVEL = 2;
+        System.setProperty("league.level", "4");
 
 
-
-        Constants.LANES = 2;
+        Constants.LANES = 1;
         if (Constants.LANES > 1)
           runner(PlayerRandomWItems2lanes.class, PlayerRandomWItems2lanes.class).start();
         else

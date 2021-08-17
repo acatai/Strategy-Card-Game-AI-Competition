@@ -1,3 +1,6 @@
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /** AI description
  * Draft phase:
  *  - always pick the first card
@@ -8,8 +11,7 @@ public class PlayerEmpty
 {
   public static void main(String[] args)
   {
-    for (int i=0; i < 30; i++)
-      System.out.println(String.format("PICK 0"));
+      System.out.println(Stream.generate(() -> "PASS").limit(30).collect(Collectors.joining(" ; ")));
 
     while (true)
       System.out.println(";");
