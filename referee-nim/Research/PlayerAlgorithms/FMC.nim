@@ -14,7 +14,7 @@ proc simulate (config: Config, root: State): SearchResult =
 
   SearchResult(actions: actions, score: config.evalState(state))
 
-proc playerAlgorithmFMC * (config: Config, state: State): SearchResult =
+proc playerAlgorithmFMC*(config: Config, state: State): SearchResult =
   block:
     result = SearchResult(score: NegInf)
 

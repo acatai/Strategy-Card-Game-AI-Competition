@@ -2,15 +2,15 @@ import std / strformat
 import Card, State
 
 type
-  Draft * = array[30, array[3, Card]]
-  DraftResult * = ref object
-    index *: int
-    score *: float
+  Draft* = array[30, array[3, Card]]
+  DraftResult* = ref object
+    index*: int
+    score*: float
 
-func `$` * (draftResult: DraftResult): string =
+func `$`*(draftResult: DraftResult): string =
   &"PICK {draftResult.index} # score: {draftResult.score}"
 
-func evaluateDraftWith * (
+func evaluateDraftWith*(
   state: State,
   evaluate: proc (card: Card): float {.noSideEffect.}
 ): DraftResult {.inline.} =

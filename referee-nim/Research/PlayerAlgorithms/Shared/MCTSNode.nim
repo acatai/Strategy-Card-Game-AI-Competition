@@ -1,30 +1,30 @@
 import std / [math, random, sequtils, strformat]
-import .. / .. / .. / Engine / [Action, Config, Search, State]
+import .. / .. / .. / Engine / [Action, Search, State]
 
 type
-  MCTSNode * = ref object
+  MCTSNode* = ref object
     # Info.
-    move   *: Action
-    nodes  *: seq[MCTSNode]
-    opened *: bool
-    parent *: MCTSNode
-    state  *: State
+    move*: Action
+    nodes*: seq[MCTSNode]
+    opened*: bool
+    parent*: MCTSNode
+    state*: State
 
     # Stats.
-    point *: float
-    visit *: float
+    point*: float
+    visit*: float
 
-func propagate * (node: MCTSNode, score: float): void =
+func propagate*(node: MCTSNode, score: float): void =
   node.point += score
   node.visit += 1
 
   if node.parent != nil:
     node.parent.propagate(score)
 
-func score * (node: MCTSNode): float {.inline.} =
+func score*(node: MCTSNode): float {.inline.} =
   node.point / node.visit + 0.1 * sqrt(ln(node.parent.visit) / node.visit)
 
-proc pick * (node: MCTSNode): MCTSNode =
+proc pick*(node: MCTSNode): MCTSNode =
   # Nothing to pick from.
   if node.nodes.len == 0:
     return nil
@@ -49,7 +49,7 @@ proc pick * (node: MCTSNode): MCTSNode =
 
   node.nodes[bestIndex]
 
-proc run * (node: MCTSNode, evaluate: proc (node: MCTSNode): void): void =
+proc run*(node: MCTSNode, evaluate: proc (node: MCTSNode): void): void =
   let wasExpanding = not node.opened
   if wasExpanding:
     node.nodes = @[]
@@ -67,7 +67,7 @@ proc run * (node: MCTSNode, evaluate: proc (node: MCTSNode): void): void =
   else:
     node.pick.run(evaluate)
 
-func toDot * (node: MCTSNode, id: var int, scope: float, root: int): string =
+func toDot*(node: MCTSNode, id: var int, scope: float, root: int): string =
   var nodeId = id
   if nodeId == 0:
     result &= "digraph MCTS {\n"
@@ -102,16 +102,16 @@ func toDot * (node: MCTSNode, id: var int, scope: float, root: int): string =
   if nodeId == 0:
     result &= "}\n"
 
-func toDot * (node: MCTSNode): string =
+func toDot*(node: MCTSNode): string =
   var id = 0
   node.toDot(id, 1, 0)
 
-proc toDotFile * (node: MCTSNode, path: string): void =
+proc toDotFile*(node: MCTSNode, path: string): void =
   let file = open(path, fmWrite)
   file.write(node.toDot())
   file.close()
 
-proc toSearchResult * (node: MCTSNode): SearchResult =
+proc toSearchResult*(node: MCTSNode): SearchResult =
   var actions: seq[Action]
   var root = node
   while true:
@@ -123,7 +123,7 @@ proc toSearchResult * (node: MCTSNode): SearchResult =
     root = next
   SearchResult(actions: actions, score: root.score)
 
-func `$` * (node: MCTSNode): string =
+func `$`*(node: MCTSNode): string =
   let move = if node.move == nil: "nil" else: $node.move
   let score = if node.parent == nil: "?" else: $node.score
   &"MCTSNode(move:{move},score:{score},visit:{node.visit},nodes:{node.nodes})"

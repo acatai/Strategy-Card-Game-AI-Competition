@@ -2,7 +2,7 @@ import std / [random, times]
 import Shared / MCTSNode
 import .. / .. / Engine / [Config, Search, State]
 
-proc playerAlgorithmMCTS * (config: Config, state: State): SearchResult =
+proc playerAlgorithmMCTS*(config: Config, state: State): SearchResult =
   proc evaluate (node: MCTSNode): void =
     var score = config.evalState(node.state)
 

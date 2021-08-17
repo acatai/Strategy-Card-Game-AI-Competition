@@ -4,7 +4,7 @@ func apply (state: State, action: Action): State {.inline.} =
   result = state.copy
   result.applyAction(action)
 
-proc playerAlgorithmGreedy * (config: Config, root: State): SearchResult =
+proc playerAlgorithmGreedy*(config: Config, root: State): SearchResult =
   block:
     result = SearchResult()
 

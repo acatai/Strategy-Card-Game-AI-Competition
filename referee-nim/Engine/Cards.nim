@@ -165,5 +165,5 @@ const
     "160 -1 0 3 2 0 0 ------ 2 2 0 0",
   ]
 
-proc getCards * (): seq[Card] =
+proc getCards*(): seq[Card] =
   cards.mapIt(it.readCard)

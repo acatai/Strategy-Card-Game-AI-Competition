@@ -1,19 +1,16 @@
 import std / [parseopt, random, strformat, strutils]
-import Engine / [Cards, Draft]
+import Engine / Cards
 import Research / [IOHelpers, Referee]
 
 type
   Options = tuple[
-    games:   int,
+    games: int,
     verbose: bool
   ]
 
 proc getOptions (): Options =
-  var games = 0
-  var verbose = true
-
   for kind, key, value in getOpt():
-    if key == "games":   result.games   = value.parseInt
+    if key == "games": result.games = value.parseInt
     if key == "verbose": result.verbose = value.parseBool
 
 proc main (): void =

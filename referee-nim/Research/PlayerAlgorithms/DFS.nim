@@ -1,7 +1,7 @@
-import std / [strformat, times]
+import std / times
 import .. / .. / Engine / [Action, Config, Search, State]
 
-proc playerAlgorithmDFS * (config: Config, state: State): SearchResult =
+proc playerAlgorithmDFS*(config: Config, state: State): SearchResult =
   block:
     result = SearchResult(score: NegInf)
 

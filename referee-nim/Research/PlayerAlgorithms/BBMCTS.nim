@@ -5,7 +5,7 @@ import .. / .. / Engine / [Config, Search, State]
 const
   PHASES = 2
 
-proc playerAlgorithmBBMCTS * (config: Config, state: State): SearchResult =
+proc playerAlgorithmBBMCTS*(config: Config, state: State): SearchResult =
   proc evaluate (node: MCTSNode): void =
     var score = config.evalState(node.state)
 

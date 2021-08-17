@@ -1,3 +1,3 @@
 const
-  Lanes     * = 2
-  MaxInLane * = 3
+  Lanes* = 2
+  MaxInLane* = 3

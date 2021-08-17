@@ -1,18 +1,18 @@
-import std / [algorithm, streams, strformat, strutils]
+import std / [streams, strutils]
 
 type
-  Input * = ref InputObj
+  Input* = ref InputObj
   InputObj = object of StreamObj
-    line   *: string
-    stream *: Stream
+    line*: string
+    stream*: Stream
 
-func newInput * (stream: Stream): Input {.inline.} =
+func newInput*(stream: Stream): Input {.inline.} =
   Input(stream: stream)
 
-proc getLine * (input: Input): string {.inline.} =
+proc getLine*(input: Input): string {.inline.} =
   input.stream.readLine
 
-proc getStr * (input: Input): string =
+proc getStr*(input: Input): string =
   while true:
     if input.line == "":
       input.line = input.stream.readLine
@@ -21,5 +21,5 @@ proc getStr * (input: Input): string =
       input.line.delete(0, part.len)
       return part
 
-proc getInt * (input: Input): int {.inline.} =
+proc getInt*(input: Input): int {.inline.} =
   input.getStr.parseInt
