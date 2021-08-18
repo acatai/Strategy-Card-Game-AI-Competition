@@ -24,8 +24,7 @@ public class ConstructPhase {
 
     // todo - add function and field documentation
 
-    public ConstructPhase(ConstructPhase.Difficulty difficulty, RefereeParams params)
-    {
+    public ConstructPhase(ConstructPhase.Difficulty difficulty, RefereeParams params) {
         this.difficulty = difficulty;
         this.params = params;
 
@@ -40,15 +39,13 @@ public class ConstructPhase {
         shufflesRNG = new Random[] {params.shufflePlayer0RNG, params.shufflePlayer1RNG};
     }
 
-    private boolean isVeryEasyCard(Card card)
-    {
+    private boolean isVeryEasyCard(Card card) {
         return card.type == Card.Type.CREATURE
                 && !card.keywords.hasAnyKeyword()
                 && card.myHealthChange == 0 && card.oppHealthChange == 0 && card.cardDraw == 0;
     }
 
-    private void prepareAllowedCards()
-    {
+    private void prepareAllowedCards() {
         Collection<Card> cardBase = Constants.CARDSET.values();
 
         if (difficulty == ConstructPhase.Difficulty.NORMAL) {
@@ -69,23 +66,19 @@ public class ConstructPhase {
         }
     }
 
-    public void PrepareConstructed()
-    {
+    public void PrepareConstructed() {
         prepareAllowedCards();
         cardsForConstruction = new ArrayList<>();
-        if (params.predefinedConstructedIds != null) // parameter-forced draft choices
-        {
+        if (params.predefinedConstructedIds != null) { // parameter-forced draft choices
             for(int pick = 0; pick <  Constants.CARDS_IN_CONSTRUCTED; pick++)
                 cardsForConstruction.add(Constants.CARDSET.get(params.predefinedConstructedIds[pick]));
             return;
         }
 
         ArrayList<Integer> drafting = new ArrayList<>();
-        for (int pick = 0; pick < Math.min(Constants.CARDS_IN_CONSTRUCTED, allowedCards.size()); pick++)
-        {
+        for (int pick = 0; pick < Math.min(Constants.CARDS_IN_CONSTRUCTED, allowedCards.size()); pick++) {
             int i;
-            do
-            {
+            do {
                 i = choicesRNG.nextInt(allowedCards.size());
             } while (drafting.contains(i));
             drafting.add(i);
@@ -96,7 +89,7 @@ public class ConstructPhase {
         cardsForConstruction.sort(new Card.CostComparator());
     }
 
-    private Card handlePassCommand(String[] command, int player) throws InvalidActionHard{
+    private Card handlePassCommand(int player) throws InvalidActionHard {
         Optional<Card> choice = cardsForConstruction.stream().
                 filter(c -> chosenQuantities[player][c.baseId] < Constants.CONSTRUCTED_MAX_COPY).
                 findFirst();
@@ -130,8 +123,7 @@ public class ConstructPhase {
     }
 
 
-    public Card PlayerChoice(String action, int player) throws InvalidActionHard
-    {
+    public void playerChoice(String action, int player) throws InvalidActionHard {
         Card choice;
         String text;
 
@@ -140,7 +132,7 @@ public class ConstructPhase {
 
         switch (command[0]){
             case "PASS":
-                choice = handlePassCommand(command, player);
+                choice = handlePassCommand(player);
                 break;
             case "PICK":
                 choice = handlePickCommand(command, player);
@@ -155,28 +147,24 @@ public class ConstructPhase {
         chosenQuantities[player][choice.baseId] += 1;
         if (!text.isEmpty())
             this.text[player] += text + " ";
-
-        return choice;
     }
 
-    public String HandlePlayerChoices(String actions, int player) throws InvalidActionHard {
+    public String handlePlayerChoices(String actions, int player) throws InvalidActionHard {
         for (String action : actions.split(";")) {
             action = action.trim();
             if (action.isEmpty())
                 continue; // empty action is a valid action
             if (action.equals("PASS"))
                 while (chosenCards[player].size() < Constants.CARDS_IN_DECK)
-                    PlayerChoice("PASS", player);
+                    playerChoice("PASS", player);
             else
-                PlayerChoice(action, player);
+                playerChoice(action, player);
         }
-        return SummarizeChoices(player);
+        return summarizeChoices(player);
     }
 
-    public void ShuffleDecks()
-    {
-        for (int player=0; player < 2; player++)
-        {
+    public void shuffleDecks() {
+        for (int player=0; player < 2; player++) {
             for (Card c : chosenCards[player])
                 decks[player].add(new Card(c));
 
@@ -186,7 +174,7 @@ public class ConstructPhase {
         }
     }
 
-    public String SummarizeChoices(int player) {
+    public String summarizeChoices(int player) {
         StringJoiner logMessage = new StringJoiner(", ");
         for (int i = 0; i < Constants.CARDSET.size(); i++) {
             if (chosenQuantities[player][i] > 0)
@@ -195,18 +183,6 @@ public class ConstructPhase {
         return logMessage.toString();
     }
 
-
-    public static class ChoiceResultPair
-    {
-        public Card card;
-        public String text;
-
-        public ChoiceResultPair(Card card, String text)
-        {
-            this.card = card;
-            this.text = text;
-        }
-    }
 
     public String[] getMockPlayersInput(int player, int turn) {
         ArrayList<String> lines = new ArrayList<>();

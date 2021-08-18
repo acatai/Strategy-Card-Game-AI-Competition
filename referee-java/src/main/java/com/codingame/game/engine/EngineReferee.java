@@ -137,7 +137,7 @@ public class EngineReferee {
             Player sdkplayer = gameManager.getPlayer(player);
             try {
                 String output = sdkplayer.getOutputs().get(0);
-                String summary = constr.HandlePlayerChoices(output, player);
+                String summary = constr.handlePlayerChoices(output, player);
                 gameManager.addToGameSummary(
                         String.format("Player %s chose cards %s.", sdkplayer.getNicknameToken(), summary)
                 );
@@ -165,7 +165,7 @@ public class EngineReferee {
 
         if (state == null) // frame-only turn for showing the initial state
         {
-            constr.ShuffleDecks();
+            constr.shuffleDecks();
             if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Decks shuffled.");
             if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game phase");
             state = new GameState(constr);
