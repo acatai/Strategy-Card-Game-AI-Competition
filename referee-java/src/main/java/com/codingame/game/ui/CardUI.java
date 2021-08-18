@@ -52,8 +52,11 @@ public class CardUI {
             .setZIndex(0);
 
         image = graphicEntityModule.createSprite()
-            .setBaseWidth(ConstantsUI.CARD_DIM.x)
-            .setBaseHeight(ConstantsUI.CARD_DIM.y)
+            .setAnchor(0.5)
+            .setBaseWidth(163)
+            .setBaseHeight(93)
+            .setX((210)/2)
+            .setY(68)
             .setZIndex(1);
 
         cost = graphicEntityModule.createText("0")
@@ -264,27 +267,25 @@ public class CardUI {
         }
 
         int tint = 0;
-        if (base.attack > 0)
-            tint += 256*256*22*(Math.pow(base.attack, 0.9) + 2);
+        if (base.attack >= -12)
+            tint += 256*256*22*(Math.pow(Math.abs(base.attack), 0.9) + 2);
         else
             tint += 256*256*255;
-        if (base.defense > 0)
-            tint += 256*22*(Math.pow(base.defense, 0.9) + 2);
+        if (base.defense >= -12)
+            tint += 256*22*(Math.pow(Math.abs(base.defense), 0.9) + 2);
         else
             tint += 256*255;
-        if (base.cost > 0)
-            tint += 22*(Math.pow(base.cost, 0.9) + 2);
+        if (base.cost >= -12)
+            tint += 22*(Math.pow(Math.abs(base.cost), 0.9) + 2);
         else
             tint += 255;
 
-        double scale = 1+(double)(base.attack+base.defense-12)/12/5;
+        double scale = 1+(double)(base.attack+base.defense-12)/12/4;
         image.setImage("atlas-" + (card.baseId - 1))
                 .setTint(tint)
-//                .setRotation((double)(base.attack+base.defense-12)/100*(Math.PI*2))
+                .setRotation((double)(base.attack+base.defense-12)/100*(Math.PI*2)*((card.baseId%2)*2-1))
                 .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))
                 .setScaleY(Math.abs(scale))
-                .setX((int) (ConstantsUI.CARD_DIM.x * (card.baseId%2 == 0 ? ((1-scale)/2) : ((1 + scale)/2))))
-//                .setY((int) (ConstantsUI.CARD_DIM.y * (1-scale)/2))
         ;
         overlay.setImage(isOnBoard && card.keywords.hasGuard ? "guard_overlay.png" : "basic_overlay.png");
         ward.setAlpha(isOnBoard && card.keywords.hasWard ? 1 : 0);
