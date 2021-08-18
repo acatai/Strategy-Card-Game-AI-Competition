@@ -25,7 +25,7 @@ public class RefereeParams
   public RefereeParams(MultiplayerGameManager<Player> gameManager)
   {
     // pure initialization if seed set by the manager
-    Long mainSeed = gameManager.getSeed();
+    long mainSeed = gameManager.getSeed();
     Random RNG = new Random(mainSeed);
     long draftChoicesSeed = RNG.nextLong();
     long shufflePlayer0Seed = RNG.nextLong();
@@ -97,12 +97,10 @@ public class RefereeParams
   @Override
   public String toString()
   {
-    StringBuilder sb = new StringBuilder();
-    sb.append("draftChoicesSeed").append("=").append(params.getProperty("draftChoicesSeed")).append("\n");
-    sb.append("shufflePlayer0Seed").append("=").append(params.getProperty("shufflePlayer0Seed")).append("\n");
-    sb.append("shufflePlayer1Seed").append("=").append(params.getProperty("shufflePlayer1Seed")).append("\n");
-    //sb.append("predefinedDraftIds").append("=").append(params.getProperty("predefinedDraftIds")).append("\n");
-    return sb.toString();
+    return "draftChoicesSeed" + "=" + params.getProperty("draftChoicesSeed") + "\n" +
+            "shufflePlayer0Seed" + "=" + params.getProperty("shufflePlayer0Seed") + "\n" +
+            "shufflePlayer1Seed" + "=" + params.getProperty("shufflePlayer1Seed") + "\n";
+//            "predefinedDraftIds" + "=" + params.getProperty("predefinedDraftIds") + "\n";
   }
   // todo toString?
 

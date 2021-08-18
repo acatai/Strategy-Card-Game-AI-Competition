@@ -20,11 +20,11 @@ public class EngineReferee {
 
     public List<Action> actionsToHandle = new ArrayList<>();
 
+    private boolean showConstructStart = true;
     private boolean showBattleStart = true;
-    private boolean showDraftStart = true;
     public int expectedConstructionFrames = 0;
 
-    static final int ILLEGAL_ACTION_SUMMARY_LIMIT =3;
+    static final int ILLEGAL_ACTION_SUMMARY_LIMIT = 3;
 
     public void refereeInit(MultiplayerGameManager<Player> gameManager) {
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("New game");
@@ -48,9 +48,7 @@ public class EngineReferee {
         }
 
         if (Constants.LANES>1)
-        {
             difficulty = ConstructPhase.Difficulty.NORMAL;
-        }
 
         Constants.LoadCardlist("cardlist.txt");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
@@ -70,12 +68,11 @@ public class EngineReferee {
     }
 
 
-    public boolean refereeGameTurn(MultiplayerGameManager<Player> gameManager, RefereeUI ui)
-    {
-        if (showDraftStart && gameTurn ==0) {
-            showDraftStart = false;
+    public boolean refereeGameTurn(MultiplayerGameManager<Player> gameManager, RefereeUI ui) {
+        if (showConstructStart && gameTurn == 0) {
+            showConstructStart = false;
             if (Constants.HANDLE_UI)
-                gameManager.addTooltip(gameManager.getPlayer(0), "Draft phase.");
+                gameManager.addTooltip(gameManager.getPlayer(0), "Construct phase.");
         }
         if (showBattleStart && gameTurn == expectedConstructionFrames) {
             showBattleStart = false;
@@ -147,8 +144,7 @@ public class EngineReferee {
             } catch (InvalidActionHard e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + ": " + e.getMessage());
                 return;
-            }
-            if (constr.chosenCards[player].size() != Constants.CARDS_IN_DECK){
+            } if (constr.chosenCards[player].size() != Constants.CARDS_IN_DECK) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " didn't choose correct number of cards!");
                 return;
             }
@@ -163,8 +159,7 @@ public class EngineReferee {
         Player sdkplayer = gameManager.getPlayer(gamePlayer);
         gameManager.setFrameDuration(Constants.FRAME_DURATION_BATTLE);
 
-        if (state == null) // frame-only turn for showing the initial state
-        {
+        if (state == null) { // frame-only turn for showing the initial state
             constr.shuffleDecks();
             if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Decks shuffled.");
             if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game phase");
@@ -180,8 +175,7 @@ public class EngineReferee {
             return false;
         }
 
-        if (!actionsToHandle.isEmpty()) // there is a legal action on top of the list
-        {
+        if (!actionsToHandle.isEmpty()) { // there is a legal action on top of the list
             //gameManager.setTurnMaxTime(1); // weird try but works ^^
             sdkplayer.expectedOutputLines = 0;
             sdkplayer.execute();
@@ -194,8 +188,7 @@ public class EngineReferee {
             if (a.type == Action.Type.SUMMON) {
                 gameManager.setFrameDuration(Constants.FRAME_DURATION_SUMMON);
             }
-        } else // it's time to actually call a player
-        {
+        } else { // it's time to actually call a player
             if (Constants.VERBOSE_LEVEL > 2) System.out.print("      Game turn " + (gameTurn - Constants.CARDS_IN_DECK) + ", player " + gamePlayer);
 
             if (Constants.IS_HUMAN_PLAYING)
@@ -250,8 +243,7 @@ public class EngineReferee {
         if (CheckAndHandleEndgame(gameManager, state))
             return true;
 
-        if (actionsToHandle.isEmpty()) // player change
-        {
+        if (actionsToHandle.isEmpty()) { // player change
             gameTurn++;
             gamePlayer = (gamePlayer + 1) % 2;
         }

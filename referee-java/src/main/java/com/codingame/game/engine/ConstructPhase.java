@@ -9,12 +9,11 @@ public class ConstructPhase {
 
     public ConstructPhase.Difficulty difficulty;
     public List<Card> allowedCards;
-    //TODO List should be used everywhere, apart from creation
-    public ArrayList<Card> cardsForConstruction;
+    public List<Card> cardsForConstruction;
     //TODO we shouldn't mix arrays and collections, List<List<Card>> would be better
-    public ArrayList<Card>[] chosenCards;
+    public List<Card>[] chosenCards;
     public int[][] chosenQuantities;
-    public ArrayList<Card>[] decks; // after shuffle and assigning unique id's
+    public List<Card>[] decks; // after shuffle and assigning unique id's
 
     public String[] text = new String[2];
 
@@ -169,8 +168,10 @@ public class ConstructPhase {
                 decks[player].add(new Card(c));
 
             Collections.shuffle(decks[player], shufflesRNG[player]);
-            for (int i=0; i < decks[player].size(); i++)
-                decks[player].get(i).id = 2 * i + player + 1;
+            ListIterator<Card> it = decks[player].listIterator();
+            while (it.hasNext()) {
+                it.next().id = 2 * it.nextIndex() + player - 1;
+            }
         }
     }
 

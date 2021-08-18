@@ -254,7 +254,7 @@ public class Card {
   {
     StringBuilder sb = new StringBuilder();
 
-    sb.append(this.name + " (#"+baseId+")").append("\n\n");
+    sb.append(this.name).append(" (#").append(baseId).append(")").append("\n\n");
 
     if (id >= 0) sb.append("instanceId: ").append(this.id).append("\n");
     sb.append("cost: ").append(this.cost).append("\n");
@@ -351,19 +351,16 @@ public class Card {
 
   public String toStringWithoutId()
   {
-    StringBuilder sb = new StringBuilder();
-    sb.append(this.baseId).append(' ');
-    //sb.append(this.type.getDescription()).append(' ');
-    sb.append(this.type.ordinal()).append(' '); // todo test is it ok? 0, 1, 2, 3
-    sb.append(this.cost).append(' ');
-    sb.append(this.attack).append(' ');
-    sb.append(this.defense).append(' ');
-    sb.append(this.keywords);
-    sb.append(' ');
-    sb.append(this.myHealthChange).append(' ');
-    sb.append(this.oppHealthChange).append(' ');
-    sb.append(this.cardDraw).append(' ');
-    return sb.toString();
+    return String.valueOf(this.baseId) + ' ' +
+//            this.type.getDescription() + ' ' +
+            this.type.ordinal() + ' ' + // todo test is it ok? 0, 1, 2, 3
+            this.cost + ' ' +
+            this.attack + ' ' +
+            this.defense + ' ' +
+            this.keywords + ' ' +
+            this.myHealthChange + ' ' +
+            this.oppHealthChange + ' ' +
+            this.cardDraw + ' ';
   }
 
   public String toString()

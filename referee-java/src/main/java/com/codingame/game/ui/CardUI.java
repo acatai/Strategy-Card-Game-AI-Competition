@@ -152,7 +152,6 @@ public class CardUI {
         group = graphicEntityModule.createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup)
                 .setScale(1.0);
 
-        extraIcons = new Sprite[3];
         for (int index = 0; index < 3; ++index) {
             group.add(extraIcons[index] = graphicEntityModule.createSprite()
                     .setAnchorY(0.5)
@@ -165,8 +164,7 @@ public class CardUI {
         extraIcons[1].setImage("heart_icon_rev.png");
         extraIcons[2].setImage("card_stat.png");
 
-        for (int index = 0; index < 3; ++index)
-        {
+        for (int index = 0; index < 3; ++index) {
             group.add(extras[index] = graphicEntityModule.createText("-")
                     .setAnchor(0.5)
                     .setFillColor(0xffffff)
@@ -179,8 +177,7 @@ public class CardUI {
             );
         }
 
-        for (int index = 0; index < 6; ++index)
-        {
+        for (int index = 0; index < 6; ++index) {
             group.add(keywords[index] = graphicEntityModule.createSprite()
                     .setAnchor(0.5)
                     .setImage(ConstantsUI.CARD_KEYWORDS_IMAGES[index])
@@ -281,7 +278,7 @@ public class CardUI {
             tint += 255;
 
         double scale = 1+(double)(base.attack+base.defense-12)/12/4;
-        image.setImage("atlas-" + (card.baseId - 1))
+        image.setImage("atlas-" + ((card.baseId - 1) % 160))
                 .setTint(tint)
                 .setRotation((double)(base.attack+base.defense-12)/100*(Math.PI*2)*((card.baseId%2)*2-1))
                 .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))

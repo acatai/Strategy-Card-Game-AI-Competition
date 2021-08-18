@@ -14,9 +14,6 @@ public class CreatureOnBoard
   public int attack;
   public int defense;
   public int cost;
-  public int myHealthChange;
-  public int oppHealthChange;
-  public int cardDraw;
   public Keywords keywords;
 
   public boolean canAttack;
@@ -36,7 +33,7 @@ public class CreatureOnBoard
     this.defense = creature.defense;
     this.keywords = new Keywords(creature.keywords);
     this.lastTurnDefense = creature.lastTurnDefense;
-    baseCard = creature.baseCard;
+    this.baseCard = creature.baseCard;
     this.canAttack = creature.canAttack;
     this.hasAttacked = creature.hasAttacked;
     this.lane = creature.lane;
@@ -68,9 +65,6 @@ public class CreatureOnBoard
     this.canAttack = this.keywords.hasCharge;
     this.lastTurnDefense = card.defense;
     this.cost = card.cost;
-    this.myHealthChange = card.myHealthChange;
-    this.oppHealthChange = card.oppHealthChange;
-    this.cardDraw = card.cardDraw;
     baseCard = card;
     this.lane = lane;
   }
@@ -102,32 +96,27 @@ public class CreatureOnBoard
 
   public String toString()
   {
-    StringBuilder sb = new StringBuilder();
-    sb.append(this.id).append(' ');
-    sb.append(this.baseId).append(' ');
-    sb.append(this.attack).append(' ');
-    sb.append(this.defense).append(' ');
-    sb.append(this.keywords);
-    return sb.toString();
+    return String.valueOf(this.id) + ' ' +
+            this.baseId + ' ' +
+            this.attack + ' ' +
+            this.defense + ' ' +
+            this.keywords;
   }
   
   public String getAsInput(boolean isOpponentBoard) {
-	  int position = isOpponentBoard? -1: 1;
-	  StringBuilder s = new StringBuilder();
-	  s.append(baseId).append(" ");
-	  s.append(id).append(" ");
-	  s.append(position).append(" ");
-	  s.append(Type.CREATURE.ordinal()).append(" ");
-	  s.append(cost).append(" ");
-	  s.append(attack).append(" ");
-	  s.append(defense).append(" ");
-	  s.append(keywords).append(" ");
-	  s.append(myHealthChange).append(" ");
-	  s.append(oppHealthChange).append(" ");
-	  s.append(cardDraw).append(" ");
-    if (Constants.LANES > 1)
-      s.append(this.lane).append(" ");
-	  return s.toString();
+    int position = isOpponentBoard? -1: 1;
+    return baseId + " " +
+            id + " " +
+            position + " " +
+            Type.CREATURE.ordinal() + " " +
+            cost + " " +
+            attack + " " +
+            defense + " " +
+            keywords + " " +
+            baseCard.myHealthChange + " " +
+            baseCard.oppHealthChange + " " +
+            baseCard.cardDraw + " " +
+            (Constants.LANES > 1 ? this.lane + " " : "");
   }
 
 public String toTooltipText() {

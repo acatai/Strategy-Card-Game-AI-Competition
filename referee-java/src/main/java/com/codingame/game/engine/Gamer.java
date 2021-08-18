@@ -2,6 +2,7 @@ package com.codingame.game.engine;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static com.codingame.game.engine.Constants.INITIAL_HAND_SIZE;
 
@@ -30,7 +31,7 @@ public class Gamer
 
 
 
-  public Gamer(int id, ArrayList<Card> deck)
+  public Gamer(int id, List<Card> deck)
   {
     this.id = id;
     this.hand = new ArrayList<>();
@@ -123,11 +124,9 @@ public class Gamer
   }
 
   public String getPlayerInput() {
-	  StringBuilder s = new StringBuilder();
-	  s.append(health).append(" ");
-	  s.append(maxMana).append(" ");
-	  s.append(deck.size()).append(" ");
-      s.append(drawValueToShow);
-	  return s.toString();
+    return health + " " +
+            maxMana + " " +
+            deck.size() + " " +
+            drawValueToShow;
   }
 }

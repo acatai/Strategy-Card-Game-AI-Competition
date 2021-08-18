@@ -6,6 +6,7 @@ import java.util.List;
 import com.codingame.game.Player;
 import com.codingame.gameengine.core.Module;
 import com.codingame.gameengine.core.MultiplayerGameManager;
+import com.codingame.gameengine.module.entities.Entity;
 import com.codingame.gameengine.module.entities.Text;
 import com.google.inject.Inject;
 
@@ -23,7 +24,7 @@ public class FXModule implements Module {
 
     @Override
     public void onGameInit() {
-        gameManager.setViewGlobalData("fx", nicknames.stream().mapToInt(n -> n.getId()).toArray());
+        gameManager.setViewGlobalData("fx", nicknames.stream().mapToInt(Entity::getId).toArray());
     }
 
     public void registerNickname(Text nick) {

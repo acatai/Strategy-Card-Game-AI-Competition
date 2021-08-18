@@ -472,7 +472,7 @@ public class GameState
     for (Action a: opponent.performedActions)
       lines.add(cardIdMap.get(a.arg1).baseId + " " + a.toStringNoText());
 
-    return lines.stream().toArray(String[]::new);
+    return lines.toArray(new String[0]);
   }
 
   public String[] getPlayersInput() {
@@ -483,7 +483,7 @@ public class GameState
     lines.add(player.getPlayerInput());
     lines.add(opponent.getPlayerInput());
 
-    return lines.stream().toArray(String[]::new);
+    return lines.toArray(new String[0]);
   }
 
   public String[] getCardsInput() {
@@ -492,7 +492,7 @@ public class GameState
     Gamer player = players[currentPlayer];
     Gamer opponent = players[1-currentPlayer];
 
-    lines.add(String.valueOf(opponent.hand.size()) + " " + toString().valueOf(opponent.performedActions.size()));
+    lines.add(String.valueOf(opponent.hand.size()) + " " + String.valueOf(opponent.performedActions.size()));
     for (Action a:opponent.performedActions)
       lines.add(String.valueOf(cardIdMap.get(a.arg1).baseId)+ " " + a.toStringNoText());
 
@@ -505,7 +505,7 @@ public class GameState
       lines.add(b.getAsInput(false));
     for (CreatureOnBoard b : opponent.board)
       lines.add(b.getAsInput(true));
-    return lines.stream().toArray(String[]::new);
+    return lines.toArray(new String[0]);
   }
 
   public String toString()

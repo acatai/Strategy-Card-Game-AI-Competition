@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -101,7 +99,7 @@ public final class Constants
 
     for (Card c : CARDSET.values())
     {
-      sb.append(c.toHTMLString(refs.get(c.baseId))+"\n");
+      sb.append(c.toHTMLString(refs.get(c.baseId))).append("\n");
     }
 
     template = String.format(template, sb.toString());

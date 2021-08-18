@@ -3,9 +3,9 @@ package com.codingame.game.ui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
 import com.codingame.game.Player;
@@ -95,8 +95,7 @@ public class RefereeUI {
             .setY(482)
             .setAlpha(0);
 
-        for (Player player : gameManager.getPlayers())
-        {
+        for (Player player : gameManager.getPlayers()) {
             players[player.getIndex()] = new PlayerUI(graphicEntityModule, player);
             fxModule.registerNickname(players[player.getIndex()].getNick());
         }
@@ -123,14 +122,13 @@ public class RefereeUI {
         }
     }
 
-    public void constructPhase(int turn)
-    {
+    public void constructPhase(int turn) {
         int draftX = ConstantsUI.BOARD.x - (int) (ConstantsUI.CARD_DIM.x * 5 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
         int draftY = ConstantsUI.BOARD.y - (int) (ConstantsUI.CARD_DIM.y * 2 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
         int draftCardSpaceX = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.x) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
         int draftCardSpaceY = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.y) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
 
-        ArrayList<Card> picks = engine.constr.cardsForConstruction;
+        List<Card> picks = engine.constr.cardsForConstruction;
 
         for (int frameIndex = 0; frameIndex < Constants.MAX_CARDS_IN_FRAME; ++frameIndex) {
             int index = turn * Constants.MAX_CARDS_IN_FRAME + frameIndex;
@@ -149,8 +147,7 @@ public class RefereeUI {
                 cardUi
                     .setVisible(false)
                     .commit(0.0);
-            }
-            else {
+            } else {
                 Card card = picks.get(index);
                 for (Player player : gameManager.getPlayers()) {
                     int playerIndex = player.getIndex();
@@ -180,8 +177,7 @@ public class RefereeUI {
             }
 
         }
-        if (turn == 0)
-        {
+        if (turn == 0) {
             for (Player player : gameManager.getPlayers()) {
                 int playerIndex = player.getIndex();
                 Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
@@ -223,10 +219,8 @@ public class RefereeUI {
         }
     }
 
-    private void initManaCurve()
-    {
-        for (int p=0; p<2; p++)
-        {
+    private void initManaCurve() {
+        for (int p=0; p<2; p++) {
             cardTypesInfo[p] = graphicEntityModule.createText("     Creatures:\nGreen Items:\n     Red Items:\n    Blue Items:")
                     .setAnchor(0.5)
                     .setFontSize(ConstantsUI.MC_COST_FONTSIZE)
@@ -245,8 +239,7 @@ public class RefereeUI {
                     .setX(ConstantsUI.MC_TYINFO_X + ConstantsUI.MC_TYINFO_X_QUANTITY_OFFS)
                     .setY(ConstantsUI.MC_PLAYERS_OFFSET[p] + ConstantsUI.MC_TYINFO_Y);
 
-            for (int m = 0; m < 8; m++)
-            {
+            for (int m = 0; m < 8; m++) {
                 manaCurveCosts[p][m] = graphicEntityModule.createText(m < 7 ? Integer.toString(m) : "7+")
                         .setAnchor(0.5)
                         .setFontSize(ConstantsUI.MC_COST_FONTSIZE)
@@ -275,20 +268,16 @@ public class RefereeUI {
         }
     }
 
-    private void drawManaCurve()
-    {
-        for (int p=0; p<2; p++)
-        {
+    private void drawManaCurve() {
+        for (int p=0; p<2; p++) {
             int[] mc = new int[8];
             int[] ct = new int[4];
 
-            for (Card c : engine.constr.chosenCards[p])
-            {
+            for (Card c : engine.constr.chosenCards[p]) {
                 if (c.cost < 7) mc[c.cost]++;
                 else            mc[7]++;
 
-                switch (c.type)
-                {
+                switch (c.type) {
                     case CREATURE: ct[0]++; break;
                     case ITEM_GREEN: ct[1]++; break;
                     case ITEM_RED: ct[2]++; break;
@@ -302,8 +291,7 @@ public class RefereeUI {
             int maxmc = Arrays.stream(mc).max().getAsInt();
             boolean overflow = maxmc  * ConstantsUI.MC_GRAPH_STEP > ConstantsUI.MC_GRAPH_MAXSIZE;
 
-            for (int m = 0; m < 8; m++)
-            {
+            for (int m = 0; m < 8; m++) {
                 int h = mc[m] * ConstantsUI.MC_GRAPH_STEP;
                 if (overflow)
                     h = ConstantsUI.MC_GRAPH_MAXSIZE * mc[m] / maxmc;
@@ -355,8 +343,7 @@ public class RefereeUI {
             for (Sprite separator : separators)
                 separator.setAlpha(1);
 
-        if (turn != lastturn)
-        {
+        if (turn != lastturn) {
             lastturn = turn;
 
             newTurnBackground
@@ -373,9 +360,7 @@ public class RefereeUI {
                     .setX(78+314/2)
                     .setY(ConstantsUI.BOARD.y)
                     .setAlpha(1);
-        }
-        else
-        {
+        } else {
             newTurnBackground.setAlpha(0);
             newTurn.setText("");
         }
@@ -517,7 +502,7 @@ public class RefereeUI {
                 Optional<CreatureOnBoard> graveyardCreature = engine.state.players[playerIndex].graveyard.stream()
                     .filter(x -> x.id == card.id)
                     .findAny();
-                CreatureOnBoard realCreature = graveyardCreature.isPresent() ? graveyardCreature.get() : new CreatureOnBoard(card);
+                CreatureOnBoard realCreature = graveyardCreature.orElseGet(() -> new CreatureOnBoard(card));
                 boolean isOnBoard = graveyardCreature.isPresent();
                 if (!isOnBoard) {
                     animateUse(card1, card, realCreature, action, card.id, x1, y1, x2, y2);

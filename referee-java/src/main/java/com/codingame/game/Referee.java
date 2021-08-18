@@ -3,6 +3,7 @@ package com.codingame.game;
 import com.codingame.game.engine.Constants;
 import com.codingame.game.engine.EngineReferee;
 import com.codingame.game.ui.RefereeUI;
+import com.codingame.gameengine.core.AbstractMultiplayerPlayer;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
@@ -22,8 +23,7 @@ public class Referee extends AbstractReferee {
     //public static int turn = 0;
 
     @Override
-    public void init()
-    {
+    public void init() {
         // Engine
         engine.refereeInit(gameManager);
 
@@ -40,8 +40,7 @@ public class Referee extends AbstractReferee {
     }
 
     @Override
-    public void gameTurn(int turn)
-    {
+    public void gameTurn(int turn) {
         //this.turn = turn;
         // Engine
         boolean end = engine.refereeGameTurn(gameManager, ui);
@@ -50,6 +49,6 @@ public class Referee extends AbstractReferee {
     @Override
     public void onEnd() {
         if (Constants.HANDLE_UI)
-            endScreenModule.setScores(gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray());
+            endScreenModule.setScores(gameManager.getPlayers().stream().mapToInt(AbstractMultiplayerPlayer::getScore).toArray());
     }
 }

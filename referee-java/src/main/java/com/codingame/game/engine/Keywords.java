@@ -55,15 +55,13 @@ public class Keywords {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(hasBreakthrough ? 'B' : '-');
-        sb.append(hasCharge ? 'C' : '-');
-        sb.append(hasDrain ? 'D' : '-');
-        sb.append(hasGuard ? 'G' : '-');
-        sb.append(hasLethal ? 'L' : '-');
-        //sb.append(hasRegenerate ? 'R' : '-');
-        sb.append(hasWard ? 'W' : '-');
-        return sb.toString();
+        return String.valueOf(hasBreakthrough ? 'B' : '-') +
+                (hasCharge ? 'C' : '-') +
+                (hasDrain ? 'D' : '-') +
+                (hasGuard ? 'G' : '-') +
+                (hasLethal ? 'L' : '-') +
+//                (hasRegenerate ? 'R' : '-') +
+                (hasWard ? 'W' : '-');
     }
 
 }
