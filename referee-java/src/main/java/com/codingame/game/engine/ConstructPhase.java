@@ -210,8 +210,8 @@ public class ConstructPhase {
 
     public String[] getMockPlayersInput(int player, int turn) {
         ArrayList<String> lines = new ArrayList<>();
-        lines.add(join(Constants.INITIAL_HEALTH, 0, turn , 25, 0));
-        lines.add(join(Constants.INITIAL_HEALTH, 0, player==0 ? turn : (turn+1), 25, 0));
+        lines.add(join(Constants.INITIAL_HEALTH, 0, turn , 0));
+        lines.add(join(Constants.INITIAL_HEALTH, 0, player==0 ? turn : (turn+1), 0));
         lines.add("0 0");
         lines.add(String.valueOf(Math.min(Constants.CARDS_IN_CONSTRUCTED, this.allowedCards.size())));
 

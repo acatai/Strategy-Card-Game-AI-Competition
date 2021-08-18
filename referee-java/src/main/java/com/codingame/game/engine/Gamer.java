@@ -21,8 +21,8 @@ public class Gamer
   public int currentMana;
   public int nextTurnDraw;
   public int drawValueToShow;
+  public int healthLostThisTurn;
 
-  public ArrayList<Integer> runes = new ArrayList<Integer>() {{ add(5);add(10);add(15);add(20);add(25); }};
   public ArrayList<Action> performedActions;
   public int handLimit;
 
@@ -49,18 +49,9 @@ public class Gamer
     handLimit = Constants.MAX_CARDS_IN_HAND + (id==0 ? 0 : Constants.SECOND_PLAYER_MAX_CARD_BONUS);
     DrawCards(INITIAL_HAND_SIZE + (id==0 ? 0 : Constants.SECOND_PLAYER_CARD_BONUS), 0);
   }
-
-  private void suicideRunes()
+  private void DamagePlayerWithEmptyDeck()
   {
-    if (!runes.isEmpty()) // first rune gone
-    {
-      Integer r = runes.remove(runes.size() - 1);
-      health = r;
-    }
-    else // final run gone - suicide
-    {
-      health = 0;
-    }
+    health -= Constants.EMPTY_DECK_DAMAGE;
   }
 
   public void DrawCards(int n, int playerturn)
@@ -69,7 +60,7 @@ public class Gamer
     {
       if (deck.isEmpty() || playerturn>=Constants.PLAYER_TURNLIMIT)
       {
-        suicideRunes();
+        DamagePlayerWithEmptyDeck();
         continue;
       }
 
@@ -92,20 +83,7 @@ public class Gamer
     if (mod >= 0)
       return;
 
-    for (int r=runes.size()-1; r >=0; r--) // rune checking;
-    {
-      if (health <= runes.get(r))
-      {
-        nextTurnDraw += 1;
-        runes.remove(r);
-      }
-    }
-  }
-
-  public int nextRune()
-  {
-    if (runes.isEmpty()) return 0;
-    return runes.get(runes.size()-1);
+    healthLostThisTurn += mod;
   }
 
   public void removeFromBoard(int creatureIndex) {
@@ -114,7 +92,7 @@ public class Gamer
 
   public String toDescriptiveString(boolean reverse)
   {
-    String line1 = String.format("[Player %d] Health: %d %s     Mana: %d/%d", id, health, runes, currentMana, maxMana);
+    String line1 = String.format("[Player %d] Health: %d     Mana: %d/%d", id, health, currentMana, maxMana);
     String line2 = String.format("Cards in hand: %d   In deck: %d   Next turn draw: %d", hand.size(), deck.size(), nextTurnDraw);
 
     ArrayList<String> inhand = new ArrayList<>();
@@ -149,8 +127,7 @@ public class Gamer
 	  s.append(health).append(" ");
 	  s.append(maxMana).append(" ");
 	  s.append(deck.size()).append(" ");
-	  s.append(nextRune()).append(" ");
-    s.append(drawValueToShow);
+      s.append(drawValueToShow);
 	  return s.toString();
   }
 }

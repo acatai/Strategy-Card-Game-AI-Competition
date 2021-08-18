@@ -16,7 +16,6 @@ class Player {
         int playerHealth = in.nextInt();
         int playerMana = in.nextInt();
         int playerDeck = in.nextInt();
-        int playerRune = in.nextInt();
         int playerDraw = in.nextInt();
       }
       int opponentHand = in.nextInt();

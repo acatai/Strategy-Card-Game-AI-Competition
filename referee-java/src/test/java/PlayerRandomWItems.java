@@ -39,12 +39,10 @@ public class PlayerRandomWItems
             int playerHealth = scanner.nextInt();
             Mana = scanner.nextInt();
             int playerDeck = scanner.nextInt();
-            int playerRune = scanner.nextInt();
             int playerDraw = scanner.nextInt();
             int oppHealth = scanner.nextInt();
             int oppMana = scanner.nextInt();
             int oppDeck = scanner.nextInt();
-            int oppRune = scanner.nextInt();
             int oppDraw = scanner.nextInt();
             //System.err.format("my deck: %d, opp deck: %d\n", playerDeck, oppDeck);
             //System.err.format("my draw: %d, opp draw: %d\n", playerDraw, oppDraw);

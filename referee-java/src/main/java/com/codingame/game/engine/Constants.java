@@ -34,7 +34,7 @@ public final class Constants
   public static final int SECOND_PLAYER_CARD_BONUS = 1;
   public static final int SECOND_PLAYER_MAX_CARD_BONUS = 0;
   public static final int SECOND_PLAYER_MANA_BONUS_TURNS = 1;
-  //public static final int EMPTY_DECK_DAMAGE = 5;
+  public static final int EMPTY_DECK_DAMAGE = 10;
 
   public static final int MAX_MANA = 12;
   public static final int INITIAL_HEALTH = 30;

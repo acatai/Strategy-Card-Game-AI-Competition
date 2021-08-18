@@ -207,10 +207,11 @@ public class GameState
         //c.defense = c.lastTurnDefense;
       c.lastTurnDefense = c.defense; // for all creatures (just in case)
     }
-
+    player.nextTurnDraw += player.healthLostThisTurn/5;
     player.DrawCards(player.nextTurnDraw, turn/2);
     player.drawValueToShow = player.nextTurnDraw;
     player.nextTurnDraw = 1;
+    player.healthLostThisTurn = 0;
     CheckWinCondition();
   }
 
@@ -460,12 +461,12 @@ public class GameState
     Gamer opponent = players[1-currentPlayer];
 
     lines.add(String.valueOf(turn));
-    lines.add(String.format("%d %d %d %d %d %d %d", player.health, player.nextRune(), player.maxMana, player.nextTurnDraw, player.hand.size(), player.board.size(), player.deck.size()));
+    lines.add(String.format("%d %d %d %d %d %d", player.health, player.maxMana, player.nextTurnDraw, player.hand.size(), player.board.size(), player.deck.size()));
     for (Card c : player.hand)
       lines.add(c.toString());
     for (CreatureOnBoard b : player.board)
       lines.add(b.toString());
-    lines.add(String.format("%d %d %d %d %d %d %d %d", opponent.health, opponent.nextRune(), opponent.maxMana, opponent.nextTurnDraw, opponent.hand.size(), opponent.board.size(), opponent.deck.size(), opponent.performedActions.size()));
+    lines.add(String.format("%d %d %d %d %d %d %d", opponent.health, opponent.maxMana, opponent.nextTurnDraw, opponent.hand.size(), opponent.board.size(), opponent.deck.size(), opponent.performedActions.size()));
     for (CreatureOnBoard b : opponent.board)
       lines.add(b.toString());
     for (Action a: opponent.performedActions)

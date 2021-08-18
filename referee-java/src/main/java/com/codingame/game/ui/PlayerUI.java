@@ -17,7 +17,6 @@ public class PlayerUI {
 
     private Sprite avatar;
     private Sprite[] frame = new Sprite[2];
-    private Sprite[] runes = new Sprite[5];
     private Text draw;
     private Text deck;
     private Text health;
@@ -169,16 +168,6 @@ public class PlayerUI {
             .setStrokeThickness(4.0)
             .setX(Vector2D.add(ConstantsUI.PLAYER_NICK_TXT, offset).x)
             .setY(Vector2D.add(ConstantsUI.PLAYER_NICK_TXT, offset).y);
-        
-
-        for (int index = 0; index < 5; ++index)
-            runes[index] = graphicEntityModule
-                .createSprite()
-                .setAlpha(0)
-                .setAnchor(0.5)
-                .setImage("rune.png")
-                .setX(Vector2D.add(ConstantsUI.PLAYER_RUNES[index], offset).x)
-                .setY(Vector2D.add(ConstantsUI.PLAYER_RUNES[index], offset).y);
     }
 
     public void attacker(ActionResult result)
@@ -212,9 +201,6 @@ public class PlayerUI {
         health.setText(Integer.toString(gamer.health));
         mana.setText(Integer.toString(gamer.currentMana) + "/" + Integer.toString(gamer.maxMana))
                 .setFillColor(gamer.bonusManaTurns > 0 ? 0x009000 : 0xffffff);
-
-        for (int index = 0; index < 5; ++index)
-            runes[index].setAlpha(gamer.runes.size() > index ? 1 : 0);
 
         return this;
     }
