@@ -3,6 +3,7 @@ package com.codingame.game.engine;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -389,5 +390,14 @@ public class Card {
       s.append(-1).append(" ");
 
 	  return s.toString();
+  }
+
+  public static final class CostComparator implements Comparator<Card> {
+    @Override
+    public int compare(Card lhs, Card rhs) {
+      if (lhs.cost == rhs.cost)
+        return Integer.compare(lhs.baseId, rhs.baseId);
+      return Integer.compare(lhs.cost, rhs.cost);
+    }
   }
 }

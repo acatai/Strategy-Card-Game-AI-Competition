@@ -2,7 +2,6 @@ package com.codingame.game.engine;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ConstructPhase {
@@ -22,9 +21,6 @@ public class ConstructPhase {
     private final Random choicesRNG;
     private final Random[] shufflesRNG;
     private final RefereeParams params;
-
-    public int[] showdraftQuantities;
-    public ArrayList<Card> showdraftCards;
 
     // todo - add function and field documentation
 
@@ -97,25 +93,7 @@ public class ConstructPhase {
         for (int pick : drafting)
             cardsForConstruction.add(allowedCards.get(pick));
 
-        prepareShowdraft();
-    }
-
-    private void prepareShowdraft()
-    {
-        showdraftQuantities = new int[161];
-        for (Card c : cardsForConstruction)
-            showdraftQuantities[c.baseId]++;
-
-        showdraftCards = new ArrayList<>(cardsForConstruction);
-
-        showdraftCards.sort((lhs, rhs) -> {
-            if (lhs.cost == rhs.cost && showdraftQuantities[rhs.baseId] == showdraftQuantities[lhs.baseId])
-                return lhs.baseId - rhs.baseId;
-            else if (lhs.cost == rhs.cost)
-                return showdraftQuantities[rhs.baseId] - showdraftQuantities[lhs.baseId];
-            else
-                return lhs.cost - rhs.cost;
-        });
+        cardsForConstruction.sort(new Card.CostComparator());
     }
 
     private Card handlePassCommand(String[] command, int player) throws InvalidActionHard{
@@ -137,7 +115,7 @@ public class ConstructPhase {
         return choice;
     }
 
-    private Card handleChooseCommand(String[] command, int player) throws InvalidActionHard{
+    private Card handleChooseCommand(String[] command, int player) throws InvalidActionHard {
         int value = Integer.parseInt(command[1]);
         Optional<Card> choice = cardsForConstruction.stream().
                 filter(c -> value == c.baseId).
@@ -154,8 +132,8 @@ public class ConstructPhase {
 
     public Card PlayerChoice(String action, int player) throws InvalidActionHard
     {
-        Card choice = null;
-        String text = "";
+        Card choice;
+        String text;
 
         String[] command = action.split(" ", 3);
         text = command.length < 3 ? "" : command[2].trim();

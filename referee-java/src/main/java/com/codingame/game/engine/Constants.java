@@ -24,7 +24,6 @@ public final class Constants
   public static boolean HANDLE_UI = true;
 
   public static final int CARDS_IN_DECK = 30; // 30;
-  public static final int CARDS_IN_DRAFT = 60; // 60;
   public static final int CARDS_IN_CONSTRUCTED = 80; // 40;
   public static final int CONSTRUCTED_MAX_COPY = 3;
 
@@ -42,8 +41,6 @@ public final class Constants
 
   public static final int MAX_CREATURES_IN_LINE = 6; // was 8
 
-  public static final int TIMELIMIT_FIRSTDRAFTTURN = 1000;
-  public static final int TIMELIMIT_DRAFTTURN = 100;
   public static final int TIMELIMIT_CONSTRUCTPHASE = 4000;
   public static final int TIMELIMIT_FIRSTGAMETURN = 1000;
   public static int TIMELIMIT_GAMETURN = LANES==1 ?  100 : 200;
@@ -54,8 +51,6 @@ public final class Constants
   public static final HashMap<Integer,Card> CARDSET = new HashMap<>();
 
   public static final int FRAME_DURATION_SHOWDRAFT = 1;
-  public static final int FRAME_DURATION_SHOWDRAFT_LAST = 2500;
-  public static final int FRAME_DURATION_DRAFT = 500;
   public static final int FRAME_DURATION_CONSTRUCTED = 2500;
   public static final int FRAME_DURATION_BATTLE = 750;
   public static final int FRAME_DURATION_SUMMON = 600;

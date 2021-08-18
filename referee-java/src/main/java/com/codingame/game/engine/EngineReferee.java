@@ -18,13 +18,11 @@ public class EngineReferee {
 
     public int gamePlayer = 0;
     public int gameTurn = 0;
-    public int initGameTurn = 0;
 
     public List<Action> actionsToHandle = new ArrayList<>();
 
     private boolean showBattleStart = true;
     private boolean showDraftStart = true;
-    public int showdraftSizechoice = 0;
     public int expectedConstructionFrames = 0;
 
     static final int ILLEGAL_ACTION_SUMMARY_LIMIT =3;
@@ -62,20 +60,11 @@ public class EngineReferee {
         constr = new ConstructPhase(difficulty, params);
         constr.PrepareConstructed();
 
-        for (int i=0; i < ConstantsUI.SHOWDRAFT_SIZECHOICE.length; i++)
-        {
-            if (constr.cardsForConstruction.size() > ConstantsUI.SHOWDRAFT_SIZECHOICE[i])
-              break;
-            showdraftSizechoice = i;
-        }
-        //System.out.println(showdraftSizechoice);
-        gameTurn = -1 - (int)Math.ceil(Math.max(0,(constr.cardsForConstruction.size() - ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice])) / (double)ConstantsUI.SHOWDRAFT_ROWSIZE[showdraftSizechoice]);
-        initGameTurn = gameTurn;
-
         expectedConstructionFrames = (int) Math.ceil(
                 (double) Math.min(Constants.CARDS_IN_CONSTRUCTED, constr.allowedCards.size())
                         / Constants.MAX_CARDS_IN_FRAME);
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Draw Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
+
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Construction Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the draft.");
 
         gameManager.setMaxTurns(Constants.MAX_TURNS_HARDLIMIT); // should be never reached, not handled on the referee's side
@@ -93,22 +82,6 @@ public class EngineReferee {
             showBattleStart = false;
             if (Constants.HANDLE_UI)
                 gameManager.addTooltip(gameManager.getPlayer(0), "Battle phase.");
-        }
-
-        if (gameTurn < 0)
-        {
-            //System.out.format("    /// %d\n", gameTurn);
-//            if (Constants.HANDLE_UI)
-//                ui.showDraftCards(gameTurn, false);
-            gameManager.getPlayer(0).expectedOutputLines = 0;
-            gameManager.getPlayer(0).execute();
-            gameManager.getPlayer(0).expectedOutputLines = 1;
-            gameTurn++;
-
-//            if (Constants.HANDLE_UI && gameTurn==0)
-//                ui.showDraftCards(0, false); // clearing ??
-
-            return false;
         }
 
         if (gameTurn == 0) {
@@ -136,12 +109,12 @@ public class EngineReferee {
             sdkplayer.execute();
             sdkplayer.expectedOutputLines = 1;
         }
-        render.run();
+        if (Constants.HANDLE_UI)
+            render.run();
         gameTurn++;
     }
 
-    private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render)
-    {
+    private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
         if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
         if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
 
