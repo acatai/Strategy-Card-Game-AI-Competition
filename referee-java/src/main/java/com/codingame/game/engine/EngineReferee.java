@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.codingame.game.Player;
 import com.codingame.game.engine.Action.Type;
-import com.codingame.game.ui.ConstantsUI;
 import com.codingame.game.ui.RefereeUI;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.MultiplayerGameManager;
@@ -140,7 +139,7 @@ public class EngineReferee {
                 String output = sdkplayer.getOutputs().get(0);
                 String summary = constr.HandlePlayerChoices(output, player);
                 gameManager.addToGameSummary(
-                        String.format("Player %s chose %s", sdkplayer.getNicknameToken(), summary.substring(0,380))
+                        String.format("Player %s chose cards %s.", sdkplayer.getNicknameToken(), summary)
                 );
             } catch (TimeoutException e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");

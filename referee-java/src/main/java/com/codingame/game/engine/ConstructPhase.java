@@ -160,19 +160,17 @@ public class ConstructPhase {
     }
 
     public String HandlePlayerChoices(String actions, int player) throws InvalidActionHard {
-        StringJoiner logMessage = new StringJoiner(", \n");
         for (String action : actions.split(";")) {
             action = action.trim();
             if (action.isEmpty())
                 continue; // empty action is a valid action
             if (action.equals("PASS"))
                 while (chosenCards[player].size() < Constants.CARDS_IN_DECK)
-                    logMessage.add(PlayerChoice("PASS", player).toDescriptiveString());
+                    PlayerChoice("PASS", player);
             else
-                logMessage.add(PlayerChoice(action, player).toDescriptiveString());
-
+                PlayerChoice(action, player);
         }
-        return logMessage.toString();
+        return SummarizeChoices(player);
     }
 
     public void ShuffleDecks()
@@ -186,6 +184,15 @@ public class ConstructPhase {
             for (int i=0; i < decks[player].size(); i++)
                 decks[player].get(i).id = 2 * i + player + 1;
         }
+    }
+
+    public String SummarizeChoices(int player) {
+        StringJoiner logMessage = new StringJoiner(", ");
+        for (int i = 0; i < Constants.CARDSET.size(); i++) {
+            if (chosenQuantities[player][i] > 0)
+                logMessage.add(i + "x" + chosenQuantities[player][i]);
+        }
+        return logMessage.toString();
     }
 
 
