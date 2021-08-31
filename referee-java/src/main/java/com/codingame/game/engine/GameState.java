@@ -1,6 +1,7 @@
 package com.codingame.game.engine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -169,6 +170,7 @@ public class GameState
 
 
 
+
   public void AdvanceState()
   {
     CheckWinCondition();
@@ -215,139 +217,167 @@ public class GameState
     CheckWinCondition();
   }
 
-  public void AdvanceState(Action action)  // ASSUMING THE ACTION IS LEGAL !
-  {
-    if (action.type == Action.Type.SUMMON) // SUMMON [id]
-    {
-      Card c = cardIdMap.get(action.arg1);
+  private int findIndex(int player, int id) {
+    int index = -1;
+    for (int i=0; i < players[player].board.size(); i++)
+      if (players[player].board.get(i).id == id) {
+        index = i;
+      }
+    return index;
+  }
 
-      players[currentPlayer].hand.remove(c);
-      players[currentPlayer].currentMana -= c.cost;
-      CreatureOnBoard creature = (Constants.LANES==1) ? new CreatureOnBoard(c, 0) : new CreatureOnBoard(c, action.arg2);
-      players[currentPlayer].board.add(creature);
-
-      players[currentPlayer].ModifyHealth(c.myHealthChange);
-      players[1-currentPlayer].ModifyHealth(c.oppHealthChange);
-      players[currentPlayer].nextTurnDraw += c.cardDraw;
-      
-      action.result = new ActionResult(creature, null, false, false, c.myHealthChange, c.oppHealthChange);
+  public void AdvanceState(Action action) { // ASSUMING THE ACTION IS LEGAL !
+    ActionResult result;
+    switch (action.type) {
+      case SUMMON: // SUMMON [id] [lane]
+        result = AdvanceSummon(action);
+        break;
+      case ATTACK: // ATTACK [id1] [id2]
+        result = AdvanceAttack(action);
+        break;
+      case USE: // USE [id1] [id2]
+        result = AdvanceUse(action);
+        break;
+      default:
+        throw new IllegalStateException("Unexpected value: " + action.type);
     }
-    else if (action.type == Action.Type.ATTACK) // ATTACK [id1] [id2]
-    {
-      int indexatt = -1;
-      for (int i=0; i < players[currentPlayer].board.size(); i++)
-        if (players[currentPlayer].board.get(i).id==action.arg1)
-          indexatt = i;
-      CreatureOnBoard att = players[currentPlayer].board.get(indexatt);
-
-      int indexdef = -1;
-      CreatureOnBoard def;
-      ActionResult result = null;
-
-      if (action.arg2 == -1) // attacking player
-      {
-        result = ResolveAttack(att);
-      }
-      else
-      {
-        for (int i=0; i < players[1-currentPlayer].board.size(); i++)
-          if (players[1-currentPlayer].board.get(i).id==action.arg2)
-            indexdef = i;
-        def = players[1-currentPlayer].board.get(indexdef);
-
-        result = ResolveAttack(att, def);
-
-        if (result.defenderDied) {
-          players[1-currentPlayer].removeFromBoard(indexdef);
-
-        }
-        else
-          players[1-currentPlayer].board.set(indexdef, result.defender);
-      }
-
-      if (result.attackerDied)
-        players[currentPlayer].removeFromBoard(indexatt);
-      else
-        players[currentPlayer].board.set(indexatt, result.attacker);
-
-      players[currentPlayer].ModifyHealth(result.attackerHealthChange);
-      players[1-currentPlayer].ModifyHealth(result.defenderHealthChange);
-      action.result = result;
-    }
-    else if (action.type == Action.Type.USE) // USE [id1] [id2]
-    {
-      Card item = cardIdMap.get(action.arg1);
-
-      players[currentPlayer].hand.remove(item);
-      players[currentPlayer].currentMana -= item.cost;
-
-      if (item.type == Card.Type.ITEM_GREEN) // here we assume that green cards never remove friendly creatures!
-      {
-        int indextarg = -1;
-        for (int i=0; i < players[currentPlayer].board.size(); i++)
-          if (players[currentPlayer].board.get(i).id==action.arg2)
-            indextarg = i;
-        CreatureOnBoard targ = players[currentPlayer].board.get(indextarg);
-
-        ActionResult result = ResolveUse(item, targ);
-
-        players[currentPlayer].board.set(indextarg, result.defender);
-
-        players[currentPlayer].ModifyHealth(result.attackerHealthChange);
-        players[1-currentPlayer].ModifyHealth(result.defenderHealthChange);
-        players[currentPlayer].nextTurnDraw += item.cardDraw;
-        action.result = result;
-      }
-      else // red and blue cards
-      {
-        int indextarg = -1;
-        ActionResult result = null;
-
-        if (action.arg2 == -1) // using on player
-        {
-          result = ResolveUse(item);
-        }
-        else // using on creature
-        {
-          for (int i=0; i < players[1-currentPlayer].board.size(); i++)
-            if (players[1-currentPlayer].board.get(i).id==action.arg2)
-              indextarg = i;
-          CreatureOnBoard targ = players[1-currentPlayer].board.get(indextarg);
-
-          result = ResolveUse(item, targ);
-
-          if (result.defenderDied)
-            players[1-currentPlayer].removeFromBoard(indextarg);
-          else
-            players[1-currentPlayer].board.set(indextarg, result.defender);
-        }
-
-        players[currentPlayer].ModifyHealth(result.attackerHealthChange);
-        players[1-currentPlayer].ModifyHealth(result.defenderHealthChange);
-        players[currentPlayer].nextTurnDraw += item.cardDraw;
-        action.result = result;
-      }
-    }
+    action.result = result;
+    players[currentPlayer].ModifyHealth(result.attackingPlayerHealthChange);
+    players[1-currentPlayer].ModifyHealth(result.defendingPlayerHealthChange);
+    players[currentPlayer].nextTurnDraw += result.cardDraw;
 
     players[currentPlayer].performedActions.add(action);
     CheckWinCondition();
   }
 
 
-  public void CheckWinCondition()
-  {
+  public void CheckWinCondition() {
     if (players[1-currentPlayer].health <= 0) // first proper win
       winner = currentPlayer;
     else if (players[currentPlayer].health <= 0) // second self-kill
       winner = 1-currentPlayer;
   }
 
-  // when creature attacks creatures // run it ONLY on legal actions
-  public static ActionResult ResolveAttack(CreatureOnBoard attacker, CreatureOnBoard defender)
-  {
-    if (!attacker.canAttack)
-      return new ActionResult(false);
+  private ActionResult AdvanceSummon(Action action) {
+    Card c = cardIdMap.get(action.arg1);
+    int maxCreaturesPerLane = Constants.MAX_CREATURES_IN_LINE / Constants.LANES;
 
+    players[currentPlayer].hand.remove(c);
+    players[currentPlayer].currentMana -= c.cost;
+    CreatureOnBoard creature = (Constants.LANES==1) ? new CreatureOnBoard(c, 0) : new CreatureOnBoard(c, action.arg2);
+    players[currentPlayer].board.add(creature);
+
+    int countSummons = 1;
+    List<CreatureOnBoard> creatures = new ArrayList<>();
+    creatures.add(creature);
+
+    if (Constants.LANES>1 && c.area == Card.Area.LANE1 && players[currentPlayer].board.stream().filter(c2 -> c2.lane == action.arg2).count() < maxCreaturesPerLane) {
+      Card cardCopy = new Card(c, true);
+      CreatureOnBoard secondCopy = new CreatureOnBoard(cardCopy, action.arg2);
+      cardIdMap.put(cardCopy.id, cardCopy);
+      players[currentPlayer].board.add(secondCopy);
+
+      creatures.add(secondCopy);
+      countSummons += 1;
+    } else if (Constants.LANES>1 && c.area == Card.Area.LANE2 && players[currentPlayer].board.stream().filter(c2 -> (1-c2.lane) == action.arg2).count() < maxCreaturesPerLane) {
+      for (int i=0; i<Constants.LANES; i++) {
+        if (i == action.arg2)
+          continue;
+        Card cardCopy = new Card(c, true);
+        CreatureOnBoard creatureCopy = new CreatureOnBoard(cardCopy, i);
+        cardIdMap.put(cardCopy.id, cardCopy);
+        players[currentPlayer].board.add(creatureCopy);
+
+        creatures.add(creatureCopy);
+        countSummons += 1;
+      }
+    }
+    return new SummonResult(creatures, countSummons*c.myHealthChange, countSummons*c.oppHealthChange, countSummons*c.cardDraw);
+  }
+
+  private ActionResult AdvanceAttack(Action action) {
+    AttackResult result;
+    int indexatt = findIndex(currentPlayer, action.arg1);
+    CreatureOnBoard att = players[currentPlayer].board.get(indexatt);
+
+    if (!att.canAttack)
+      return new InvalidActionResult();
+
+    if (action.arg2 == -1) { // attacking player
+      result = ResolveAttack(att);
+    } else { // attacking creature
+      int indexdef = findIndex(1-currentPlayer, action.arg2);
+      CreatureOnBoard def = players[1-currentPlayer].board.get(indexdef);
+
+      result = ResolveAttack(att, def);
+
+      if (result.defenderDied)
+        players[1-currentPlayer].removeFromBoard(indexdef);
+      else
+        players[1-currentPlayer].board.set(indexdef, result.defender);
+    }
+
+    if (result.attackerDied)
+      players[currentPlayer].removeFromBoard(indexatt);
+    else
+      players[currentPlayer].board.set(indexatt, result.attacker);
+    return result;
+  }
+
+  private UseResult AdvanceUse(Action action) {
+    UseResult result;
+
+    Card item = cardIdMap.get(action.arg1);
+    players[currentPlayer].hand.remove(item);
+    players[currentPlayer].currentMana -= item.cost;
+
+    if (action.arg2 == -1) { // red and blue cards used on player
+      result = ResolveUse(item);
+    } else {
+      int targetPlayer = (item.type == Card.Type.ITEM_GREEN) ? currentPlayer : 1-currentPlayer;
+      int indextarg = findIndex(targetPlayer, action.arg2);
+      CreatureOnBoard targ = players[targetPlayer].board.get(indextarg);
+      List<UseResult.CreatureUseResult> targets = new ArrayList<>();
+
+      switch (item.area) {
+        case TARGET:
+          result = ResolveUse(item, targ);
+          if (result.targets.get(0).targetDied)
+            players[targetPlayer].removeFromBoard(indextarg);
+          else
+            players[targetPlayer].board.set(indextarg, result.targets.get(0).target);
+          break;
+        case LANE1:
+        case LANE2: {
+          int countUsages = 0;
+          for (int i = 0; i<players[targetPlayer].board.size(); i++) {
+            CreatureOnBoard potentialTarget = players[targetPlayer].board.get(i);
+            if (item.area != Card.Area.LANE2 && potentialTarget.lane != targ.lane)
+              continue;
+
+            UseResult partialResult = ResolveUse(item, potentialTarget);
+            if (partialResult.targets.get(0).targetDied) {
+              players[targetPlayer].removeFromBoard(i);
+              i--;
+            } else {
+              players[targetPlayer].board.set(i, partialResult.targets.get(0).target);
+            }
+            targets.addAll(partialResult.targets);
+            countUsages += 1;
+          }
+          result = new UseResult(new CreatureOnBoard(item), targets,
+                  countUsages*item.myHealthChange, countUsages*item.oppHealthChange, countUsages*item.cardDraw);
+          break;
+        }
+        default:
+          throw new IllegalStateException("Unexpected value: " + item.area);
+      }
+    }
+    return result;
+  }
+
+  // when creature attacks creatures // run it ONLY on legal actions
+  private AttackResult ResolveAttack(CreatureOnBoard attacker, CreatureOnBoard defender) {
     CreatureOnBoard attackerAfter = new CreatureOnBoard(attacker);
     CreatureOnBoard defenderAfter = new CreatureOnBoard(defender);
 
@@ -373,18 +403,13 @@ public class GameState
     if (damageTaken >= attacker.defense) attackerAfter = null;
     if (defender.keywords.hasLethal && damageTaken > 0) attackerAfter = null;
     if (attackerAfter != null) attackerAfter.defense -= damageTaken;
-    ActionResult result = new ActionResult(attackerAfter == null ? attacker : attackerAfter, defenderAfter == null ? defender : defenderAfter, attackerAfter == null, defenderAfter == null, healthGain, healthTaken);
-    result.attackerDefenseChange = -damageTaken;
-    result.defenderDefenseChange = -damageGiven;
-    return result;
+    return new AttackResult(attackerAfter == null ? attacker : attackerAfter, defenderAfter == null ? defender : defenderAfter,
+            attackerAfter == null, defenderAfter == null,
+            healthGain, healthTaken, 0, -damageTaken, -damageGiven);
   }
 
   // when creature attacks player // run it ONLY on legal actions
-  public static ActionResult ResolveAttack(CreatureOnBoard attacker)
-  {
-    if (!attacker.canAttack)
-      return new ActionResult(false);
-
+  private AttackResult ResolveAttack(CreatureOnBoard attacker) {
     CreatureOnBoard attackerAfter = new CreatureOnBoard(attacker);
 
     attackerAfter.canAttack = false;
@@ -393,18 +418,14 @@ public class GameState
     int healthGain = attacker.keywords.hasDrain ? attacker.attack : 0;
     int healthTaken = -attacker.attack;
 
-    ActionResult result = new ActionResult(attackerAfter, null, healthGain, healthTaken);
-    result.defenderDefenseChange = healthTaken;
-    return result;
+    return new AttackResult(attackerAfter, healthGain, healthTaken, 0);
   }
 
   // when item is used on a creature // run it ONLY on legal actions
-  public static ActionResult ResolveUse(Card item, CreatureOnBoard target)
-  {
+  private UseResult ResolveUse(Card item, CreatureOnBoard target) {
     CreatureOnBoard targetAfter = new CreatureOnBoard(target);
 
-    if (item.type==Card.Type.ITEM_GREEN) // add keywords
-    {
+    if (item.type==Card.Type.ITEM_GREEN) { // add keywords
       targetAfter.keywords.hasCharge       = target.keywords.hasCharge       || item.keywords.hasCharge;
       if (item.keywords.hasCharge) 
           targetAfter.canAttack = !targetAfter.hasAttacked; // No Swift Strike hack
@@ -414,9 +435,7 @@ public class GameState
       targetAfter.keywords.hasLethal       = target.keywords.hasLethal       || item.keywords.hasLethal;
       //targetAfter.keywords.hasRegenerate   = target.keywords.hasRegenerate   || item.keywords.hasRegenerate;
       targetAfter.keywords.hasWard         = target.keywords.hasWard         || item.keywords.hasWard;
-    }
-    else // Assumming ITEM_BLUE or ITEM_RED - remove keywords
-    {
+    } else { // Assumming ITEM_BLUE or ITEM_RED - remove keywords
       targetAfter.keywords.hasCharge       = target.keywords.hasCharge       && !item.keywords.hasCharge;
       targetAfter.keywords.hasBreakthrough = target.keywords.hasBreakthrough && !item.keywords.hasBreakthrough;
       targetAfter.keywords.hasDrain        = target.keywords.hasDrain        && !item.keywords.hasDrain;
@@ -437,24 +456,23 @@ public class GameState
     int itemgiverHealthChange = item.myHealthChange;
     int targetHealthChange = item.oppHealthChange;
 
-    ActionResult result = new ActionResult(new CreatureOnBoard(item), targetAfter == null ? target : targetAfter, false, targetAfter == null, itemgiverHealthChange, targetHealthChange);
-    result.defenderAttackChange  = item.attack;
-    result.defenderDefenseChange = item.defense;
-    return result;
+    UseResult.CreatureUseResult creatureResult = new UseResult.CreatureUseResult(
+            targetAfter == null ? target : targetAfter, targetAfter == null,
+            item.attack, item.defense);
+
+    return new UseResult(new CreatureOnBoard(item), Collections.singletonList(creatureResult), item.cardDraw, itemgiverHealthChange, targetHealthChange);
   }
 
   // when item is used on a player // run it ONLY on legal actions
-  public static ActionResult ResolveUse(Card item)
-  {
+  private UseResult ResolveUse(Card item) {
     int itemgiverHealthChange = item.myHealthChange;
     int targetHealthChange = item.defense + item.oppHealthChange;
 
-    return new ActionResult(null, null, itemgiverHealthChange, targetHealthChange);
+    return new UseResult(new CreatureOnBoard(item), itemgiverHealthChange, targetHealthChange, item.cardDraw);
   }
 
   // old method
-  public String[] toStringLines()
-  {
+  public String[] toStringLines() {
     ArrayList<String> lines = new ArrayList<>();
 
     Gamer player = players[currentPlayer];
@@ -508,8 +526,7 @@ public class GameState
     return lines.toArray(new String[0]);
   }
 
-  public String toString()
-  {
+  public String toString() {
     StringBuilder sb = new StringBuilder();
 
     for (String line: getPlayersInput())

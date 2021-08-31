@@ -1,10 +1,10 @@
 package com.codingame.game.ui;
 
 import java.util.HashMap;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import com.codingame.game.engine.ActionResult;
-import com.codingame.game.engine.Card;
-import com.codingame.game.engine.CreatureOnBoard;
+import com.codingame.game.engine.*;
 import com.codingame.gameengine.module.entities.Curve;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
@@ -354,18 +354,13 @@ public class CardUI {
         return this;
     }
 
-    public CardUI action(ActionResult result, int id) {
-        int attack = result.attacker != null && result.attacker.id == id
-            ? result.attackerAttackChange
-            : result.defender != null && result.defender.id == id
-                ? result.defenderAttackChange
-                : 0;
+    public CardUI action(AttackResult result, int id) {
+        int attack = 0;
         int defense = result.attacker != null && result.attacker.id == id
             ? result.attackerDefenseChange
             : result.defender != null && result.defender.id == id
                 ? result.defenderDefenseChange
                 : 0;
-
 
         if (defense < 0) {
             damageFloat.setText(Integer.toString(defense));
@@ -376,7 +371,22 @@ public class CardUI {
             heal.setAlpha(1, Curve.NONE);
             graphicEntityModule.commitEntityState(0.5, healFloat, heal);
         }
+        return this;
+    }
 
+    public CardUI action(UseResult.CreatureUseResult result, int id) {
+        int attack = result.targetAttackChange;
+        int defense = result.targetDefenseChange;
+
+        if (defense < 0) {
+            damageFloat.setText(Integer.toString(defense));
+            impact.setAlpha(1, Curve.NONE);
+            graphicEntityModule.commitEntityState(0.5, damageFloat, impact);
+        } else if (defense > 0) {
+            healFloat.setText(Integer.toString(defense));
+            heal.setAlpha(1, Curve.NONE);
+            graphicEntityModule.commitEntityState(0.5, healFloat, heal);
+        }
         return this;
     }
 
@@ -437,6 +447,10 @@ public class CardUI {
         if (!visible)
             action();
         return this;
+    }
+
+    public boolean isVisible() {
+        return group.getAlpha() == 0;
     }
 
     public CardUI setExtrasVisibility(boolean visible) {

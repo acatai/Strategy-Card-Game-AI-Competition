@@ -40,6 +40,31 @@ public class Card {
 
   }
 
+  public enum Area {
+    TARGET("target"),
+    LANE1("lane1"),
+    LANE2("lane2");
+
+    private String description;
+
+    public String getDescription() {
+      return description;
+    }
+
+    public static Area fromDescription(String description) {
+      for (Area area : values()) {
+        if (area.description.equals(description)) {
+          return area;
+        }
+      }
+      return null;
+    }
+
+    Area(String description) {
+      this.description = description;
+    }
+  }
+
   public int id;
   public int baseId;
   public Type type;
@@ -51,10 +76,13 @@ public class Card {
   public int myHealthChange;
   public int oppHealthChange;
   public int cardDraw;
+  public Area area;
   public String name;
   public String text;
   private String tooltipTextBase;
   public String comment;
+
+  private static int lastID = 2*Constants.CARDS_IN_DECK;
 
 
 
@@ -62,9 +90,9 @@ public class Card {
   // todo constructor with text (id-based)
 
   // copy constructor
-  public Card(Card card)
+  public Card(Card card, boolean newID)
   {
-    this.id = card.id;
+    this.id = newID ? lastID : card.id;
     this.baseId = card.baseId;
     this.name = card.name;
     this.type = card.type;
@@ -75,9 +103,16 @@ public class Card {
     this.myHealthChange =  card.myHealthChange;
     this.oppHealthChange = card.oppHealthChange;
     this.cardDraw =        card.cardDraw;
+    this.area =            card.area;
     this.comment = card.comment;
     generateText();
     this.tooltipTextBase = card.tooltipTextBase;
+
+    if (newID) lastID += 1;
+  }
+
+  public Card(Card card) {
+    this(card, false);
   }
 
   // data = {baseId, name, type, cost, attack, defense, keywords, myHealthChange, oppHealthChange, cardDraw, comment}
@@ -94,12 +129,13 @@ public class Card {
     this.myHealthChange =  Integer.parseInt(data[7]);
     this.oppHealthChange = Integer.parseInt(data[8]);
     this.cardDraw =        Integer.parseInt(data[9]);
+    this.area =            Area.fromDescription(data[10]);
 
-    this.comment = ""; //data[11]; // comments deprecated as we are far from TESL in many cards
+    this.comment = ""; //data[12]; // comments deprecated as we are far from TESL in many cards
     generateText();
     try
     {
-      this.tooltipTextBase = data[10];
+      this.tooltipTextBase = data[11];
     }
     catch (java.lang.ArrayIndexOutOfBoundsException e)
     {

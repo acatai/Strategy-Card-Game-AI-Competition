@@ -172,12 +172,12 @@ public class PlayerUI {
 
     public void attacker(ActionResult result)
     {
-        handleHealthChange(result.attackerHealthChange);
+        handleHealthChange(result.attackingPlayerHealthChange);
     }
 
     public void defender(ActionResult result)
     {
-        handleHealthChange(result.defenderHealthChange);
+        handleHealthChange(result.defendingPlayerHealthChange);
     }
 
     public PlayerUI updateStats(Gamer gamer)
