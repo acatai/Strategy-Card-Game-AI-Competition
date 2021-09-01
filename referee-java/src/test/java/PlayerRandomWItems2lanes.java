@@ -68,6 +68,7 @@ public class PlayerRandomWItems2lanes
         int myHealthChange = scanner.nextInt();
         int opponentHealthChange = scanner.nextInt();
         int cardDraw = scanner.nextInt();
+        int area = scanner.nextInt();
         int lane = scanner.nextInt();
         //System.err.format("CARD %d (#%d) // lane=%d\n", instanceId, cardName, lane);
 

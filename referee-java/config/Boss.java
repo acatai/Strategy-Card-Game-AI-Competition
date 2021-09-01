@@ -39,6 +39,7 @@ class Player {
         int myHealthChange = in.nextInt();
         int opponentHealthChange = in.nextInt();
         int cardDraw = in.nextInt();
+        int area = in.nextInt();
         int lane = in.nextInt();
       }
 

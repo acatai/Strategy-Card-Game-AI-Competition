@@ -68,6 +68,7 @@ public class PlayerRandomWItems
                 int myHealthChange = scanner.nextInt();
                 int opponentHealthChange = scanner.nextInt();
                 int cardDraw = scanner.nextInt();
+                int area = scanner.nextInt();
 
                 if (location==0) // hand
                 {

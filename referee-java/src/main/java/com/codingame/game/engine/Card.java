@@ -303,7 +303,6 @@ public class Card {
 
   public String toHTMLString(String teslcomment)
   {
-    
     StringBuilder sb = new StringBuilder();
     sb.append("<tr>");
     sb.append("<td>").append(baseId).append("</td>");
@@ -328,6 +327,7 @@ public class Card {
     sb.append("<td>").append(myHealthChange).append("</td>");
     sb.append("<td>").append(oppHealthChange).append("</td>");
     sb.append("<td>").append(cardDraw).append("</td>");
+    sb.append("<td>").append(area.getDescription()).append("</td>");
 
     Pattern tesllink = Pattern.compile("@(\\d+)=(['\\w-]+)");
     String htmlcomment = teslcomment==null ? "" : teslcomment;
@@ -363,13 +363,13 @@ public class Card {
   public String toDescriptiveString()
   {
     StringBuilder sb = new StringBuilder();
-    if (id >= 0) sb.append("id:").append(this.id).append(' ');
-    if (!name.equals("?")) sb.append(this.name).append(' ');
+    if (this.id >= 0) sb.append("id:").append(this.id).append(' ');
+    if (!this.name.equals("?")) sb.append(this.name).append(' ');
     sb.append("(#").append(this.baseId).append(")").append(' ');
-    sb.append(type.getDescription()).append(' ');
+    sb.append(this.type.getDescription()).append(' ');
 
     sb.append("COST:").append(this.cost).append(' ');
-    if (this.type == Type.CREATURE )
+    if (this.type == Type.CREATURE)
     {
       sb.append("ATT:").append(this.attack).append(' ');
       sb.append("DEF:").append(this.defense).append(' ');
@@ -379,6 +379,8 @@ public class Card {
       sb.append("ATT:").append(String.format("%+d", this.attack)).append(' ');
       sb.append("DEF:").append(String.format("%+d", this.defense)).append(' ');
     }
+
+    sb.append("AREA:").append(this.area.getDescription());
 
     sb.append(" ").append(this.text);
 
@@ -396,7 +398,8 @@ public class Card {
             this.keywords + ' ' +
             this.myHealthChange + ' ' +
             this.oppHealthChange + ' ' +
-            this.cardDraw + ' ';
+            this.cardDraw + ' ' +
+            this.area.ordinal() + ' ';
   }
 
   public String toString()
@@ -405,24 +408,19 @@ public class Card {
   }
   
   public String getAsInput() {
-	  StringBuilder s = new StringBuilder();
-	  
-	  s.append(baseId).append(" ");
-	  s.append(id).append(" ");
-	  s.append(0).append(" ");
-	  s.append(type.ordinal()).append(" ");
-	  s.append(cost).append(" ");
-	  s.append(attack).append(" ");
-	  s.append(defense).append(" ");
-	  s.append(keywords).append(" ");
-	  s.append(myHealthChange).append(" ");
-	  s.append(oppHealthChange).append(" ");
-	  s.append(cardDraw).append(" ");
-
-	  if (Constants.LANES>1)
-      s.append(-1).append(" ");
-
-	  return s.toString();
+    return baseId + " " +
+            id + " " +
+            0 + " " +
+            type.ordinal() + " " +
+            cost + " " +
+            attack + " " +
+            defense + " " +
+            keywords + " " +
+            myHealthChange + " " +
+            oppHealthChange + " " +
+            cardDraw + " " +
+            area.ordinal() + " " +
+            ((Constants.LANES>1) ? "-1 " : "");
   }
 
   public static final class CostComparator implements Comparator<Card> {

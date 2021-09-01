@@ -6,5 +6,5 @@ loop opponentActions
     read cardNumberAndAction:string(20)
 read cardCount:int
 loop cardCount
-   read cardNumber:int instanceId:int location:int cardType:int cost:int attack:int defense:int abilities:word(6) myHealthChange:int opponentHealthChange:int cardDraw:int lane:int
+   read cardNumber:int instanceId:int location:int cardType:int cost:int attack:int defense:int abilities:word(6) myHealthChange:int opponentHealthChange:int cardDraw:int area:int lane:int
 write PASS

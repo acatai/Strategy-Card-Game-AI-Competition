@@ -5,7 +5,7 @@ import java.util.List;
 import com.codingame.game.engine.Card.Type;
 
 /**
- * Creature that is not a card anymore but it is placed on board.
+ * Creature that is not a card anymore, but it is placed on board.
  */
 public class CreatureOnBoard
 {
@@ -65,7 +65,7 @@ public class CreatureOnBoard
     this.canAttack = this.keywords.hasCharge;
     this.lastTurnDefense = card.defense;
     this.cost = card.cost;
-    baseCard = card;
+    this.baseCard = card;
     this.lane = lane;
   }
 
@@ -116,12 +116,12 @@ public class CreatureOnBoard
             baseCard.myHealthChange + " " +
             baseCard.oppHealthChange + " " +
             baseCard.cardDraw + " " +
+            baseCard.area.ordinal() + " " +
             (Constants.LANES > 1 ? this.lane + " " : "");
   }
 
-public String toTooltipText() {
+  public String toTooltipText() {
     return baseCard.toTooltipText(this);
 }
-
 
 }
