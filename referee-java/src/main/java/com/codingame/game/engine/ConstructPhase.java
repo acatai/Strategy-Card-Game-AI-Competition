@@ -34,7 +34,7 @@ public class ConstructPhase {
         for (int player = 0; player < 2; player++)
             text[player] = "";
 
-        choicesRNG = params.draftChoicesRNG;
+        choicesRNG = params.constructedChoicesRNG;
         shufflesRNG = new Random[] {params.shufflePlayer0RNG, params.shufflePlayer1RNG};
     }
 
@@ -68,21 +68,21 @@ public class ConstructPhase {
     public void PrepareConstructed() {
         prepareAllowedCards();
         cardsForConstruction = new ArrayList<>();
-        if (params.predefinedConstructedIds != null) { // parameter-forced draft choices
+        if (params.predefinedConstructedIds != null) { // parameter-forced construction choices
             for(int pick = 0; pick <  Constants.CARDS_IN_CONSTRUCTED; pick++)
                 cardsForConstruction.add(Constants.CARDSET.get(params.predefinedConstructedIds[pick]));
             return;
         }
 
-        ArrayList<Integer> drafting = new ArrayList<>();
+        ArrayList<Integer> cardsForConstructionIds = new ArrayList<>();
         for (int pick = 0; pick < Math.min(Constants.CARDS_IN_CONSTRUCTED, allowedCards.size()); pick++) {
             int i;
             do {
                 i = choicesRNG.nextInt(allowedCards.size());
-            } while (drafting.contains(i));
-            drafting.add(i);
+            } while (cardsForConstructionIds.contains(i));
+            cardsForConstructionIds.add(i);
         }
-        for (int pick : drafting)
+        for (int pick : cardsForConstructionIds)
             cardsForConstruction.add(allowedCards.get(pick));
 
         cardsForConstruction.sort(new Card.CostComparator());

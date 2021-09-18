@@ -2,7 +2,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** AI description
- * Draft phase:
+ * Construction phase:
  *  - use default deck creation
  * Game phase:
  *  - do nothing (outputs single ';')

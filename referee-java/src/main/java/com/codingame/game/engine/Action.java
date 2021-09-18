@@ -10,17 +10,18 @@ public class Action
 {
   public enum Type {SUMMON, ATTACK, USE, PASS};
 
-  public Type type;
-  public int arg1;
-  public int arg2;
-  public Card.Type cardType; // for items
-  public String text; // for say
+  public final Type type;
+  public final int arg1;
+  public final int arg2;
+  public final String text; // for say
   public ActionResult result;
 
-  public Action()
-  {
+  private Action(Type type, int arg1, int arg2, String text) {
+    this.type = type;
+    this.arg1 = arg1;
+    this.arg2 = arg2;
+    this.text = text;
   }
-
 
   public static List<Action> parseSequence(String data) throws InvalidActionHard
   {
@@ -51,7 +52,7 @@ public class Action
       case "ATTACK": type = Type.ATTACK; break;
       case "USE": type = Type.USE; break;
       case "PASS": type = Type.PASS; break;
-      default: throw new InvalidActionHard("Invalid action name. Should be SUMMON, ATTACK, or USE.");
+      default: throw new InvalidActionHard("Invalid action name. Should be SUMMON, ATTACK,  USE or PASS.");
     }
 
     if (type==Type.SUMMON)
@@ -89,8 +90,6 @@ public class Action
     	return Action.newPass();
     }
     else {
-      
-
       try
       {
         String[] args = str[1].split(" ", 3);
@@ -112,70 +111,47 @@ public class Action
 
   public static Action newSummon(int arg1)
   {
-    return newSummon(arg1, 0, "");
+    return new Action(Type.SUMMON, arg1, 0, "");
   }
 
   public static Action newSummon(int arg1, String text)
   {
-    return newSummon(arg1, 0, text);
+    return new Action(Type.SUMMON, arg1, 0, text);
   }
 
   public static Action newSummon(int arg1, int arg2)
   {
-    return newSummon(arg1, arg2, "");
+    return new Action(Type.SUMMON, arg1, arg2, "");
   }
 
-  public static Action newSummon(int arg1, int arg2, String text) // todo private?
+  public static Action newSummon(int arg1, int arg2, String text)
   {
-    Action a = new Action();
-    a.type = Type.SUMMON;
-    a.cardType = Card.Type.CREATURE;
-    a.arg1 = arg1;
-    a.arg2 = arg2; // lane
-    a.text = text;
-    return a;
+    return new Action(Type.SUMMON, arg1, arg2, "");
   }
 
   public static Action newAttack(int arg1, int arg2)
   {
-    return newAttack(arg1, arg2, "");
+    return new Action(Type.ATTACK, arg1, arg2, "");
   }
 
-  public static Action newAttack(int arg1, int arg2, String text) // todo private?
+  public static Action newAttack(int arg1, int arg2, String text)
   {
-    Action a = new Action();
-    a.type = Type.ATTACK;
-    a.cardType = Card.Type.CREATURE;
-    a.arg1 = arg1;
-    a.arg2 = arg2;
-    a.text = text;
-    return a;
+    return new Action(Type.ATTACK, arg1, arg2, text);
   }
 
-  public static Action newPass() {
-	Action a = new Action();
-    a.type = Type.PASS;
-    a.text = "";
-    return a;
+  public static Action newPass()
+  {
+    return new Action(Type.PASS, -1, -1, "");
   }
 
   public static Action newUse(int arg1, int arg2)
   {
-    return newUse(arg1, arg2, "");
+    return new Action(Type.USE, arg1, arg2, "");
   }
 
-
-
-  // todo - it's just a shell now
-  public static Action newUse(int arg1, int arg2, String text) // todo private?
+  public static Action newUse(int arg1, int arg2, String text)
   {
-    Action a = new Action();
-    a.type = Type.USE;
-    //a.cardType = Card.Type.CREATURE; // todo here
-    a.arg1 = arg1;
-    a.arg2 = arg2;
-    a.text = text;
-    return a;
+    return new Action(Type.USE, arg1, arg2, text);
   }
 
   public String toStringNoText()

@@ -247,12 +247,12 @@ public class PlayerUI {
         graphicEntityModule.commitEntityState(0, healFloat, heal);
     }
 
-    public void talk(String text, boolean draftPhase) {
+    public void talk(String text, boolean constructionPhase) {
         int playerIndex = player.getIndex();
 
         bubbleSprite.setAlpha(1, Curve.NONE);
 
-        if (draftPhase) {
+        if (constructionPhase) {
             bubble.setX(bubblePosition.x, Curve.IMMEDIATE).setY(bubblePosition.y, Curve.IMMEDIATE);
             bubbleSprite.setImage("bubble_long.png");
             if (text.length() > 22) {

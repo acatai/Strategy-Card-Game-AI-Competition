@@ -66,13 +66,11 @@ public class ConstantsUI {
 
     public static final double CARD_BOARD_SCALE = 1.0;
     public static final double LIFTED_CARD_BOARD_SCALE = 1.2;
-    public static final double CARD_DRAFT_SCALE = 1.3;
     public static final double CARD_CONSTRUCTED_SCALE = 0.4;
     public static final double CARD_DECK_SCALE  = (double) PLAYER_DECK_DIM.y / (double) CARD_DIM.y;
     public static final double CARD_HAND_SCALE  = 0.77;
 
     public static final Vector2D CARD_BOARD_DIM = Vector2D.mult(CARD_DIM, CARD_BOARD_SCALE);
-    public static final Vector2D CARD_DRAFT_DIM = Vector2D.mult(CARD_DIM, CARD_DRAFT_SCALE);
     public static final Vector2D CARD_DECK_DIM  = Vector2D.mult(CARD_DIM, CARD_BOARD_SCALE);
     public static final Vector2D CARD_HAND_DIM  = Vector2D.mult(CARD_DIM, CARD_HAND_SCALE);
     public static final Vector2D ZOOM_OFFSET = new Vector2D(

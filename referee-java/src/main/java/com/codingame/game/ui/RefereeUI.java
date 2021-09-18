@@ -32,7 +32,7 @@ public class RefereeUI {
     private Map<Integer, CardUI> cardsPool = new HashMap<>();
     private static PlayerUI[] players = new PlayerUI[2];
 
-    private Text[][] draftCardsQuantity = new Text[2][Constants.MAX_CARDS_IN_FRAME];
+    private Text[][] constructedCardsQuantity = new Text[2][Constants.MAX_CARDS_IN_FRAME];
 
     private Text[] deck = new Text[2];
 
@@ -105,7 +105,7 @@ public class RefereeUI {
 
             for (Player player : gameManager.getPlayers()) {
                 int playerIndex = player.getIndex();
-                draftCardsQuantity[playerIndex][index] =
+                constructedCardsQuantity[playerIndex][index] =
                     graphicEntityModule.createText("")
                     .setAnchorX(0.5)
                     .setFontSize(20)
@@ -118,26 +118,26 @@ public class RefereeUI {
     }
 
     public void constructPhase(int turn) {
-        int draftX = ConstantsUI.BOARD.x - (int) (ConstantsUI.CARD_DIM.x * 5 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
-        int draftY = ConstantsUI.BOARD.y - (int) (ConstantsUI.CARD_DIM.y * 2 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
-        int draftCardSpaceX = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.x) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
-        int draftCardSpaceY = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.y) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
+        int constructionX = ConstantsUI.BOARD.x - (int) (ConstantsUI.CARD_DIM.x * 5 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
+        int constructionY = ConstantsUI.BOARD.y - (int) (ConstantsUI.CARD_DIM.y * 2 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
+        int constructionCardSpaceX = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.x) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
+        int constructionCardSpaceY = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.y) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
 
         List<Card> picks = engine.constr.cardsForConstruction;
 
         for (int frameIndex = 0; frameIndex < Constants.MAX_CARDS_IN_FRAME; ++frameIndex) {
             int index = turn * Constants.MAX_CARDS_IN_FRAME + frameIndex;
-            int cardX = draftX + (int) (draftCardSpaceX * ((frameIndex) % 10)) - ConstantsUI.CARD_BOARD_SPACE;
-            int cardY = draftY + (int) (draftCardSpaceY * Math.floor((frameIndex) / 10)) + ConstantsUI.CARD_HAND_SPACE;
+            int cardX = constructionX + (int) (constructionCardSpaceX * ((frameIndex) % 10)) - ConstantsUI.CARD_BOARD_SPACE;
+            int cardY = constructionY + (int) (constructionCardSpaceY * Math.floor((frameIndex) / 10)) + ConstantsUI.CARD_HAND_SPACE;
 
             CardUI cardUi = getCardFromPool(-(frameIndex+1));
             if (index >= picks.size()) {
                 for (Player player : gameManager.getPlayers()) {
                     int playerIndex = player.getIndex();
-                    draftCardsQuantity[playerIndex][frameIndex]
+                    constructedCardsQuantity[playerIndex][frameIndex]
                         .setVisible(false)
                         .setAlpha(0);
-                    graphicEntityModule.commitEntityState(0.0, draftCardsQuantity[playerIndex][frameIndex]);
+                    graphicEntityModule.commitEntityState(0.0, constructedCardsQuantity[playerIndex][frameIndex]);
                 }
                 cardUi
                     .setVisible(false)
@@ -146,20 +146,20 @@ public class RefereeUI {
                 Card card = picks.get(index);
                 for (Player player : gameManager.getPlayers()) {
                     int playerIndex = player.getIndex();
-                    draftCardsQuantity[playerIndex][frameIndex]
+                    constructedCardsQuantity[playerIndex][frameIndex]
                         .setVisible(false);
-                    graphicEntityModule.commitEntityState(0.0, draftCardsQuantity[playerIndex][frameIndex]);
+                    graphicEntityModule.commitEntityState(0.0, constructedCardsQuantity[playerIndex][frameIndex]);
                     if (engine.constr.chosenQuantities[playerIndex][card.baseId] > 0) {
-                        draftCardsQuantity[playerIndex][frameIndex]
+                        constructedCardsQuantity[playerIndex][frameIndex]
                             .setText("x" + engine.constr.chosenQuantities[playerIndex][card.baseId])
                             .setX(cardX + (playerIndex * 2 - 1) * (ConstantsUI.CARD_BOARD_SPACE - 20) + 42)
                             .setY(cardY-5)
                             .setScaleY(0.0)
                             .setVisible(true);
-                        graphicEntityModule.commitEntityState(0.0, draftCardsQuantity[playerIndex][frameIndex]);
-                        draftCardsQuantity[playerIndex][frameIndex]
+                        graphicEntityModule.commitEntityState(0.0, constructedCardsQuantity[playerIndex][frameIndex]);
+                        constructedCardsQuantity[playerIndex][frameIndex]
                             .setScaleY(1.0);
-                        graphicEntityModule.commitEntityState(0.2, draftCardsQuantity[playerIndex][frameIndex]);
+                        graphicEntityModule.commitEntityState(0.2, constructedCardsQuantity[playerIndex][frameIndex]);
                     }
                     getCardFromPool(-(frameIndex+1))
                         .setScaleY(0)
@@ -319,8 +319,8 @@ public class RefereeUI {
             }
             for (int index = 0; index < Constants.MAX_CARDS_IN_FRAME; ++index) {
                 getCardFromPool(-(index + 1)).setVisible(false);
-                if (draftCardsQuantity[p][index] != null)
-                    draftCardsQuantity[p][index].setAlpha(0);
+                if (constructedCardsQuantity[p][index] != null)
+                    constructedCardsQuantity[p][index].setAlpha(0);
             }
         }
         for (int i = 0; i<Constants.MAX_CREATURES_IN_LINE; i++)
@@ -350,7 +350,7 @@ public class RefereeUI {
                     .setAlpha(1);
 
             newTurn
-                    .setText("Turn " + Integer.toString((turn-engine.expectedConstructionFrames)/2+1))
+                    .setText("Turn " + Integer.toString((turn-engine.expectedConstructionFrames)/2))
                     .setAnchor(0.5)
                     .setFontSize(50)
                     .setFillColor(gameManager.getPlayers().get(turn%2).getColorToken())
@@ -377,7 +377,7 @@ public class RefereeUI {
         if (action != null && action.type == Action.Type.SUMMON) {
             SummonResult result = (SummonResult) action.result;
             for (CreatureOnBoard copyCreature : result.summonedCreatures) {
-                if (copyCreature.lane == action.arg2)
+                if (copyCreature.id == result.originalCreature.id)
                     continue;
                 CardUI cardUI1 = getCardFromPool(result.originalCreature.id);
                 CardUI cardUI2 = getCardFromPool(copyCreature.id);

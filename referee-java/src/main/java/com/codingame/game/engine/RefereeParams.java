@@ -8,18 +8,18 @@ import java.util.Random;
 
 public class RefereeParams
 {
-  public Random draftChoicesRNG;
-  public Random shufflePlayer0RNG;
-  public Random shufflePlayer1RNG;
-  public Integer[][] predefinedDraftIds = null;
-  public Integer[] predefinedConstructedIds = null;
+  public final Random constructedChoicesRNG;
+  public final Random shufflePlayer0RNG;
+  public final Random shufflePlayer1RNG;
+  public final Integer[] predefinedConstructedIds;
   private Properties params;
 
-  public RefereeParams(long draftChoicesSeed, long shufflePlayer0Seed, long shufflePlayer1Seed)
+  public RefereeParams(long constructedChoicesSeed, long shufflePlayer0Seed, long shufflePlayer1Seed)
   {
-    draftChoicesRNG = new Random(draftChoicesSeed);
+    constructedChoicesRNG = new Random(constructedChoicesSeed);
     shufflePlayer0RNG = new Random(shufflePlayer0Seed);
     shufflePlayer1RNG = new Random(shufflePlayer1Seed);
+    predefinedConstructedIds = null;
   }
 
   public RefereeParams(MultiplayerGameManager<Player> gameManager)
@@ -27,7 +27,7 @@ public class RefereeParams
     // pure initialization if seed set by the manager
     long mainSeed = gameManager.getSeed();
     Random RNG = new Random(mainSeed);
-    long draftChoicesSeed = RNG.nextLong();
+    long constructedChoicesSeed = RNG.nextLong();
     long shufflePlayer0Seed = RNG.nextLong();
     long shufflePlayer1Seed = RNG.nextLong();
 
@@ -37,35 +37,18 @@ public class RefereeParams
     {
       mainSeed = Long.parseLong(params.getProperty("seed"));
       RNG = new Random(mainSeed);
-      draftChoicesSeed = RNG.nextLong();
+      constructedChoicesSeed = RNG.nextLong();
       shufflePlayer0Seed = RNG.nextLong();
       shufflePlayer1Seed = RNG.nextLong();
     }
 
     // overriding remaining seeds
-    if ( isNumber(params.getProperty("draftChoicesSeed")))
-      draftChoicesSeed = Long.parseLong(params.getProperty("draftChoicesSeed"));
+    if ( isNumber(params.getProperty("constructedChoicesSeed")))
+      constructedChoicesSeed = Long.parseLong(params.getProperty("constructedChoicesSeed"));
     if ( isNumber(params.getProperty("shufflePlayer0Seed")))
       shufflePlayer0Seed = Long.parseLong(params.getProperty("shufflePlayer0Seed"));
     if ( isNumber(params.getProperty("shufflePlayer1Seed")))
       shufflePlayer1Seed = Long.parseLong(params.getProperty("shufflePlayer1Seed"));
-
-    if ( params.getProperty("predefinedDraftIds")!=null)
-    {
-      predefinedDraftIds = new Integer[Constants.CARDS_IN_DECK][3];
-      String[] picks = params.getProperty("predefinedDraftIds").replace('_', ' ').split(",");
-
-      assert (picks.length >= Constants.CARDS_IN_DECK);
-
-      for(int pick=0; pick <  Constants.CARDS_IN_DECK; pick++)
-      {
-        String[] choice = picks[pick].trim().split("\\s+");
-        for (int i=0; i < 3; i++)
-        {
-          predefinedDraftIds[pick][i] = Integer.parseInt(choice[i].trim());
-        }
-      }
-    }
 
     if ( params.getProperty("predefinedConstructedIds")!=null)
     {
@@ -79,15 +62,19 @@ public class RefereeParams
         predefinedConstructedIds[pick] = Integer.parseInt(picks[pick].trim());
       }
     }
+    else
+    {
+      predefinedConstructedIds = null;
+    }
 
     // update params values
-    // we can't update predefinedDraftIds if there were not set by the user...
-    params.setProperty("draftChoicesSeed",  Long.toString(draftChoicesSeed));
+    // we can't update predefinedConstructedIds if there were not set by the user...
+    params.setProperty("constructedChoicesSeed",  Long.toString(constructedChoicesSeed));
     params.setProperty("shufflePlayer0Seed",  Long.toString(shufflePlayer0Seed));
     params.setProperty("shufflePlayer1Seed",  Long.toString(shufflePlayer1Seed));
 
     // set RNG's
-    draftChoicesRNG = new Random(draftChoicesSeed);
+    constructedChoicesRNG = new Random(constructedChoicesSeed);
     shufflePlayer0RNG = new Random(shufflePlayer0Seed);
     shufflePlayer1RNG = new Random(shufflePlayer1Seed);
 
@@ -97,10 +84,10 @@ public class RefereeParams
   @Override
   public String toString()
   {
-    return "draftChoicesSeed" + "=" + params.getProperty("draftChoicesSeed") + "\n" +
+    return "constructedChoicesSeed" + "=" + params.getProperty("constructedChoicesSeed") + "\n" +
             "shufflePlayer0Seed" + "=" + params.getProperty("shufflePlayer0Seed") + "\n" +
             "shufflePlayer1Seed" + "=" + params.getProperty("shufflePlayer1Seed") + "\n";
-//            "predefinedDraftIds" + "=" + params.getProperty("predefinedDraftIds") + "\n";
+//            "predefinedConstructedIds" + "=" + params.getProperty("predefinedConstructedIds") + "\n";
   }
   // todo toString?
 

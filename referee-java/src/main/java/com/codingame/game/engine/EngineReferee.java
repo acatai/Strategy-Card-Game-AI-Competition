@@ -62,7 +62,7 @@ public class EngineReferee {
                         / Constants.MAX_CARDS_IN_FRAME);
 
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Construction Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the draft.");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the construction.");
 
         gameManager.setMaxTurns(Constants.MAX_TURNS_HARDLIMIT); // should be never reached, not handled on the referee's side
     }
@@ -189,7 +189,7 @@ public class EngineReferee {
                 gameManager.setFrameDuration(Constants.FRAME_DURATION_SUMMON);
             }
         } else { // it's time to actually call a player
-            if (Constants.VERBOSE_LEVEL > 2) System.out.print("      Game turn " + (gameTurn - Constants.CARDS_IN_DECK) + ", player " + gamePlayer);
+            if (Constants.VERBOSE_LEVEL > 2) System.out.print("      Game turn " + (int)Math.ceil(((float)gameTurn - expectedConstructionFrames - 1) / 2) + ", player " + gamePlayer);
 
             if (Constants.IS_HUMAN_PLAYING)
                 gameManager.setTurnMaxTime(200 * Constants.TIMELIMIT_GAMETURN);
@@ -265,7 +265,7 @@ public class EngineReferee {
 
         //gameManager.addToGameSummary("!\n" + state.toString());
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + (int)Math.ceil(((float)gameTurn - expectedConstructionFrames + 1) / 2) + ".");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + (int)Math.ceil(((float)gameTurn - expectedConstructionFrames - 1) / 2) + ".");
         if (Constants.VERBOSE_LEVEL > 1) System.out.print("   Scores: ");
         if (Constants.VERBOSE_LEVEL > 0) System.out.println((state.winner == 0 ? "1" : "0") + " " + (state.winner == 1 ? "1" : "0"));
 
