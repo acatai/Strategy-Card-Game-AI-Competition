@@ -23,7 +23,7 @@ public class Main
         System.setProperty("league.level", "4");
 
 
-        Constants.LANES = 1;
+        Constants.LANES = 2;
         if (Constants.LANES > 1)
             runner(PlayerRandomWItems2lanes.class, PlayerRandomWItems2lanes.class).start();
         else

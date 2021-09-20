@@ -5,11 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.codingame.game.engine.*;
-import com.codingame.gameengine.module.entities.Curve;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Sprite;
-import com.codingame.gameengine.module.entities.Text;
+import com.codingame.gameengine.module.entities.*;
 import com.codingame.view.tooltip.TooltipModule;
 
 public class CardUI {
@@ -31,6 +27,7 @@ public class CardUI {
     private Text[] extras = new Text[3];
     private Text damageFloat, healFloat;
     private Sprite[] extraIcons = new Sprite[3];
+    private Sprite area;
 
     public CardUI(GraphicEntityModule graphicEntityModule, TooltipModule tooltipModule) {
         this.graphicEntityModule = graphicEntityModule;
@@ -44,7 +41,7 @@ public class CardUI {
             .setStrokeThickness(4.0)
             .setX(45 * 2 * 260 / 740)
             .setY(210 * 2 * 260 / 740)
-            .setZIndex(2);
+            .setZIndex(3);
 
         background = graphicEntityModule.createSprite()
             .setBaseWidth(ConstantsUI.CARD_DIM.x)
@@ -67,7 +64,7 @@ public class CardUI {
             .setStrokeThickness(4.0)
             .setX(150 * 2 * 260 / 740)
             .setY(220 * 2 * 260 / 740)
-            .setZIndex(2);
+            .setZIndex(3);
 
         defense = graphicEntityModule.createText("0")
             .setAnchor(0.5)
@@ -77,28 +74,28 @@ public class CardUI {
             .setStrokeThickness(4.0)
             .setX(255 * 2 * 260 / 740)
             .setY(210 * 2 * 260 / 740)
-            .setZIndex(2);
+            .setZIndex(3);
 
         overlay = graphicEntityModule.createSprite()
             .setAlpha(1)
             .setBaseHeight(ConstantsUI.CARD_DIM.y)
             .setBaseWidth(ConstantsUI.CARD_DIM.x)
             .setImage("basic_overlay.png")
-            .setZIndex(1);
+            .setZIndex(2);
 
         ward = graphicEntityModule.createSprite()
             .setAlpha(0)
             .setBaseHeight(ConstantsUI.CARD_DIM.y)
             .setBaseWidth(ConstantsUI.CARD_DIM.x)
             .setImage("ward.png")
-            .setZIndex(3);
+            .setZIndex(4);
 
         lethal = graphicEntityModule.createSprite()
             .setAlpha(0)
             .setBaseWidth((int) (ConstantsUI.CARD_DIM.x * (28f/300)))
             .setBaseHeight((int) (ConstantsUI.CARD_DIM.y * (66f/370)))
             .setImage("lethal.png")
-            .setZIndex(4)
+            .setZIndex(5)
             .setX((int) (ConstantsUI.CARD_DIM.x * (3f/300)))
             .setY((int) (ConstantsUI.CARD_DIM.y * (170f/370)));
 
@@ -130,7 +127,7 @@ public class CardUI {
             .setFontSize(36)
             .setStrokeColor(0x000000)
             .setStrokeThickness(2.0)
-            .setZIndex(2);
+            .setZIndex(3);
 
         healFloat = graphicEntityModule.createText("")
             .setAnchor(0.5)
@@ -138,18 +135,27 @@ public class CardUI {
             .setFontSize(36)
             .setStrokeColor(0x000000)
             .setStrokeThickness(2.0)
-            .setZIndex(2);
+            .setZIndex(3);
 
         Group damageGroup = graphicEntityModule.createGroup(impact, damageFloat)
-            .setZIndex(6)
+            .setZIndex(7)
             .setX(ConstantsUI.CARD_DIM.x / 2)
             .setY(80);
         Group healGroup = graphicEntityModule.createGroup(heal, healFloat)
-            .setZIndex(5)
+            .setZIndex(6)
             .setX(ConstantsUI.CARD_DIM.x / 2)
             .setY(80);
 
-        group = graphicEntityModule.createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup)
+
+        area = graphicEntityModule.createSprite()
+                .setAlpha(1)
+                .setBaseHeight(22*ConstantsUI.CARD_DIM.y/370)
+                .setBaseWidth(ConstantsUI.CARD_DIM.x)
+                .setX(0)
+                .setY(310*ConstantsUI.CARD_DIM.y/370)
+                .setZIndex(1);
+
+        group = graphicEntityModule.createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup, area)
                 .setScale(1.0);
 
         for (int index = 0; index < 3; ++index) {
@@ -173,7 +179,7 @@ public class CardUI {
                     .setStrokeThickness(2.0)
                     .setX(ConstantsUI.CARD_EXTRAS[index].x)
                     .setY(ConstantsUI.CARD_EXTRAS[index].y)
-                    .setZIndex(2)
+                    .setZIndex(3)
             );
         }
 
@@ -184,7 +190,7 @@ public class CardUI {
                     .setScale(0.6)
                     .setX(ConstantsUI.CARD_KEYWORDS[index].x)
                     .setY(ConstantsUI.CARD_KEYWORDS[index].y)
-                    .setZIndex(2)
+                    .setZIndex(3)
             );
         }
     }
@@ -314,6 +320,18 @@ public class CardUI {
         keywords[4].setAlpha(card.keywords.hasLethal ? 1 : 0.1);
         keywords[5].setAlpha(card.keywords.hasWard ? 1 : 0.1);
 
+        switch (base.area) {
+            case TARGET:
+                area.setImage("Area_lane0.png");
+                break;
+            case LANE1:
+                area.setImage("Area_lane1.png");
+                break;
+            case LANE2:
+                area.setImage("Area_lane2.png");
+                break;
+        }
+
         this.tooltipModule.registerEntity(group, new HashMap<>());
         this.tooltipModule.updateExtraTooltipText(group, card.toTooltipText());
 
@@ -425,6 +443,7 @@ public class CardUI {
             extraIcons[0],
             extraIcons[1],
             extraIcons[2],
+            area,
             group,
             image,
             overlay,
