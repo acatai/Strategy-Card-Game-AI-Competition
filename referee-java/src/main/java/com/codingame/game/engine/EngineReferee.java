@@ -90,7 +90,7 @@ public class EngineReferee {
         }
         else if (gameTurn <= Math.max(3, expectedConstructionFrames + 1)) {
             gameManager.setFrameDuration(10);
-            VisualTurn(gameManager, ui::cleanupAfterConstruction);
+            VisualTurn(gameManager, () -> ui.cleanupAfterConstruction());
             return false;
         }
         else {
@@ -99,6 +99,7 @@ public class EngineReferee {
     }
 
     private void VisualTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
+        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Visual construct turn");
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
             sdkplayer.expectedOutputLines = 0;
@@ -112,7 +113,7 @@ public class EngineReferee {
 
     private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
         if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
-        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn " + gameTurn + "/" + Constants.CARDS_IN_DECK);
+        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn");
 
         gameManager.setFrameDuration(Constants.FRAME_DURATION_CONSTRUCTED);
 
