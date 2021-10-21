@@ -118,17 +118,17 @@ public class RefereeUI {
     }
 
     public void constructPhase(int turn) {
-        int constructionX = ConstantsUI.BOARD.x - (int) (ConstantsUI.CARD_DIM.x * 5 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
-        int constructionY = ConstantsUI.BOARD.y - (int) (ConstantsUI.CARD_DIM.y * 2 * ConstantsUI.CARD_CONSTRUCTED_SCALE) - ConstantsUI.CARD_BOARD_SPACE;
         int constructionCardSpaceX = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.x) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
         int constructionCardSpaceY = (int) ((ConstantsUI.CARD_BOARD_SPACE + ConstantsUI.CARD_DIM.y) * ConstantsUI.CARD_CONSTRUCTED_SCALE);
+        int constructionAreaX = ConstantsUI.BOARD.x - 5 * constructionCardSpaceX + (int) (ConstantsUI.CARD_BOARD_SPACE * ConstantsUI.CARD_CONSTRUCTED_SCALE/2);
+        int constructionAreaY = ConstantsUI.BOARD.y - 2 * constructionCardSpaceY + (int) (ConstantsUI.CARD_BOARD_SPACE * ConstantsUI.CARD_CONSTRUCTED_SCALE/2);
 
         List<Card> picks = engine.constr.cardsForConstruction;
 
         for (int frameIndex = 0; frameIndex < Constants.MAX_CARDS_IN_FRAME; ++frameIndex) {
             int index = turn * Constants.MAX_CARDS_IN_FRAME + frameIndex;
-            int cardX = constructionX + (int) (constructionCardSpaceX * ((frameIndex) % 10)) - ConstantsUI.CARD_BOARD_SPACE;
-            int cardY = constructionY + (int) (constructionCardSpaceY * Math.floor((frameIndex) / 10)) + ConstantsUI.CARD_HAND_SPACE;
+            int cardX = constructionAreaX + (int) (constructionCardSpaceX * ((frameIndex) % 10));
+            int cardY = constructionAreaY + (int) (constructionCardSpaceY * Math.floor((frameIndex) / 10));
 
             CardUI cardUi = getCardFromPool(-(frameIndex+1));
             if (index >= picks.size()) {
