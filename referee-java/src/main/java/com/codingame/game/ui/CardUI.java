@@ -1,6 +1,7 @@
 package com.codingame.game.ui;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -157,7 +158,6 @@ public class CardUI {
 
         group = graphicEntityModule.createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup, area)
                 .setScale(1.0);
-
         for (int index = 0; index < 3; ++index) {
             group.add(extraIcons[index] = graphicEntityModule.createSprite()
                     .setAnchorY(0.5)
@@ -270,23 +270,25 @@ public class CardUI {
         }
 
         int tint = 0;
-        if (base.attack >= -12)
-            tint += 256*256*22*(Math.pow(Math.abs(base.attack), 0.9) + 2);
+        if (Math.abs(base.attack) <= 12)
+            tint += 0x010000 * (int)(22*(Math.pow(Math.abs(base.attack), 0.9) + 2));
         else
-            tint += 256*256*255;
-        if (base.defense >= -12)
-            tint += 256*22*(Math.pow(Math.abs(base.defense), 0.9) + 2);
+            tint += 0xFF0000;
+        if (Math.abs(base.defense) <= 12)
+            tint += 0x000100 * (int)(22*(Math.pow(Math.abs(base.defense), 0.9) + 2));
         else
-            tint += 256*255;
-        if (base.cost >= -12)
-            tint += 22*(Math.pow(Math.abs(base.cost), 0.9) + 2);
+            tint += 0x00FF00;
+        if (Math.abs(base.cost) <= 12)
+            tint += (int)(22*(Math.pow(Math.abs(base.cost), 0.9) + 2));
         else
-            tint += 255;
+            tint += 0x0000FF;
 
         double scale = 1+(double)(base.attack+base.defense-12)/12/4;
-        image.setImage("atlas-" + ((card.baseId - 1) % 160))
+        double angle = ((double)(Objects.hash(base.baseId, 31, base.attack, base.defense))%25-12)/200
+                *(Math.PI*2)*((card.baseId%2)*2-1);
+        image.setImage("atlas-" + ((Objects.hash(base.baseId, base.cost)) % 160))
                 .setTint(tint)
-                .setRotation((double)(base.attack+base.defense-12)/100*(Math.PI*2)*((card.baseId%2)*2-1))
+                .setRotation(angle)
                 .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))
                 .setScaleY(Math.abs(scale))
         ;
