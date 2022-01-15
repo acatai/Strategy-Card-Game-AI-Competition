@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Strategy Card Game AI Competition - COG 2021</title>
+	<meta charset="utf-8">
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="../style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+	<div class="header">
+    <div align="center">
+      <img src="../CEC19/artwork_small.jpg" width="600" alt="LOCM artwork">
+    </div>
+		<h1><b>Strategy Card Game AI Competition<br/><a href="https://ieee-cog.org/2021/index.html">IEEE COG 2022</a></b></h1>
+	</div>
+
+	<hr>
+  
+  <p>Legends of Code and Magic (LOCM) is a small implementation of a Strategy Card Game, designed to perform AI research. 
+  Its advantage over the real cardgame AI engines is that it is much simpler to handle by the agents, and thus allows testing more sophisticated algorithms and quickly implement theoretical ideas.</p>
+  
+
+  <p>Its goal is to encourage advanced research, free of drawbacks of working with the full-fledged game. It means i.a., embedding deckbuilding into the game itself (limiting the usage of premade decks), and allowing efficient search beyond the one turn depth. All cards effects are deterministic, thus nondeterminism is introduced only by the ordering of cards and an unknown opponent's deck. The game board consists of two lines (similar to <a href="https://legends.bethesda.net/en">TES:Legends</a> on which LOCM is based), favoring deeper strategic thinking. </p>
+ 
+<p>Because of the domain's properties, Strategy Card Games are a very suitable subject for evolutionary-based approaches. First, as in other multi-action games, rolling horizon evolution is considered, alongside MCTS, one of the best-performing search algorithm. Second, as the game contains many parameters used in repeatable context (card statistics and keywords), there are multiple opportunities to treat parts of the game as an optimization problem (board evaluation, arena draft evaluation), which can be successfully tackled by evolution.</p>
+
+<p style="color: #ff6600;">The current edition introduces "Constructed Mode," where an agent will be presented with a set of randomly generated cards before each game, and it has to create its deck using these cards. Thus, the deckbuilding is dynamic and cannot be simply reduced to using human-created top-meta decks, but is less random and gives more control for the agent than the Arena Mode. The new version of the game also introduces cards with Area of Effect, which was the most important feature standard in other card games but so far missing in LOCM.</p>
+
+  
+  <!-- <p>This competition aims to play the same role for <a href="https://dockhorn.antares.uberspace.de/wordpress/">Hearthstone AI Competition</a> as <a href="https://sites.google.com/site/micrortsaicompetition/home">microRTS</a> plays for various StarCraft AI contests.
+  Encourage advanced research, free of drawbacks of working with the full-fledged game. In this domain, it means i.a. embedding deckbuilding into the game itself (limiting the usage of premade decks), and allowing efficient search beyond the one turn depth.
+  </p> -->
+  
+  
+  <!-- <p>The contest is based on the LOCM 1.2, the same as in CEC and COG 2019-2020 competitions. One-lane, 1.0 version of the game, has been used for <a href="https://www.codingame.com/leaderboards/challenge/legends-of-code-and-magic-marathon/global">CodinGame contest</a> in August 2018.
+  </p> -->
+  
+  <hr>
+  <div align="center">
+    <!--<a href="../CEC19/screen05.png"><img src="../CEC19/screen05.png" width="300" alt="Screen 1"></a>-->
+    <a href="../CEC19/screen02.png"><img src="../CEC19/screen02.png" width="300" alt="Screen 2"></a>
+    <a href="../CEC19/screen03.png"><img src="../CEC19/screen03.png" width="300" alt="Screen 3"></a>
+  </div>
+  <hr>
+
+  <br/>
+
+  <h1 style="text-align: center;"><strong><div style="color: #ff6600;">More details SOON</div></strong></h1>
+
+  <br/>
+  
+  <hr>
+
+  <br/>
+  <!-- <h2><b><a name="Results">Results</a></b></h2>
+  
+  <div align="center">
+    <b><big><big><a href="https://youtu.be/8iyUp8r_TX4"> <b style="color: #ff6600;">Competition Summary Video</b></a></big></big></b>
+    <br/>
+    <b><big><a href="COG2021-slides.pdf">Slides</a></big></b><br/>
+  </div> -->
+  <!--
+  <ol>
+  <li style="color: #ff6600;"><b>Coac</b><br/><i>Victor Le</i></li>
+  <li style="color: #ff6600;"><b>Chad</b><br/><i>Marcin Witkowski, Wojciech Meller, Łukasz Klasiński,</i></li>
+  <li style="color: #ff6600;"><b>ReinforcedGreediness,</b><br/><i>Ronaldo Vieira, Luiz Chaimowicz, Anderson Tavares</i></li>
+  <li><b>Prophet Coac</b><br/><i>Ronaldo Vieira</i></li>
+  <li><b>Marasbot</b><br/><i>Jakub Maras</i></li>
+  <li><b>UJIAgent2</b><br/><i>Alejandro Juan, Arturo Barbosa, Diego Villabrille, Sergio Ferreras, Daniel Delgado, Raúl Montoliu</i></li>
+  <li><b>UJIAgent3</b><br/><i>Raúl Montoliu, Daniel Delgado, Arturo Barbosa, Diego Villabrille, Sergio Ferreras, Alejandro Juan</i></li>
+  <li><b>AntiSquid</b><br/><i>Sergiu Lucec</i></li>
+  <li><b>Fabbiamo</b><br/><i>Shioda Masahiro</i></li>
+  <li><b>UJIAgent1</b><br/><i>Arturo Barbosa, Diego Villabrille, Sergio Ferreras, Alejandro Juan, Daniel Delgado, Raúl Montoliu</i></li>
+  <li><b>Conrisc</b><br/><i>Konrad Cielecki</i></li>
+  <li><b>Baseline2</b><br/><i>organizers</i></li>
+  <li><b>Baseline1</b><br/><i>organizers</i></li>
+</ol>-->
+
+<!-- <ul class="list"> -->
+      <!--<li>New or upgraded submissions: <b style="color: #ff6600;">5</b></li>-->
+      <!--<li><a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/tree/master/contest-2020-07-CEC"><b>Detailed results data</b></a> (including sources of the agents)</li>-->
+  <!-- </ul> -->
+
+  <!-- <div align="center">
+    <a href="COG2021-results.png"><img src="COG2021-results.png" width="90%" alt="Results graph"></a>
+    <br/>
+    <a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/tree/master/contest-2021-08-COG"><b>Detailed results data</b></a> <br/>(including sources of the agents)
+    <br/><hr style="margin-top: 20px; width: 60%"><br/>
+    <a href="COG2021-winners.png"><img src="COG2021-winners.png" width="40%" alt="Winners"></a>
+    <br/>
+  </div>
+ 
+  <p align="right">
+  Prizes have been sponsored by <br/>
+  <a href="https://cis.ieee.org/"><img src="https://cis.ieee.org/images/files/template/cis-logo.png" alt="IEEE CIS" height="60"></a>
+  </p> -->
+  
+
+  <!-- <ul class="list">
+      <li><hr style="margin-top: 20px"></li>
+  </ul> -->
+
+  <!-- <h2>The Game</h2>
+	
+	<ul class="list">
+	
+
+    <li>
+
+      <strong><a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/blob/master/GAME-RULES.md">Rules</a></strong><br/>
+      <ul class="taglist">
+        <li><a href="../CEC19/intro.html">Short introduction to the game</a></li>
+      </ul>
+      <ul class="taglist">
+        <li><a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/blob/master/GAME-RULES.md">Full rules: markdown</a></li>
+      </ul>
+      <ul class="taglist">
+        <li><a href="../CEC19/rules.html">Full rules: image</a></li>
+      </ul>
+		</li>
+    
+    <li>
+			<strong><a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition">Game referee and runner</a></strong>
+            <ul class="taglist">
+        <li>(Including getting started and setup instructions)</li>
+      </ul>
+		</li>
+    
+    
+    <li>
+			<strong><a href="https://www.codingame.com/contribute/view/162759566f5a132f64b4de78ed637a2f309a">Play online</a></strong> <!-- via <a href="https://www.codingame.com">CodinGame</a> (Use "PREVIEW" to play)-->
+      <!--<ul class="taglist">
+        <li>(Click "PREVIEW" to run IDE)</li>
+      </ul>
+		</li>
+    
+    <li>
+			<strong><a href="../cardlist.html">List of Cards</a></strong><br/>
+      <ul class="taglist">
+        <li><a href="../cardlist.txt">Text version</a></li>
+      </ul>
+		</li>
+    
+    
+    <li>
+      <strong><a href="../COG20/index.html#Results"><div style="color: #ff6600;">IEEE COG 2020 Competition Results</div></a></strong><br/>
+      <strong><a href="../CEC20/index.html#Results"><div style="color: #ff6600;">IEEE CEC 2020 Competition Results</div></a></strong><br/>
+      <strong><a href="../COG19/index.html#Results"><div style="color: #ff6600;">IEEE COG 2019 Competition Results</div></a></strong><br/>
+      <strong><a href="../CEC19/index.html#Results"><div style="color: #ff6600;">IEEE CEC 2019 Competition Results</div></a></strong><br/>
+		</li
+    
+    <li><hr style="margin-top: 20px"></li>
+    
+    </ul> -->
+    
+    
+    
+  <!-- <h2>Important dates</h2>
+	
+	<ul class="list"> -->
+		<!--<li><hr></li>-->
+
+
+		<!-- <li>
+			1st August 2021, 23:59 GMT <strong>Submission deadline</strong>
+		</li>
+
+    <li>
+			17-20 August 2021 <strong><a href="https://ieee-cog.org/2021/index.html">COG conference</a></strong> and results announcement<br/>
+		</li>
+
+    <li><hr style="margin-top: 20px"></li>
+    </ul> -->
+    
+    
+  <!-- <h2>Competition rules</h2>
+	
+	<ul class="list"> -->
+		<!--<li><hr></li>-->
+
+<!--     
+    <li><strong>Submission</strong>
+      <ul class="list">
+        <li>
+			Please send a zip archive containing your bot to jko@cs.uni.wroc.pl.<br/>
+			The email should additionally contain:<br/>
+      - names (and optionally institutions) of all bot's authors<br/>
+      - bot's name<br/>
+      - instructions how to compile/run the bot on the unix system<br/>
+      - short description of the bot (ideally a few slides, but short pdf / markdown / doc is also enough)
+        </li>
+      </ul> -->
+	
+  <!-- <li><strong>Additional requirements</strong>
+      <ul class="list">
+        <li class="tightlist">
+      There are no language restrictions - until the bot can run on unix system without problems.<br/>
+			While playing, the bot should not exceed 256 MB of memory. Anytime exceedance of 1024 MB of RAM usage will result in excluding the bot from the contest.<br/> -->
+			<!--All the bots should be open sourced, however this can be done after the deadline (but <strong>before</strong> the CEC conference).<br/>-->
+      <!-- Although we encourage to <a href="https://www.codingame.com/contribute/view/162759566f5a132f64b4de78ed637a2f309a">test your bots online</a>, it is not required to do so.<br/>
+      It would be great you your bot is open source, but it is not a requirement at the time of submission.
+        </li>
+      </ul> -->
+	
+  <!-- <li><strong>Evaluation</strong>
+    <ul class="list">
+      <li>
+        Bots will play LOCM 1.2 version, with the following timelimits:<br/>
+      - 1000ms for the first turn of the game<br/>
+      - 100ms for the remaining 29 turns of the draft phase<br/>
+      - 1000ms for the first turn of the battle phase<br/>
+      - 200ms for all the remaining turns
+      </li>
+      
+        <li>
+        Bots will be evaluated via the original <a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/tree/master/referee-java">java-based referee</a>, using the <a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition/tree/master/referee-nim">nim-based runner</a>, on a large number of mixed random and predefined draft choices in all-play-all system.
+        </li>
+        
+      </ul>
+ 
+    <li><hr style="margin-top: 20px"></li>
+ 
+    </ul> -->
+
+
+
+  <h2>Contact</h2>
+	
+	<ul class="list">
+		<!--<li><hr></li>-->
+
+    <!-- <li>
+    <strong><a href="https://groups.google.com/forum/#!forum/strategy-card-game-ai-competition/">Discussion forum</a></strong>
+    </li> -->
+    
+		<li>Organizers:
+      <ul class="taglist">
+        <li  style="color: #000000;"><strong><a href="mailto:jakub.kowalski@cs.uni.wroc.pl,radoslaw.miernik@cs.uni.wroc.p">Jakub Kowalski, Radosław Miernik</a></strong>, University of Wrocław</li>
+      </ul>
+
+           
+		</li>
+	<hr>
+</body>
+</html>
