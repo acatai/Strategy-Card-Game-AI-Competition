@@ -104,7 +104,7 @@ public class EngineReferee {
 
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
-            for (String line : constr.getMockPlayersInput(player, gameTurn)) {
+            for (String line : constr.getMockPlayersInput(player)) {
                 sdkplayer.sendInputLine(line);
             }
             for (Card card : constr.cardsForConstruction)
