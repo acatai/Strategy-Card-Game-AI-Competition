@@ -5,9 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConstructPhase {
-    public enum Difficulty {NORMAL, LESS_EASY, EASY, VERY_EASY}
-
-    public ConstructPhase.Difficulty difficulty;
     public List<Card> allowedCards;
     public List<Card> cardsForConstruction;
     //TODO we shouldn't mix arrays and collections, List<List<Card>> would be better
@@ -23,8 +20,7 @@ public class ConstructPhase {
 
     // todo - add function and field documentation
 
-    public ConstructPhase(ConstructPhase.Difficulty difficulty, RefereeParams params) {
-        this.difficulty = difficulty;
+    public ConstructPhase(RefereeParams params) {
         this.params = params;
 
         chosenCards = new ArrayList[] {new ArrayList<Card>(), new ArrayList<Card>()};
@@ -46,23 +42,7 @@ public class ConstructPhase {
 
     private void prepareAllowedCards() {
         Collection<Card> cardBase = Constants.CARDSET.values();
-
-        if (difficulty == ConstructPhase.Difficulty.NORMAL) {
-            allowedCards = new ArrayList<>(cardBase);
-        } else if (difficulty == ConstructPhase.Difficulty.LESS_EASY) {
-            allowedCards = cardBase.stream()
-                    .filter(card -> !card.keywords.hasDrain && !card.keywords.hasLethal && !card.keywords.hasWard)
-                    .collect(Collectors.toList());
-        } else if (difficulty == ConstructPhase.Difficulty.EASY) {
-            allowedCards = cardBase.stream()
-                    .filter(card -> card.type == Card.Type.CREATURE)
-                    .filter(card -> !card.keywords.hasDrain && !card.keywords.hasLethal && !card.keywords.hasWard)
-                    .collect(Collectors.toList());
-        } else {
-            allowedCards = cardBase.stream()
-                    .filter(this::isVeryEasyCard)
-                    .collect(Collectors.toList());
-        }
+        allowedCards = new ArrayList<>(cardBase);
     }
 
     public void PrepareConstructed() {

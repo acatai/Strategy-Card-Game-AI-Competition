@@ -20,8 +20,6 @@ public class Main
         }
 
         Constants.VERBOSE_LEVEL = 2;
-        System.setProperty("league.level", "4");
-
 
         Constants.LANES = 2;
         if (Constants.LANES > 1)

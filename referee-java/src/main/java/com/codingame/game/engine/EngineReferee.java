@@ -31,30 +31,10 @@ public class EngineReferee {
 
         RefereeParams params = new RefereeParams(gameManager);
 
-        ConstructPhase.Difficulty difficulty;
-        switch (gameManager.getLeagueLevel()) {
-            case 1:
-                difficulty = ConstructPhase.Difficulty.VERY_EASY;
-                break;
-            case 2:
-                difficulty = ConstructPhase.Difficulty.EASY;
-                break;
-            case 3:
-                difficulty = ConstructPhase.Difficulty.LESS_EASY;
-                break;
-            default:
-                difficulty = ConstructPhase.Difficulty.NORMAL;
-                break;
-        }
-
-        if (Constants.LANES>1)
-            difficulty = ConstructPhase.Difficulty.NORMAL;
-
         Constants.LoadCardlist("cardlist.txt");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Difficulty is set to: " + difficulty.name() + ".");
 
-        constr = new ConstructPhase(difficulty, params);
+        constr = new ConstructPhase(params);
         constr.PrepareConstructed();
 
         expectedConstructionFrames = (int) Math.ceil(
