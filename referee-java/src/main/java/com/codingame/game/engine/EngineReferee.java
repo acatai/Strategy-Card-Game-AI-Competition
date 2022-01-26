@@ -31,7 +31,13 @@ public class EngineReferee {
 
         RefereeParams params = new RefereeParams(gameManager);
 
-        Constants.LoadCardlist("cardlist.txt");
+        if (params.predefinedCardListFile != null) {
+            Constants.LoadCardlist(params.predefinedCardListFile);
+        } else {
+            CardGenerator cardGenerator = new CardGenerator(params.cardGenRNG, "cardWeights.json");
+            cardGenerator.generateCardList();
+        }
+
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
 
         constr = new ConstructPhase(params);
