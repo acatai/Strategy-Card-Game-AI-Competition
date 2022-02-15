@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.codingame.game.Player;
 import com.codingame.game.engine.Action.Type;
+import com.codingame.game.engine.cardgenerator.CardGenerator;
 import com.codingame.game.ui.RefereeUI;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.MultiplayerGameManager;
