@@ -330,6 +330,48 @@ public class RefereeUI {
     }
 
     public void battle(int turn) {
+        prepareForBattleTurn(turn);
+
+        ArrayList<Action> actions = engine.state.players[turn % 2].performedActions;
+        Action action = actions.size() == 0 ? null : actions.get(actions.size() - 1);
+
+        if (action != null && action.type == Action.Type.SUMMON)
+            handleSummonAction(action);
+
+        for (Player player : gameManager.getPlayers()) {
+            int playerIndex = player.getIndex();
+
+            // Expose an API in the engine?
+            Gamer gamer = engine.state.players[playerIndex];
+
+            // Update player.
+            players[playerIndex]
+                    .setActive(turn % 2 == playerIndex)
+                    .updateStats(gamer);
+
+            updateBoard(playerIndex, gamer.board);
+            updateHand(playerIndex, gamer.hand);
+        }
+
+        int playerIndex = turn % 2;
+
+        if (action != null && action.text != null && !action.text.isEmpty())
+            players[playerIndex].talk(action.text, false);
+        else
+            players[playerIndex].hideBubble();
+
+        if (action != null && action.type == Action.Type.ATTACK)
+            handleAttackAction(playerIndex, action);
+        else if (action != null && (action.type == Action.Type.USE))
+            handleUseAction(playerIndex, action);
+
+        if (action != null) {
+            players[playerIndex].attacker(action.result);
+            players[1 - playerIndex].defender(action.result);
+        }
+    }
+
+    private void prepareForBattleTurn(int turn) {
         for (int playerIndex = 0; playerIndex < 2; ++playerIndex) {
             players[playerIndex].hideBubble();
         }
@@ -350,13 +392,13 @@ public class RefereeUI {
                     .setAlpha(1);
 
             newTurn
-                    .setText("Turn " + Integer.toString((turn-engine.expectedConstructionFrames)/2))
+                    .setText("Turn " + Integer.toString((turn - engine.expectedConstructionFrames) / 2))
                     .setAnchor(0.5)
                     .setFontSize(50)
-                    .setFillColor(gameManager.getPlayers().get(turn%2).getColorToken())
+                    .setFillColor(gameManager.getPlayers().get(turn % 2).getColorToken())
                     .setStrokeColor(0x000000)
                     .setStrokeThickness(4.0)
-                    .setX(78+314/2)
+                    .setX(78 + 314 / 2)
                     .setY(ConstantsUI.BOARD.y)
                     .setAlpha(1);
         } else {
@@ -364,218 +406,189 @@ public class RefereeUI {
             newTurn.setText("");
         }
 
-        graphicEntityModule.commitEntityState(0,  newTurn, newTurnBackground);
+        graphicEntityModule.commitEntityState(0, newTurn, newTurnBackground);
 
         for (CardUI card : cardsPool.values())
             if (!card.isVisible())
                 card.setVisible(false);
+    }
 
+    private void updateBoard(int playerIndex, ArrayList<CreatureOnBoard> board) {
+        int boardX = ConstantsUI.BOARD.x;
+        int boardY = ConstantsUI.BOARD.y + (int) (ConstantsUI.BOARD_DIM.y * (0.5 - playerIndex) / 2.0);
+        int bcw = (int) (ConstantsUI.CARD_BOARD_SCALE * ConstantsUI.CARD_DIM.x * 0.8);
+        int bch = (int) (ConstantsUI.CARD_BOARD_SCALE * ConstantsUI.CARD_DIM.y);
+        int bcs = ConstantsUI.CARD_BOARD_SPACE;
 
-        ArrayList<Action> actions = engine.state.players[turn%2].performedActions;
-        Action action = actions.size() == 0 ? null : actions.get(actions.size() - 1);
-
-        if (action != null && action.type == Action.Type.SUMMON) {
-            SummonResult result = (SummonResult) action.result;
-            for (CreatureOnBoard copyCreature : result.summonedCreatures) {
-                if (copyCreature.id == result.originalCreature.id)
-                    continue;
-                CardUI cardUI1 = getCardFromPool(result.originalCreature.id);
-                CardUI cardUI2 = getCardFromPool(copyCreature.id);
-                Card card = engine.state.cardIdMap.get(action.arg1);
-                cardUI2
-                        .move(cardUI1.getX(), cardUI1.getY(), card)
-                        .setScale(ConstantsUI.CARD_HAND_SCALE)
-                        .commit(0.0);
-            }
-        }
-
-        for (Player player : gameManager.getPlayers()) {
-            int playerIndex = player.getIndex();
-            Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
-
-            // Expose an API in the engine?
-            Gamer gamer = engine.state.players[playerIndex];
-
-            // Update player.
-            players[playerIndex]
-                .setActive(turn % 2 == playerIndex)
-                .updateStats(gamer);
-
-            // Update board.
-            ArrayList<CreatureOnBoard> board = gamer.board;
-
-            int boardX = ConstantsUI.BOARD.x;
-            int boardY = ConstantsUI.BOARD.y + (int) (ConstantsUI.BOARD_DIM.y * (0.5 - playerIndex) / 2.0);
-            int bcw = (int) (ConstantsUI.CARD_BOARD_SCALE * ConstantsUI.CARD_DIM.x * 0.8);
-            int bch = (int) (ConstantsUI.CARD_BOARD_SCALE * ConstantsUI.CARD_DIM.y);
-            int bcs = ConstantsUI.CARD_BOARD_SPACE;
-
-            for (int lane = 0; lane < Constants.LANES; ++lane) {
-                // We love Java, right?
-                final int _lane = lane;
-                ArrayList<CreatureOnBoard> cardsInLane = board
+        for (int lane = 0; lane < Constants.LANES; ++lane) {
+            // We love Java, right?
+            final int _lane = lane;
+            ArrayList<CreatureOnBoard> cardsInLane = board
                     .stream()
                     .filter(card -> card.lane == _lane)
                     .collect(Collectors.toCollection(ArrayList::new));
 
-                int laneX = Constants.LANES == 1 ? 0 : (int) ((lane - 0.5) * ConstantsUI.BOARD_DIM.x / Constants.LANES);
-                int boardCenterX = ((bcw + bcs) * cardsInLane.size() + (cardsInLane.size() % 2) * bcs / 2) / 2;
+            int laneX = Constants.LANES == 1 ? 0 : (int) ((lane - 0.5) * ConstantsUI.BOARD_DIM.x / Constants.LANES);
+            int boardCenterX = ((bcw + bcs) * cardsInLane.size() + (cardsInLane.size() % 2) * bcs / 2) / 2;
 
-                for (int index = 0; index < cardsInLane.size(); ++index) {
-                    int cardXOffset = (bcw + bcs) * index;
-                    int cardX = boardX - laneX - boardCenterX + cardXOffset;
-                    int cardY = boardY - bch / 2;
+            for (int index = 0; index < cardsInLane.size(); ++index) {
+                int cardXOffset = (bcw + bcs) * index;
+                int cardX = boardX - laneX - boardCenterX + cardXOffset;
+                int cardY = boardY - bch / 2;
 
-                    CreatureOnBoard card = cardsInLane.get(index);
-                    Card base = Constants.CARDSET.values().stream()
+                CreatureOnBoard card = cardsInLane.get(index);
+                Card base = Constants.CARDSET.values().stream()
                         .filter(x -> x.baseId == card.baseId)
                         .findAny()
                         .get();
 
-                    getCardFromPool(card.id)
+                getCardFromPool(card.id)
                         .setScale(ConstantsUI.CARD_BOARD_SCALE)
                         .move(cardX, cardY, base, card, true);
-                }
             }
+        }
+    }
 
-            // Update hand.
-            ArrayList<Card> hand = gamer.hand;
+    private void updateHand(int playerIndex, ArrayList<Card> hand) {
+        int handX = ConstantsUI.BOARD.x;
+        int handY = ConstantsUI.BOARD.y + (ConstantsUI.BOARD_DIM.y + ConstantsUI.CARD_HAND_DIM.y + 20) * ((1 - playerIndex) * 2 - 1) / 2;
+        int hcw = (int) (ConstantsUI.CARD_HAND_SCALE * ConstantsUI.CARD_DIM.x);
+        int hch = (int) (ConstantsUI.CARD_HAND_SCALE * ConstantsUI.CARD_DIM.y);
+        int hcs = ConstantsUI.CARD_HAND_SPACE;
+        int handCenterX = ((hcw + hcs) * hand.size() + (hand.size() % 2) * hcs / 2) / 2;
+        Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
 
-            int handX = ConstantsUI.BOARD.x;
-            int handY = ConstantsUI.BOARD.y + (ConstantsUI.BOARD_DIM.y + ConstantsUI.CARD_HAND_DIM.y + 20) * ((1 - playerIndex) * 2 - 1) / 2;
-            int hcw = (int) (ConstantsUI.CARD_HAND_SCALE * ConstantsUI.CARD_DIM.x);
-            int hch = (int) (ConstantsUI.CARD_HAND_SCALE * ConstantsUI.CARD_DIM.y);
-            int hcs = ConstantsUI.CARD_HAND_SPACE;
-            int handCenterX = ((hcw + hcs) * hand.size() + (hand.size() % 2) * hcs / 2) / 2;
+        for (int index = 0; index < hand.size(); ++index) {
+            int cardXOffset = (hcw + hcs) * index;
+            int cardX = handX - handCenterX + cardXOffset;
+            int cardY = handY - hch / 2;
 
-            for (int index = 0; index < hand.size(); ++index) {
-                int cardXOffset = (hcw + hcs) * index;
-                int cardX = handX - handCenterX + cardXOffset;
-                int cardY = handY - hch / 2;
+            Card card = hand.get(index);
+            CardUI cardUI = getCardFromPool(card.id);
 
-                Card card = hand.get(index);
-                CardUI cardUI = getCardFromPool(card.id);
-
-                if (cardUI.getX() == 0) {
-                    cardUI
+            if (cardUI.getX() == 0) {
+                cardUI
                         .lift()
                         .setScale(ConstantsUI.CARD_DECK_SCALE)
                         .move(
-                            Vector2D.add(Vector2D.sub(ConstantsUI.PLAYER_DRAW_TXT, Vector2D.div(ConstantsUI.PLAYER_DECK_DIM, 2)), offset).x,
-                            Vector2D.add(Vector2D.sub(ConstantsUI.PLAYER_DRAW_TXT, Vector2D.div(ConstantsUI.PLAYER_DECK_DIM, 2)), offset).y,
-                            card
+                                Vector2D.add(Vector2D.sub(ConstantsUI.PLAYER_DRAW_TXT, Vector2D.div(ConstantsUI.PLAYER_DECK_DIM, 2)), offset).x,
+                                Vector2D.add(Vector2D.sub(ConstantsUI.PLAYER_DRAW_TXT, Vector2D.div(ConstantsUI.PLAYER_DECK_DIM, 2)), offset).y,
+                                card
                         )
                         .commit(0.0);
-                }
+            }
 
-                cardUI
+            cardUI
                     .setScale(ConstantsUI.CARD_HAND_SCALE)
                     .move(cardX, cardY, card)
                     .ground();
-            }
         }
 
-        int playerIndex = turn % 2;
-        Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, playerIndex);
+    }
 
-
-        if (action != null && action.text != null && !action.text.isEmpty()) {
-            players[playerIndex].talk(action.text, false);
-        } else {
-            players[playerIndex].hideBubble();
-        }
-
-        if (action != null && action.type == Action.Type.ATTACK) {
-            CardUI cardUI1 = cardsPool.get(action.arg1);
-
-            int x1 = cardUI1.getX();
-            int y1 = cardUI1.getY();
-
+    private void handleSummonAction(Action action) {
+        SummonResult result = (SummonResult) action.result;
+        for (CreatureOnBoard copyCreature : result.summonedCreatures) {
+            if (copyCreature.id == result.originalCreature.id)
+                continue;
+            CardUI cardUI1 = getCardFromPool(result.originalCreature.id);
+            CardUI cardUI2 = getCardFromPool(copyCreature.id);
             Card card = engine.state.cardIdMap.get(action.arg1);
-            Optional<CreatureOnBoard> creature = engine.state.players[playerIndex].board.stream()
-                    .filter(x -> x.id == card.id)
-                    .findAny();
+            cardUI2
+                    .move(cardUI1.getX(), cardUI1.getY(), card)
+                    .setScale(ConstantsUI.CARD_HAND_SCALE)
+                    .commit(0.0);
+        }
+    }
 
-            CardUI cardUI2 = action.arg2 == -1 ? null : cardsPool.get(action.arg2);
-            int x2 = cardUI2 == null
-                    ? ConstantsUI.PLAYER_AVATAR.x - cardUI1.getWidth() / 2 + offset.x
-                    : cardUI2.getX() + (cardUI2.getWidth() - cardUI1.getWidth()) / 2;
-            int y2 = cardUI2 == null
-                    ? ConstantsUI.PLAYER_AVATAR.y - cardUI1.getHeight() / 2 + offset.y
-                    : cardUI2.getY() + (cardUI2.getHeight() - cardUI1.getHeight()) / 2;
+    private void handleAttackAction(int playerIndex, Action action) {
+        Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, playerIndex);
+        CardUI cardUI1 = cardsPool.get(action.arg1);
 
-            if (creature.isPresent()) {
-                animateAttackAndLive(cardUI1, card, creature.get(), action, card.id, x1, y1, x2, y2);
-            } else {
-                Optional<CreatureOnBoard> graveyardCreature = engine.state.players[playerIndex].graveyard.stream()
-                        .filter(x -> x.id == card.id)
-                        .findAny();
-                boolean isOnBoard = graveyardCreature.isPresent();
-                assert isOnBoard : "Attacking creature should to be alive or on graveyard";
-                CreatureOnBoard realCreature = graveyardCreature.get();
-                animateAttackAndDie(cardUI1, card, realCreature, action, card.id, x1, y1, x2, y2);
+        int x1 = cardUI1.getX();
+        int y1 = cardUI1.getY();
+
+        Card card = engine.state.cardIdMap.get(action.arg1);
+        Optional<CreatureOnBoard> creature = engine.state.players[playerIndex].board.stream()
+                .filter(x -> x.id == card.id)
+                .findAny();
+
+        CardUI cardUI2 = action.arg2 == -1 ? null : cardsPool.get(action.arg2);
+        int x2 = cardUI2 == null
+                ? ConstantsUI.PLAYER_AVATAR.x - cardUI1.getWidth() / 2 + offset.x
+                : cardUI2.getX() + (cardUI2.getWidth() - cardUI1.getWidth()) / 2;
+        int y2 = cardUI2 == null
+                ? ConstantsUI.PLAYER_AVATAR.y - cardUI1.getHeight() / 2 + offset.y
+                : cardUI2.getY() + (cardUI2.getHeight() - cardUI1.getHeight()) / 2;
+
+        if (creature.isPresent()) {
+            animateAttackAndLive(cardUI1, card, creature.get(), action, card.id, x1, y1, x2, y2);
+        } else {
+            Optional<CreatureOnBoard> graveyardCreature = searchCreatureInGraveyard(playerIndex, card.id);
+            boolean isOnBoard = graveyardCreature.isPresent();
+            assert isOnBoard : "Attacking creature should to be alive or on graveyard";
+            CreatureOnBoard realCreature = graveyardCreature.get();
+            animateAttackAndDie(cardUI1, card, realCreature, action, card.id, x1, y1, x2, y2);
+        }
+
+        if (cardUI2 != null) {
+            Optional<CreatureOnBoard> graveyardCreature2 = searchCreatureInGraveyard(1 - playerIndex, action.arg2);
+            if (graveyardCreature2.isPresent()) {
+                forceCommitAlpha1(cardUI2, 0.5);
+                cardUI2.setVisible(false);
+                cardUI2.commit(1);
             }
+            cardUI2.action((AttackResult) action.result, action.arg2);
+        }
+    }
 
-            if (cardUI2 != null) {
-                Optional<CreatureOnBoard> graveyardCreature2 = engine.state.players[1 - playerIndex].graveyard.stream()
-                        .filter(x -> x.id == action.arg2)
-                        .findAny();
+    private void handleUseAction(int playerIndex, Action action) {
+        Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, playerIndex);
+        if (actionPlayedOnSelf(action)) {
+            offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
+        }
+        CardUI cardUI1 = cardsPool.get(action.arg1);
+        int x1 = cardUI1.getX();
+        int y1 = cardUI1.getY();
+        Card card = engine.state.cardIdMap.get(action.arg1);
+        Optional<CreatureOnBoard> graveyardCreature = searchCreatureInGraveyard(playerIndex, card.id);
+        CreatureOnBoard realCreature = graveyardCreature.orElseGet(() -> new CreatureOnBoard(card));
+
+        UseResult result = (UseResult) action.result;
+
+        if (action.arg2 == -1) {
+            int x2 = ConstantsUI.PLAYER_AVATAR.x - cardUI1.getWidth() / 2 + offset.x;
+            int y2 = ConstantsUI.PLAYER_AVATAR.y - cardUI1.getHeight() / 2 + offset.y;
+            animateUse(cardUI1, card, realCreature, x1, y1, x2, y2);
+        } else {
+            for (int i = 0; i < result.targets.size(); i++) {
+                UseResult.CreatureUseResult partialResult = result.targets.get(i);
+                CardUI itemCopyUI = cardsPool.get(-(i + 1));
+                itemCopyUI
+                        .move(x1, y1, card, realCreature, false)
+                        .commit(0.0);
+
+                CardUI cardUI2 = cardsPool.get(partialResult.target.id);
+                int x2 = cardUI2.getX() + (cardUI2.getWidth() - cardUI1.getWidth()) / 2;
+                int y2 = cardUI2.getY() + (cardUI2.getHeight() - cardUI1.getHeight()) / 2;
+
+                animateUse(itemCopyUI, card, realCreature, x1, y1, x2, y2);
+
+                Optional<CreatureOnBoard> graveyardCreature2 = searchCreatureInGraveyard(1 - playerIndex, partialResult.target.id);
                 if (graveyardCreature2.isPresent()) {
                     forceCommitAlpha1(cardUI2, 0.5);
                     cardUI2.setVisible(false);
                     cardUI2.commit(1);
                 }
-                cardUI2.action((AttackResult) action.result, action.arg2);
-            }
-        } else if (action != null && (action.type == Action.Type.USE)) {
-            if (actionPlayedOnSelf(action)) {
-                offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
-            }
-            CardUI cardUI1 = cardsPool.get(action.arg1);
-            int x1 = cardUI1.getX();
-            int y1 = cardUI1.getY();
-            Card card = engine.state.cardIdMap.get(action.arg1);
-            Optional<CreatureOnBoard> graveyardCreature = engine.state.players[playerIndex].graveyard.stream()
-                    .filter(x -> x.id == card.id)
-                    .findAny();
-            CreatureOnBoard realCreature = graveyardCreature.orElseGet(() -> new CreatureOnBoard(card));
-
-            UseResult result = (UseResult) action.result;
-
-            if (action.arg2 == -1) {
-                int x2 = ConstantsUI.PLAYER_AVATAR.x - cardUI1.getWidth() / 2 + offset.x;
-                int y2 = ConstantsUI.PLAYER_AVATAR.y - cardUI1.getHeight() / 2 + offset.y;
-                animateUse(cardUI1, card, realCreature, x1, y1, x2, y2);
-            } else {
-                for (int i = 0; i<result.targets.size(); i++) {
-                    UseResult.CreatureUseResult partialResult = result.targets.get(i);
-                    CardUI itemCopyUI = cardsPool.get(-(i+1));
-                    itemCopyUI
-                            .move(x1, y1, card, realCreature, false)
-                            .commit(0.0);
-
-                    CardUI cardUI2 = cardsPool.get(partialResult.target.id);
-                    int x2 = cardUI2.getX() + (cardUI2.getWidth() - cardUI1.getWidth()) / 2;
-                    int y2 = cardUI2.getY() + (cardUI2.getHeight() - cardUI1.getHeight()) / 2;
-
-                    animateUse(itemCopyUI, card, realCreature, x1, y1, x2, y2);
-
-                    Optional<CreatureOnBoard> graveyardCreature2 = engine.state.players[1 - playerIndex].graveyard.stream()
-                            .filter(x -> x.id == partialResult.target.id)
-                            .findAny();
-                    if (graveyardCreature2.isPresent()) {
-                        forceCommitAlpha1(cardUI2, 0.5);
-                        cardUI2.setVisible(false);
-                        cardUI2.commit(1);
-                    }
-                    cardUI2.action(partialResult, action.arg2);
-                }
+                cardUI2.action(partialResult, action.arg2);
             }
         }
-        if (action != null) {
-            players[playerIndex].attacker(action.result);
-            players[1 - playerIndex].defender(action.result);
-        }
+    }
+
+    private Optional<CreatureOnBoard> searchCreatureInGraveyard(int playerIndex, int searchedId) {
+        return engine.state.players[playerIndex].graveyard.stream()
+                .filter(x -> x.id == searchedId)
+                .findAny();
     }
 
     private boolean actionPlayedOnSelf(Action action) {
