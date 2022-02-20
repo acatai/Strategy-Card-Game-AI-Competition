@@ -460,7 +460,7 @@ public class GameState
             targetAfter == null ? target : targetAfter, targetAfter == null,
             item.attack, item.defense);
 
-    return new UseResult(new CreatureOnBoard(item), Collections.singletonList(creatureResult), item.cardDraw, itemgiverHealthChange, targetHealthChange);
+    return new UseResult(new CreatureOnBoard(item), Collections.singletonList(creatureResult), itemgiverHealthChange, targetHealthChange, item.cardDraw);
   }
 
   // when item is used on a player // run it ONLY on legal actions
