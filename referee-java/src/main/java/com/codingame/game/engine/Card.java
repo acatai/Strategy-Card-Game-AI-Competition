@@ -19,7 +19,7 @@ public class Card {
     ITEM_RED("itemRed"),
     ITEM_BLUE("itemBlue");
 
-    private String description;
+    private final String description;
 
     public String getDescription() {
       return description;
@@ -45,7 +45,7 @@ public class Card {
     LANE1("lane1"),
     LANE2("lane2");
 
-    private String description;
+    private final String description;
 
     public String getDescription() {
       return description;
@@ -65,24 +65,24 @@ public class Card {
     }
   }
 
-  public int id;
-  public int baseId;
-  public Type type;
-  public int cost;
-  public int attack;
-  public int defense;
-  public Keywords keywords;
+  public final int id;
+  public final int baseId;
+  public final Type type;
+  public final int cost;
+  public final int attack;
+  public final int defense;
+  public final Keywords keywords;
   //TODO maybe myHealthChange, oppHealthChange, cardDraw should be moved into Summon class?
-  public int myHealthChange;
-  public int oppHealthChange;
-  public int cardDraw;
-  public Area area;
-  public String name;
+  public final int myHealthChange;
+  public final int oppHealthChange;
+  public final int cardDraw;
+  public final Area area;
+  public final String name;
   public String text;
   private String tooltipTextBase;
-  public String comment;
+  public final String comment;
 
-  private static int lastID = 2*Constants.CARDS_IN_DECK;
+  private static int lastID = 1;
 
 
 

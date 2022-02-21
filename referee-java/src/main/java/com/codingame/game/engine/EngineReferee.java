@@ -45,10 +45,10 @@ public class EngineReferee {
         constr.PrepareConstructed();
 
         expectedConstructionFrames = (int) Math.ceil(
-                (double) Math.min(Constants.CARDS_IN_CONSTRUCTED, constr.allowedCards.size())
+                (double) Math.min(Constants.CARDS_IN_CONSTRUCTED, constr.cardsForConstruction.size())
                         / Constants.MAX_CARDS_IN_FRAME);
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Construction Phase Prepared. " + constr.allowedCards.size() + " cards allowed. ");
+        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Construction Phase Prepared. ");
         if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the construction.");
 
         gameManager.setMaxTurns(Constants.MAX_TURNS_HARDLIMIT); // should be never reached, not handled on the referee's side

@@ -5,14 +5,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConstructPhase {
-    public List<Card> allowedCards;
-    public List<Card> cardsForConstruction;
+    public final List<Card> cardsForConstruction;
     //TODO we shouldn't mix arrays and collections, List<List<Card>> would be better
-    public List<Card>[] chosenCards;
-    public int[][] chosenQuantities;
-    public List<Card>[] decks; // after shuffle and assigning unique id's
+    public final List<Card>[] chosenCards;
+    public final int[][] chosenQuantities;
+    public final List<Card>[] decks; // after shuffle and assigning unique id's
 
-    public String[] text = new String[2];
+    public final String[] text = new String[2];
 
     private final Random choicesRNG;
     private final Random[] shufflesRNG;
@@ -22,6 +21,8 @@ public class ConstructPhase {
 
     public ConstructPhase(RefereeParams params) {
         this.params = params;
+
+        cardsForConstruction = new ArrayList<>();
 
         chosenCards = new ArrayList[] {new ArrayList<Card>(), new ArrayList<Card>()};
         decks = new ArrayList[] {new ArrayList<Card>(), new ArrayList<Card>()};
@@ -34,20 +35,9 @@ public class ConstructPhase {
         shufflesRNG = new Random[] {params.shufflePlayer0RNG, params.shufflePlayer1RNG};
     }
 
-    private boolean isVeryEasyCard(Card card) {
-        return card.type == Card.Type.CREATURE
-                && !card.keywords.hasAnyKeyword()
-                && card.myHealthChange == 0 && card.oppHealthChange == 0 && card.cardDraw == 0;
-    }
-
-    private void prepareAllowedCards() {
-        Collection<Card> cardBase = Constants.CARDSET.values();
-        allowedCards = new ArrayList<>(cardBase);
-    }
-
     public void PrepareConstructed() {
-        prepareAllowedCards();
-        cardsForConstruction = new ArrayList<>();
+        List<Card> allowedCards = new ArrayList<>(Constants.CARDSET.values());
+
         if (params.predefinedConstructedIds != null) { // parameter-forced construction choices
             for(int pick = 0; pick <  Constants.CARDS_IN_CONSTRUCTED; pick++)
                 cardsForConstruction.add(Constants.CARDSET.get(params.predefinedConstructedIds[pick]));
@@ -145,13 +135,8 @@ public class ConstructPhase {
     public void shuffleDecks() {
         for (int player=0; player < 2; player++) {
             for (Card c : chosenCards[player])
-                decks[player].add(new Card(c));
-
+                decks[player].add(new Card(c, true));
             Collections.shuffle(decks[player], shufflesRNG[player]);
-            ListIterator<Card> it = decks[player].listIterator();
-            while (it.hasNext()) {
-                it.next().id = 2 * it.nextIndex() + player - 1;
-            }
         }
     }
 
@@ -170,7 +155,7 @@ public class ConstructPhase {
         lines.add(join(Constants.INITIAL_HEALTH, 0, 0, 0));
         lines.add(join(Constants.INITIAL_HEALTH, 0, 0, 0));
         lines.add("0 0");
-        lines.add(String.valueOf(Math.min(Constants.CARDS_IN_CONSTRUCTED, this.allowedCards.size())));
+        lines.add(String.valueOf(Math.min(Constants.CARDS_IN_CONSTRUCTED, this.cardsForConstruction.size())));
 
         return lines.stream().toArray(String[]::new);
     }

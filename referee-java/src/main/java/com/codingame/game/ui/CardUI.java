@@ -2,33 +2,31 @@ package com.codingame.game.ui;
 
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.codingame.game.engine.*;
 import com.codingame.gameengine.module.entities.*;
 import com.codingame.view.tooltip.TooltipModule;
 
 public class CardUI {
-    private TooltipModule tooltipModule;
-    private GraphicEntityModule graphicEntityModule;
+    private final TooltipModule tooltipModule;
+    private final GraphicEntityModule graphicEntityModule;
 
-    private Group group;
-    private Sprite background;
-    private Sprite image;
-    private Sprite overlay;
-    private Sprite ward;
-    private Sprite lethal;
-    private Sprite shadow;
-    private Sprite impact, heal;
-    private Sprite[] keywords = new Sprite[6];
-    private Text attack;
-    private Text cost;
-    private Text defense;
-    private Text[] extras = new Text[3];
-    private Text damageFloat, healFloat;
-    private Sprite[] extraIcons = new Sprite[3];
-    private Sprite area;
+    private final Group group;
+    private final Sprite background;
+    private final Sprite image;
+    private final Sprite overlay;
+    private final Sprite ward;
+    private final Sprite lethal;
+    private final Sprite shadow;
+    private final Sprite impact, heal;
+    private final Sprite[] keywords = new Sprite[6];
+    private final Text attack;
+    private final Text cost;
+    private final Text defense;
+    private final Text[] extras = new Text[3];
+    private final Text damageFloat, healFloat;
+    private final Sprite[] extraIcons = new Sprite[3];
+    private final Sprite area;
 
     public CardUI(GraphicEntityModule graphicEntityModule, TooltipModule tooltipModule) {
         this.graphicEntityModule = graphicEntityModule;

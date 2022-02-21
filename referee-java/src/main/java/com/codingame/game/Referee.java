@@ -17,7 +17,7 @@ public class Referee extends AbstractReferee {
     @Inject private EndScreenModule endScreenModule;
     @Inject private FXModule fxModule;
 
-    private EngineReferee engine = new EngineReferee();
+    private final EngineReferee engine = new EngineReferee();
     private RefereeUI ui;
 
     //public static int turn = 0;
@@ -37,6 +37,7 @@ public class Referee extends AbstractReferee {
             ui.fxModule = fxModule;
             ui.init();
         }
+
     }
 
     @Override

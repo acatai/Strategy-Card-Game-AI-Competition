@@ -47,14 +47,6 @@ public class ConstantsUI {
     public static final Vector2D PLAYER_HEALTH_TXT = new Vector2D(95,  370);
     public static final Vector2D PLAYER_MANA_TXT = new Vector2D(245, 370);
     public static final Vector2D PLAYER_NICK_TXT = new Vector2D(229, 250);
-
-    public static final Vector2D[] PLAYER_RUNES = {
-        new Vector2D(95,  434),
-        new Vector2D(144, 415),
-        new Vector2D(157, 367),
-        new Vector2D(144, 322),
-        new Vector2D(95,  304)
-    };
     
     public static final Vector2D[] PLAYER_BUBBLES_POSITION = {
         new Vector2D(229, 539),

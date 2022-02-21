@@ -12,8 +12,8 @@ import com.google.inject.Inject;
 
 public class FXModule implements Module {
 
-    MultiplayerGameManager<Player> gameManager;
-    List<Text> nicknames = new ArrayList<>(2);
+    private final MultiplayerGameManager<Player> gameManager;
+    private final List<Text> nicknames = new ArrayList<>(2);
 
     @Inject
     public FXModule(MultiplayerGameManager<Player> gameManager) {

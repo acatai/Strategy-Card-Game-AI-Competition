@@ -9,8 +9,8 @@ import com.codingame.game.engine.Card.Type;
  */
 public class CreatureOnBoard
 {
-  public int id;
-  public int baseId;
+  public final int id;
+  public final int baseId;
   public int attack;
   public int defense;
   public int cost;
@@ -20,9 +20,9 @@ public class CreatureOnBoard
   public boolean hasAttacked;
   public int lastTurnDefense;
 
-  public int lane; // usually 0 or 1
+  public final int lane; // usually 0 or 1
   
-  public Card baseCard;
+  public final Card baseCard;
 
   public CreatureOnBoard (CreatureOnBoard creature)
   {
@@ -37,22 +37,6 @@ public class CreatureOnBoard
     this.canAttack = creature.canAttack;
     this.hasAttacked = creature.hasAttacked;
     this.lane = creature.lane;
-  }
-
-  /**
-   * @param data "id baseId attack defense keywords"
-   */
-  public CreatureOnBoard (String data)
-  {
-    String[] creature = data.split(" ");
-    this.id = Integer.parseInt(creature[0]);
-    this.baseId = Integer.parseInt(creature[1]);
-    this.attack = Integer.parseInt(creature[2]);
-    this.defense = Integer.parseInt(creature[3]);
-    this.keywords = new Keywords(creature[4]);
-    this.canAttack = this.keywords.hasCharge;
-    this.lastTurnDefense = this.defense;
-    this.lane = 0;
   }
 
   public CreatureOnBoard (Card card, int lane)

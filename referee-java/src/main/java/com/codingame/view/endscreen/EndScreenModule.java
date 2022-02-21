@@ -7,7 +7,7 @@ import com.google.inject.Inject;
 
 public class EndScreenModule implements Module {
 
-    private GameManager<AbstractPlayer> gameManager;
+    private final GameManager<AbstractPlayer> gameManager;
     private int[] scores;
 
     @Inject

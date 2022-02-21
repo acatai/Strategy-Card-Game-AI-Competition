@@ -11,10 +11,10 @@ import com.codingame.gameengine.module.entities.Entity;
 
 public class TooltipModule implements Module {
 
-  MultiplayerGameManager<Player> gameManager;
-  Map<Integer, Map<String, Object>> registrations;
-  Map<Integer, Map<String, Object>> newRegistrations;
-  Map<Integer, String[]> extra, newExtra;
+  private final MultiplayerGameManager<Player> gameManager;
+  private final Map<Integer, Map<String, Object>> registrations;
+  private final Map<Integer, Map<String, Object>> newRegistrations;
+  private final Map<Integer, String[]> extra, newExtra;
 
   public TooltipModule(MultiplayerGameManager<Player> gameManager) {
     this.gameManager = gameManager;

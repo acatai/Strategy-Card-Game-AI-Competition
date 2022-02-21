@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Action
 {
-  public enum Type {SUMMON, ATTACK, USE, PASS};
+  public enum Type {SUMMON, ATTACK, USE, PASS}
 
   public final Type type;
   public final int arg1;
@@ -126,7 +126,7 @@ public class Action
 
   public static Action newSummon(int arg1, int arg2, String text)
   {
-    return new Action(Type.SUMMON, arg1, arg2, "");
+    return new Action(Type.SUMMON, arg1, arg2, text);
   }
 
   public static Action newAttack(int arg1, int arg2)

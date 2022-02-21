@@ -12,24 +12,24 @@ import com.codingame.gameengine.module.entities.Text;
 
 public class PlayerUI {
     private static final int[] CHARS_TO_CROP = new int[] {22, 45};
-    private GraphicEntityModule graphicEntityModule;
-    private Player player;
+    private final GraphicEntityModule graphicEntityModule;
+    private final Player player;
 
-    private Sprite avatar;
-    private Sprite[] frame = new Sprite[2];
-    private Text draw;
-    private Text deck;
-    private Text health;
-    private Text mana;
-    private Text nick;
+    private final Sprite avatar;
+    private final Sprite[] frame = new Sprite[2];
+    private final Text draw;
+    private final Text deck;
+    private final Text health;
+    private final Text mana;
+    private final Text nick;
 
-    private Text damageFloat, healFloat;
-    private Sprite impact, heal;
-    private Group bubble;
-    private Text bubbleText;
-    private Sprite bubbleSprite;
+    private final Text damageFloat, healFloat;
+    private final Sprite impact, heal;
+    private final Group bubble;
+    private final Text bubbleText;
+    private final Sprite bubbleSprite;
 
-    private Vector2D bubblePosition;
+    private final Vector2D bubblePosition;
 
     public PlayerUI(GraphicEntityModule graphicEntityModule, Player player)
     {

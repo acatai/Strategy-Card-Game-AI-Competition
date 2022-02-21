@@ -29,19 +29,19 @@ public class RefereeUI {
 
     private TooltipModule tooltipModule;
 
-    private Map<Integer, CardUI> cardsPool = new HashMap<>();
-    private static PlayerUI[] players = new PlayerUI[2];
+    private final Map<Integer, CardUI> cardsPool = new HashMap<>();
+    private final static PlayerUI[] players = new PlayerUI[2];
 
-    private Text[][] constructedCardsQuantity = new Text[2][Constants.MAX_CARDS_IN_FRAME];
+    private final Text[][] constructedCardsQuantity = new Text[2][Constants.MAX_CARDS_IN_FRAME];
 
-    private Text[] deck = new Text[2];
+    private final Text[] deck = new Text[2];
 
-    private Text[][] manaCurveCosts = new Text[2][8];
-    private Rectangle[][] manaCurve = new Rectangle[2][8];
-    private Text[][] manaCurveQuantity = new Text[2][8];
+    private final Text[][] manaCurveCosts = new Text[2][8];
+    private final Rectangle[][] manaCurve = new Rectangle[2][8];
+    private final Text[][] manaCurveQuantity = new Text[2][8];
 
-    private Text[] cardTypesInfo = new Text[2];
-    private Text[] cardTypesQuantity = new Text[2];
+    private final Text[] cardTypesInfo = new Text[2];
+    private final Text[] cardTypesQuantity = new Text[2];
 
     private Sprite[] separators;
     private Sprite newTurnBackground;
@@ -172,46 +172,51 @@ public class RefereeUI {
             }
 
         }
-        if (turn == 0) {
-            for (Player player : gameManager.getPlayers()) {
-                int playerIndex = player.getIndex();
-                Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
 
-                if (!engine.constr.text[playerIndex].isEmpty()) {
-                    players[playerIndex].talk(engine.constr.text[playerIndex], true);
-                } else {
-                    players[playerIndex].hideBubble();
-                }
+        if (turn == 0)
+            constructPhaseTurnZero();
+    }
 
-                deck[1 - playerIndex]
-                        .setText(Integer.toString(Constants.CARDS_IN_DECK))
-                        .setAnchor(0.5)
-                        .setFillColor(0xffffff)
-                        .setFontSize(40)
-                        .setStrokeColor(0x000000)
-                        .setStrokeThickness(4.0)
-                        .setX(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).x)
-                        .setY(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).y);
+    private void constructPhaseTurnZero() {
+        for (Player player : gameManager.getPlayers()) {
+            int playerIndex = player.getIndex();
+            Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
+
+            if (!engine.constr.text[playerIndex].isEmpty()) {
+                players[playerIndex].talk(engine.constr.text[playerIndex], true);
+            } else {
+                players[playerIndex].hideBubble();
             }
 
-            newTurnBackground
-                    .setX(78)
-                    .setY(482)
-                    .setAlpha(1);
-
-            newTurn
-                    .setText("Cards: " + Integer.toString(Constants.CARDS_IN_DECK))
+            deck[1 - playerIndex]
+                    .setText(Integer.toString(Constants.CARDS_IN_DECK))
                     .setAnchor(0.5)
-                    .setFontSize(50)
                     .setFillColor(0xffffff)
+                    .setFontSize(40)
                     .setStrokeColor(0x000000)
                     .setStrokeThickness(4.0)
-                    .setX(78+314/2)
-                    .setY(ConstantsUI.BOARD.y);
-
-            graphicEntityModule.commitEntityState(0,  newTurnBackground, newTurn);
-            drawManaCurve();
+                    .setX(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).x)
+                    .setY(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).y);
         }
+
+        newTurnBackground
+                .setX(78)
+                .setY(482)
+                .setAlpha(1);
+
+        newTurn
+                .setText("Cards: " + Integer.toString(Constants.CARDS_IN_DECK))
+                .setAnchor(0.5)
+                .setFontSize(50)
+                .setFillColor(0xffffff)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(78+314/2)
+                .setY(ConstantsUI.BOARD.y);
+
+        graphicEntityModule.commitEntityState(0,  newTurnBackground, newTurn);
+        drawManaCurve();
+
     }
 
     private void initManaCurve() {

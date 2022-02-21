@@ -11,7 +11,7 @@ import static com.codingame.game.engine.Constants.INITIAL_HAND_SIZE;
  */
 public class Gamer
 {
-  public int id;
+  public final int id;
   public int bonusManaTurns;
   public ArrayList<Card> hand;
   public ArrayList<Card> deck;
@@ -25,7 +25,7 @@ public class Gamer
   public int healthLostThisTurn;
 
   public ArrayList<Action> performedActions;
-  public int handLimit;
+  public final int handLimit;
 
   // todo rest
 
