@@ -8,7 +8,6 @@ import java.util.List;
  * 02.04.2018
  */
 public class Keywords {
-
     public boolean hasBreakthrough;
     public boolean hasCharge;
     public boolean hasDrain;
@@ -63,5 +62,4 @@ public class Keywords {
 //                (hasRegenerate ? 'R' : '-') +
                 (hasWard ? 'W' : '-');
     }
-
 }

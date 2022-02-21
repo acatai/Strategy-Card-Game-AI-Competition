@@ -11,7 +11,6 @@ import com.codingame.gameengine.module.entities.Text;
 import com.google.inject.Inject;
 
 public class FXModule implements Module {
-
     private final MultiplayerGameManager<Player> gameManager;
     private final List<Text> nicknames = new ArrayList<>(2);
 
@@ -19,7 +18,6 @@ public class FXModule implements Module {
     public FXModule(MultiplayerGameManager<Player> gameManager) {
         this.gameManager = gameManager;
         gameManager.registerModule(this);
-
     }
 
     @Override
@@ -33,12 +31,9 @@ public class FXModule implements Module {
 
     @Override
     public void onAfterGameTurn() {
-
     }
 
     @Override
     public void onAfterOnEnd() {
-
     }
-
 }

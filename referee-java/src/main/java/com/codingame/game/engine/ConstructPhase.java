@@ -23,23 +23,22 @@ public class ConstructPhase {
         this.params = params;
 
         cardsForConstruction = new ArrayList<>();
-
-        chosenCards = new ArrayList[] {new ArrayList<Card>(), new ArrayList<Card>()};
-        decks = new ArrayList[] {new ArrayList<Card>(), new ArrayList<Card>()};
-        chosenQuantities = new int[2][Constants.CARDSET.size()+1];
+        chosenCards = new ArrayList[]{new ArrayList<Card>(), new ArrayList<Card>()};
+        decks = new ArrayList[]{new ArrayList<Card>(), new ArrayList<Card>()};
+        chosenQuantities = new int[2][Constants.CARDSET.size() + 1];
 
         for (int player = 0; player < 2; player++)
             text[player] = "";
 
         choicesRNG = params.constructedChoicesRNG;
-        shufflesRNG = new Random[] {params.shufflePlayer0RNG, params.shufflePlayer1RNG};
+        shufflesRNG = new Random[]{params.shufflePlayer0RNG, params.shufflePlayer1RNG};
     }
 
     public void PrepareConstructed() {
         List<Card> allowedCards = new ArrayList<>(Constants.CARDSET.values());
 
         if (params.predefinedConstructedIds != null) { // parameter-forced construction choices
-            for(int pick = 0; pick <  Constants.CARDS_IN_CONSTRUCTED; pick++)
+            for (int pick = 0; pick < Constants.CARDS_IN_CONSTRUCTED; pick++)
                 cardsForConstruction.add(Constants.CARDSET.get(params.predefinedConstructedIds[pick]));
             return;
         }
@@ -59,9 +58,9 @@ public class ConstructPhase {
     }
 
     private Card handlePassCommand(int player) throws InvalidActionHard {
-        Optional<Card> choice = cardsForConstruction.stream().
-                filter(c -> chosenQuantities[player][c.baseId] < Constants.CONSTRUCTED_MAX_COPY).
-                findFirst();
+        Optional<Card> choice = cardsForConstruction.stream()
+                .filter(c -> chosenQuantities[player][c.baseId] < Constants.CONSTRUCTED_MAX_COPY)
+                .findFirst();
         if (choice.isPresent())
             return choice.get();
         throw new InvalidActionHard("Something went horrible wrong. No card available to choose.");
@@ -70,7 +69,7 @@ public class ConstructPhase {
     private Card handlePickCommand(String[] command, int player) throws InvalidActionHard {
         int value = Integer.parseInt(command[1]);
         if (value < 0 || value >= Constants.CARDS_IN_CONSTRUCTED)
-            throw  new InvalidActionHard("Invalid action argument. \"PICK\" argument should be between 0 and " + (Constants.CARDS_IN_CONSTRUCTED -1) + ".");
+            throw new InvalidActionHard("Invalid action argument. \"PICK\" argument should be between 0 and " + (Constants.CARDS_IN_CONSTRUCTED - 1) + ".");
         Card choice = cardsForConstruction.get(value);
         if (chosenQuantities[player][choice.baseId] >= Constants.CONSTRUCTED_MAX_COPY)
             throw new InvalidActionHard("Invalid action argument. Card can be chosen maximally three times.");
@@ -79,9 +78,9 @@ public class ConstructPhase {
 
     private Card handleChooseCommand(String[] command, int player) throws InvalidActionHard {
         int value = Integer.parseInt(command[1]);
-        Optional<Card> choice = cardsForConstruction.stream().
-                filter(c -> value == c.baseId).
-                findAny();
+        Optional<Card> choice = cardsForConstruction.stream()
+                .filter(c -> value == c.baseId)
+                .findAny();
 
         if (!choice.isPresent())
             throw new InvalidActionHard("Invalid action format. \"CHOOSE\" argument should be valid card's base id.");
@@ -94,12 +93,10 @@ public class ConstructPhase {
 
     public void playerChoice(String action, int player) throws InvalidActionHard {
         Card choice;
-        String text;
-
         String[] command = action.split(" ", 3);
-        text = command.length < 3 ? "" : command[2].trim();
+        String text = command.length < 3 ? "" : command[2].trim();
 
-        switch (command[0]){
+        switch (command[0]) {
             case "PASS":
                 choice = handlePassCommand(player);
                 break;
@@ -133,7 +130,7 @@ public class ConstructPhase {
     }
 
     public void shuffleDecks() {
-        for (int player=0; player < 2; player++) {
+        for (int player = 0; player < 2; player++) {
             for (Card c : chosenCards[player])
                 decks[player].add(new Card(c, true));
             Collections.shuffle(decks[player], shufflesRNG[player]);
@@ -142,10 +139,9 @@ public class ConstructPhase {
 
     public String summarizeChoices(int player) {
         StringJoiner logMessage = new StringJoiner(", ");
-        for (int i = 0; i < Constants.CARDSET.size(); i++) {
+        for (int i = 0; i < Constants.CARDSET.size(); i++)
             if (chosenQuantities[player][i] > 0)
                 logMessage.add(i + "x" + chosenQuantities[player][i]);
-        }
         return logMessage.toString();
     }
 

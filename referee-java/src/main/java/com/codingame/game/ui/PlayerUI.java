@@ -11,7 +11,7 @@ import com.codingame.gameengine.module.entities.Sprite;
 import com.codingame.gameengine.module.entities.Text;
 
 public class PlayerUI {
-    private static final int[] CHARS_TO_CROP = new int[] {22, 45};
+    private static final int[] CHARS_TO_CROP = new int[]{22, 45};
     private final GraphicEntityModule graphicEntityModule;
     private final Player player;
 
@@ -31,8 +31,7 @@ public class PlayerUI {
 
     private final Vector2D bubblePosition;
 
-    public PlayerUI(GraphicEntityModule graphicEntityModule, Player player)
-    {
+    public PlayerUI(GraphicEntityModule graphicEntityModule, Player player) {
         this.graphicEntityModule = graphicEntityModule;
         this.player = player;
 
@@ -41,24 +40,27 @@ public class PlayerUI {
         Vector2D offset = Vector2D.mult(ConstantsUI.PLAYER_OFFSET, 1 - playerIndex);
         bubblePosition = ConstantsUI.PLAYER_BUBBLES_POSITION[1 - playerIndex];
 
-        avatar = graphicEntityModule.createSprite()
-            .setAnchor(0.5)
-            .setBaseHeight(ConstantsUI.PLAYER_AVATAR_DIM.y)
-            .setBaseWidth(ConstantsUI.PLAYER_AVATAR_DIM.x)
-            .setImage(player.getAvatarToken())
-            .setX(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).y);
+        avatar = graphicEntityModule
+                .createSprite()
+                .setAnchor(0.5)
+                .setBaseHeight(ConstantsUI.PLAYER_AVATAR_DIM.y)
+                .setBaseWidth(ConstantsUI.PLAYER_AVATAR_DIM.x)
+                .setImage(player.getAvatarToken())
+                .setX(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).y);
 
-        draw = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(40)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(Vector2D.add(ConstantsUI.PLAYER_DRAW_TXT, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_DRAW_TXT, offset).y);
+        draw = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(40)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(Vector2D.add(ConstantsUI.PLAYER_DRAW_TXT, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_DRAW_TXT, offset).y);
 
-        deck = graphicEntityModule.createText("")
+        deck = graphicEntityModule
+                .createText("")
                 .setAnchor(0.5)
                 .setFillColor(0xffffff)
                 .setFontSize(40)
@@ -67,123 +69,133 @@ public class PlayerUI {
                 .setX(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).x)
                 .setY(Vector2D.add(ConstantsUI.PLAYER_DECK_TXT, offset).y);
 
-        frame[0] = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setAnchor(0.5)
-            .setBaseHeight(ConstantsUI.PLAYER_FRAME_DIM.y)
-            .setBaseWidth(ConstantsUI.PLAYER_FRAME_DIM.x)
-            .setImage("playerframe-active.png")
-            .setX(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).y);
+        frame[0] = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setAnchor(0.5)
+                .setBaseHeight(ConstantsUI.PLAYER_FRAME_DIM.y)
+                .setBaseWidth(ConstantsUI.PLAYER_FRAME_DIM.x)
+                .setImage("playerframe-active.png")
+                .setX(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).y);
 
-        frame[1] = graphicEntityModule.createSprite()
-            .setAnchor(0.5)
-            .setBaseHeight(ConstantsUI.PLAYER_FRAME_DIM.y)
-            .setBaseWidth(ConstantsUI.PLAYER_FRAME_DIM.x)
-            .setImage("playerframe-inactive.png")
-            .setX(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).y);
+        frame[1] = graphicEntityModule
+                .createSprite()
+                .setAnchor(0.5)
+                .setBaseHeight(ConstantsUI.PLAYER_FRAME_DIM.y)
+                .setBaseWidth(ConstantsUI.PLAYER_FRAME_DIM.x)
+                .setImage("playerframe-inactive.png")
+                .setX(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_AVATAR, offset).y);
 
-        health = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(40)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(Vector2D.add(ConstantsUI.PLAYER_HEALTH_TXT, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_HEALTH_TXT, offset).y);
+        health = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(40)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(Vector2D.add(ConstantsUI.PLAYER_HEALTH_TXT, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_HEALTH_TXT, offset).y);
 
-        damageFloat = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(36)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setZIndex(2);
+        damageFloat = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(36)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setZIndex(2);
 
-        impact = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setAnchor(.5)
-            .setImage("impact.png")
-            .setZIndex(1);
+        impact = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setAnchor(.5)
+                .setImage("impact.png")
+                .setZIndex(1);
 
-        healFloat = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(36)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setZIndex(2);
+        healFloat = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(36)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setZIndex(2);
 
-        heal = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setAnchor(.5)
-            .setImage("heal.png")
-            .setZIndex(1);
+        heal = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setAnchor(.5)
+                .setImage("heal.png")
+                .setZIndex(1);
 
-        bubbleText = graphicEntityModule.createText("")
-            .setFillColor(player.getColorToken())
-            .setFontSize(30)
-            .setZIndex(2)
-            .setAnchor(.5)
-            .setX(ConstantsUI.PLAYER_LONG_BUBBLES_TEXT_POSITION.x)
-            .setY((playerIndex == 0 ? 1 : -1) * ConstantsUI.PLAYER_LONG_BUBBLES_TEXT_POSITION.y)
-            .setFontFamily("Monospace");
+        bubbleText = graphicEntityModule
+                .createText("")
+                .setFillColor(player.getColorToken())
+                .setFontSize(30)
+                .setZIndex(2)
+                .setAnchor(.5)
+                .setX(ConstantsUI.PLAYER_LONG_BUBBLES_TEXT_POSITION.x)
+                .setY((playerIndex == 0 ? 1 : -1) * ConstantsUI.PLAYER_LONG_BUBBLES_TEXT_POSITION.y)
+                .setFontFamily("Monospace");
 
-        bubbleSprite = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setZIndex(1)
-            .setScale(playerIndex == 0 ? 1 : -1)
-            .setAnchorX(0.5);
+        bubbleSprite = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setZIndex(1)
+                .setScale(playerIndex == 0 ? 1 : -1)
+                .setAnchorX(0.5);
 
         bubble = graphicEntityModule.createGroup(
-            bubbleSprite,
-            bubbleText
+                bubbleSprite,
+                bubbleText
         );
 
-        graphicEntityModule.createGroup(impact, damageFloat)
-            .setZIndex(1)
-            .setX(avatar.getX())
-            .setY(avatar.getY());
+        graphicEntityModule
+                .createGroup(impact, damageFloat)
+                .setZIndex(1)
+                .setX(avatar.getX())
+                .setY(avatar.getY());
 
-        graphicEntityModule.createGroup(heal, healFloat)
-            .setZIndex(1)
-            .setX(avatar.getX())
-            .setY(avatar.getY());
+        graphicEntityModule
+                .createGroup(heal, healFloat)
+                .setZIndex(1)
+                .setX(avatar.getX())
+                .setY(avatar.getY());
 
-        mana = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(40)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(Vector2D.add(ConstantsUI.PLAYER_MANA_TXT, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_MANA_TXT, offset).y);
+        mana = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(40)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(Vector2D.add(ConstantsUI.PLAYER_MANA_TXT, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_MANA_TXT, offset).y);
 
-        nick = graphicEntityModule.createText(player.getNicknameToken())
-            .setAnchor(0.5)
-            .setFillColor(player.getColorToken())
-            .setFontSize(60)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(Vector2D.add(ConstantsUI.PLAYER_NICK_TXT, offset).x)
-            .setY(Vector2D.add(ConstantsUI.PLAYER_NICK_TXT, offset).y);
+        nick = graphicEntityModule
+                .createText(player.getNicknameToken())
+                .setAnchor(0.5)
+                .setFillColor(player.getColorToken())
+                .setFontSize(60)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(Vector2D.add(ConstantsUI.PLAYER_NICK_TXT, offset).x)
+                .setY(Vector2D.add(ConstantsUI.PLAYER_NICK_TXT, offset).y);
     }
 
-    public void attacker(ActionResult result)
-    {
+    public void attacker(ActionResult result) {
         handleHealthChange(result.attackingPlayerHealthChange);
     }
 
-    public void defender(ActionResult result)
-    {
+    public void defender(ActionResult result) {
         handleHealthChange(result.defendingPlayerHealthChange);
     }
 
-    public PlayerUI updateStats(Gamer gamer)
-    {
+    public PlayerUI updateStats(Gamer gamer) {
         draw.setText("+" + Integer.toString(gamer.nextTurnDraw));
-        if (gamer.hand.size()+gamer.nextTurnDraw > Constants.MAX_CARDS_IN_HAND) // show overdraw
+        if (gamer.hand.size() + gamer.nextTurnDraw > Constants.MAX_CARDS_IN_HAND) // show overdraw
             draw.setFillColor(0xff5500);
         else
             draw.setFillColor(0xffffff);
@@ -205,8 +217,7 @@ public class PlayerUI {
         return this;
     }
 
-    public PlayerUI setActive(boolean active)
-    {
+    public PlayerUI setActive(boolean active) {
         frame[0].setAlpha(active ? 1 : 0, Curve.IMMEDIATE);
         frame[1].setAlpha(active ? 0 : 1, Curve.IMMEDIATE);
         return this;
@@ -231,6 +242,7 @@ public class PlayerUI {
         impact.setAlpha(1, Curve.NONE);
         graphicEntityModule.commitEntityState(0.5, damageFloat, impact);
     }
+
     private void displayHeal() {
         heal.setAlpha(1, Curve.NONE);
         graphicEntityModule.commitEntityState(0.5, healFloat, heal);
@@ -241,6 +253,7 @@ public class PlayerUI {
         damageFloat.setText("");
         graphicEntityModule.commitEntityState(0, damageFloat, impact);
     }
+
     private void hideHeal() {
         heal.setAlpha(0, Curve.IMMEDIATE);
         healFloat.setText("");
@@ -257,9 +270,8 @@ public class PlayerUI {
             bubbleSprite.setImage("bubble_long.png");
             if (text.length() > 22) {
                 bubbleText.setFontSize(26);
-                if (text.length() > 25) {
+                if (text.length() > 25)
                     text = text.substring(0, 23) + "...";
-                }
             } else {
                 bubbleText.setFontSize(30);
             }
@@ -267,16 +279,14 @@ public class PlayerUI {
             bubbleSprite.setImage("bubble.png");
             bubble.setX(bubblePosition.x, Curve.IMMEDIATE).setY(bubblePosition.y + (playerIndex == 0 ? -1 : 1) * 60, Curve.IMMEDIATE);
             bubbleText.setFontSize(30)
-                .setY((playerIndex == 0 ? 1 : -1) * ConstantsUI.PLAYER_BUBBLES_TEXT_POSITION.y, Curve.IMMEDIATE);
+                    .setY((playerIndex == 0 ? 1 : -1) * ConstantsUI.PLAYER_BUBBLES_TEXT_POSITION.y, Curve.IMMEDIATE);
 
             for (int i : CHARS_TO_CROP) {
-                if (text.length() > i) {
+                if (text.length() > i)
                     text = text.substring(0, i) + "\n" + text.substring(i, text.length());
-                }
             }
-            if (text.length() > 67) {
+            if (text.length() > 67)
                 text = text.substring(0, 65) + "...";
-            }
         }
 
         bubbleText.setText(text);

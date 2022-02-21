@@ -28,7 +28,8 @@ public class EngineReferee {
     static final int ILLEGAL_ACTION_SUMMARY_LIMIT = 3;
 
     public void refereeInit(MultiplayerGameManager<Player> gameManager) {
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("New game");
+        if (Constants.VERBOSE_LEVEL > 1)
+            System.out.println("New game");
 
         RefereeParams params = new RefereeParams(gameManager);
 
@@ -39,7 +40,8 @@ public class EngineReferee {
             cardGenerator.generateCardList();
         }
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
+        if (Constants.VERBOSE_LEVEL > 1)
+            System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
 
         constr = new ConstructPhase(params);
         constr.PrepareConstructed();
@@ -48,8 +50,10 @@ public class EngineReferee {
                 (double) Math.min(Constants.CARDS_IN_CONSTRUCTED, constr.cardsForConstruction.size())
                         / Constants.MAX_CARDS_IN_FRAME);
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Construction Phase Prepared. ");
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the construction.");
+        if (Constants.VERBOSE_LEVEL > 1)
+            System.out.println("   Construction Phase Prepared. ");
+        if (Constants.VERBOSE_LEVEL > 1)
+            System.out.println("   " + constr.cardsForConstruction.size() + " cards selected to the construction.");
 
         gameManager.setMaxTurns(Constants.MAX_TURNS_HARDLIMIT); // should be never reached, not handled on the referee's side
     }
@@ -70,23 +74,21 @@ public class EngineReferee {
         if (gameTurn == 0) {
             ConstructTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
-        }
-        else if (gameTurn < expectedConstructionFrames) {
+        } else if (gameTurn < expectedConstructionFrames) {
             VisualTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
-        }
-        else if (gameTurn <= Math.max(3, expectedConstructionFrames + 1)) {
+        } else if (gameTurn <= Math.max(3, expectedConstructionFrames + 1)) {
             gameManager.setFrameDuration(10);
             VisualTurn(gameManager, () -> ui.cleanupAfterConstruction());
             return false;
-        }
-        else {
+        } else {
             return GameTurn(gameManager, () -> ui.battle(gameTurn));
         }
     }
 
     private void VisualTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
-        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Visual construct turn");
+        if (Constants.VERBOSE_LEVEL > 2)
+            System.out.println("      Visual construct turn");
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
             sdkplayer.expectedOutputLines = 0;
@@ -99,8 +101,10 @@ public class EngineReferee {
     }
 
     private void ConstructTurn(MultiplayerGameManager<Player> gameManager, Runnable render) {
-        if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0) System.out.println("   Construct phase");
-        if (Constants.VERBOSE_LEVEL > 2) System.out.println("      Construct turn");
+        if (Constants.VERBOSE_LEVEL > 1 && gameTurn == 0)
+            System.out.println("   Construct phase");
+        if (Constants.VERBOSE_LEVEL > 2)
+            System.out.println("      Construct turn");
 
         gameManager.setFrameDuration(Constants.FRAME_DURATION_CONSTRUCTED);
 
@@ -111,9 +115,8 @@ public class EngineReferee {
 
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
-            for (String line : constr.getMockPlayersInput(player)) {
+            for (String line : constr.getMockPlayersInput(player))
                 sdkplayer.sendInputLine(line);
-            }
             for (Card card : constr.cardsForConstruction)
                 sdkplayer.sendInputLine(card.getAsInput());
             sdkplayer.execute();
@@ -132,7 +135,8 @@ public class EngineReferee {
             } catch (InvalidActionHard e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + ": " + e.getMessage());
                 return;
-            } if (constr.chosenCards[player].size() != Constants.CARDS_IN_DECK) {
+            }
+            if (constr.chosenCards[player].size() != Constants.CARDS_IN_DECK) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " didn't choose correct number of cards!");
                 return;
             }
@@ -149,8 +153,10 @@ public class EngineReferee {
 
         if (state == null) { // frame-only turn for showing the initial state
             constr.shuffleDecks();
-            if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Decks shuffled.");
-            if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game phase");
+            if (Constants.VERBOSE_LEVEL > 1)
+                System.out.println("   Decks shuffled.");
+            if (Constants.VERBOSE_LEVEL > 1)
+                System.out.println("   Game phase");
             state = new GameState(constr);
 
             //gameManager.setTurnMaxTime(1); // weird try but works ^^
@@ -173,11 +179,11 @@ public class EngineReferee {
             gameManager.addToGameSummary("Player " + sdkplayer.getNicknameToken() + " performed action: " + a.toStringNoText());
 
             state.AdvanceState(a);
-            if (a.type == Action.Type.SUMMON) {
+            if (a.type == Action.Type.SUMMON)
                 gameManager.setFrameDuration(Constants.FRAME_DURATION_SUMMON);
-            }
         } else { // it's time to actually call a player
-            if (Constants.VERBOSE_LEVEL > 2) System.out.print("      Game turn " + (int)Math.ceil(((float)gameTurn - expectedConstructionFrames - 1) / 2) + ", player " + gamePlayer);
+            if (Constants.VERBOSE_LEVEL > 2)
+                System.out.print("      Game turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - 1) / 2) + ", player " + gamePlayer);
 
             if (Constants.IS_HUMAN_PLAYING)
                 gameManager.setTurnMaxTime(200 * Constants.TIMELIMIT_GAMETURN);
@@ -195,7 +201,8 @@ public class EngineReferee {
             try {
                 String output = sdkplayer.getOutputs().get(0);
                 actionsToHandle = Action.parseSequence(output);
-                if (Constants.VERBOSE_LEVEL > 2) System.out.println(" (returned " + actionsToHandle.size() + " actions)");
+                if (Constants.VERBOSE_LEVEL > 2)
+                    System.out.println(" (returned " + actionsToHandle.size() + " actions)");
             } catch (InvalidActionHard e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + ": " + e.getMessage());
             } catch (TimeoutException e) {
@@ -217,13 +224,11 @@ public class EngineReferee {
                 break;
             actionsToHandle.remove(0); // pop
             illegalActions++;
-            if (illegalActions <= ILLEGAL_ACTION_SUMMARY_LIMIT) {
+            if (illegalActions <= ILLEGAL_ACTION_SUMMARY_LIMIT)
                 gameManager.addToGameSummary("[Warning] " + sdkplayer.getNicknameToken() + " Action is not legal: " + a.toString());
-            }
         }
-        if (illegalActions > ILLEGAL_ACTION_SUMMARY_LIMIT) {
+        if (illegalActions > ILLEGAL_ACTION_SUMMARY_LIMIT)
             gameManager.addToGameSummary("[Warning] " + sdkplayer.getNicknameToken() + " Performed another " + (illegalActions - ILLEGAL_ACTION_SUMMARY_LIMIT) + " illegalActions");
-        }
 
         if (Constants.HANDLE_UI)
             render.run();
@@ -253,14 +258,16 @@ public class EngineReferee {
 
         //gameManager.addToGameSummary("!\n" + state.toString());
 
-        if (Constants.VERBOSE_LEVEL > 1) System.out.println("   Game finished in turn " + (int)Math.ceil(((float)gameTurn - expectedConstructionFrames - 1) / 2) + ".");
-        if (Constants.VERBOSE_LEVEL > 1) System.out.print("   Scores: ");
-        if (Constants.VERBOSE_LEVEL > 0) System.out.println((state.winner == 0 ? "1" : "0") + " " + (state.winner == 1 ? "1" : "0"));
+        if (Constants.VERBOSE_LEVEL > 1)
+            System.out.println("   Game finished in turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - 1) / 2) + ".");
+        if (Constants.VERBOSE_LEVEL > 1)
+            System.out.print("   Scores: ");
+        if (Constants.VERBOSE_LEVEL > 0)
+            System.out.println((state.winner == 0 ? "1" : "0") + " " + (state.winner == 1 ? "1" : "0"));
 
         gameManager.addToGameSummary(MultiplayerGameManager.formatSuccessMessage(gameManager.getPlayer(state.winner).getNicknameToken() + " won!"));
         gameManager.getPlayer(state.winner).setScore(1);
         gameManager.endGame();
         return true;
     }
-
 }

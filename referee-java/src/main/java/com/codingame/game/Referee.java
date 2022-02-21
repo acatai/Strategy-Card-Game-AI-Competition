@@ -12,15 +12,17 @@ import com.codingame.view.endscreen.EndScreenModule;
 import com.google.inject.Inject;
 
 public class Referee extends AbstractReferee {
-    @Inject private MultiplayerGameManager<Player> gameManager;
-    @Inject private GraphicEntityModule graphicEntityModule;
-    @Inject private EndScreenModule endScreenModule;
-    @Inject private FXModule fxModule;
+    @Inject
+    private MultiplayerGameManager<Player> gameManager;
+    @Inject
+    private GraphicEntityModule graphicEntityModule;
+    @Inject
+    private EndScreenModule endScreenModule;
+    @Inject
+    private FXModule fxModule;
 
     private final EngineReferee engine = new EngineReferee();
     private RefereeUI ui;
-
-    //public static int turn = 0;
 
     @Override
     public void init() {
@@ -28,8 +30,7 @@ public class Referee extends AbstractReferee {
         engine.refereeInit(gameManager);
 
         // GUI.
-        if (Constants.HANDLE_UI)
-        {
+        if (Constants.HANDLE_UI) {
             ui = new RefereeUI();
             ui.engine = engine;
             ui.gameManager = gameManager;
@@ -37,7 +38,6 @@ public class Referee extends AbstractReferee {
             ui.fxModule = fxModule;
             ui.init();
         }
-
     }
 
     @Override

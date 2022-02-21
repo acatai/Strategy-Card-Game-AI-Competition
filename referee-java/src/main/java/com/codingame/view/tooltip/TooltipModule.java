@@ -11,63 +11,63 @@ import com.codingame.gameengine.module.entities.Entity;
 
 public class TooltipModule implements Module {
 
-  private final MultiplayerGameManager<Player> gameManager;
-  private final Map<Integer, Map<String, Object>> registrations;
-  private final Map<Integer, Map<String, Object>> newRegistrations;
-  private final Map<Integer, String[]> extra, newExtra;
+    private final MultiplayerGameManager<Player> gameManager;
+    private final Map<Integer, Map<String, Object>> registrations;
+    private final Map<Integer, Map<String, Object>> newRegistrations;
+    private final Map<Integer, String[]> extra, newExtra;
 
-  public TooltipModule(MultiplayerGameManager<Player> gameManager) {
-    this.gameManager = gameManager;
-    gameManager.registerModule(this);
-    registrations = new HashMap<>();
-    newRegistrations = new HashMap<>();
-    extra = new HashMap<>();
-    newExtra = new HashMap<>();
-  }
-
-  @Override
-  public void onGameInit() {
-    sendFrameData();
-  }
-
-  @Override
-  public void onAfterGameTurn() {
-    sendFrameData();
-  }
-
-  @Override
-  public void onAfterOnEnd() {
-    sendFrameData();
-  }
-
-  private void sendFrameData() {
-    Object[] data = { newRegistrations, newExtra };
-    gameManager.setViewData("tooltips", data);
-    newRegistrations.clear();
-    newExtra.clear();
-  }
-
-  public void registerEntity(Entity<?> entity) {
-    registerEntity(entity, new HashMap<>());
-  }
-
-  public void registerEntity(Entity<?> entity, Map<String, Object> params) {
-    int id = entity.getId();
-    if (!params.equals(registrations.get(id))) {
-      newRegistrations.put(id, params);
-      registrations.put(id, params);
+    public TooltipModule(MultiplayerGameManager<Player> gameManager) {
+        this.gameManager = gameManager;
+        gameManager.registerModule(this);
+        registrations = new HashMap<>();
+        newRegistrations = new HashMap<>();
+        extra = new HashMap<>();
+        newExtra = new HashMap<>();
     }
-  }
 
-  boolean deepEquals(String[] a, String[] b) {
-    return Arrays.deepEquals(a,b);
-  }
-
-  public void updateExtraTooltipText(Entity<?> entity, String... lines) {
-    int id = entity.getId();
-    if (!deepEquals(lines, extra.get(id))) {
-      newExtra.put(id, lines);
-      extra.put(id, lines);
+    @Override
+    public void onGameInit() {
+        sendFrameData();
     }
-  }
+
+    @Override
+    public void onAfterGameTurn() {
+        sendFrameData();
+    }
+
+    @Override
+    public void onAfterOnEnd() {
+        sendFrameData();
+    }
+
+    private void sendFrameData() {
+        Object[] data = {newRegistrations, newExtra};
+        gameManager.setViewData("tooltips", data);
+        newRegistrations.clear();
+        newExtra.clear();
+    }
+
+    public void registerEntity(Entity<?> entity) {
+        registerEntity(entity, new HashMap<>());
+    }
+
+    public void registerEntity(Entity<?> entity, Map<String, Object> params) {
+        int id = entity.getId();
+        if (!params.equals(registrations.get(id))) {
+            newRegistrations.put(id, params);
+            registrations.put(id, params);
+        }
+    }
+
+    boolean deepEquals(String[] a, String[] b) {
+        return Arrays.deepEquals(a, b);
+    }
+
+    public void updateExtraTooltipText(Entity<?> entity, String... lines) {
+        int id = entity.getId();
+        if (!deepEquals(lines, extra.get(id))) {
+            newExtra.put(id, lines);
+            extra.put(id, lines);
+        }
+    }
 }

@@ -3,21 +3,19 @@ import java.util.*;
 /**
  * AI description
  * Construction phase:
- *  - pick random cards
+ * - pick random cards
  * Game phase:
- *  - while there are onboard friendly creatures and inhand green items with cost less then current mana
- *       use random green item to a random friendly creature
- *  - each creature attacks one randomly chosen available target
- *  - if there are guards - target is chosen among them, otherwise it is any opponent creature or -1
- *  - while there are inhand creatures with cost less then current mana summons random such creature
- *  - while there are inhand red/blue items with cost less then current mana choose randomly one of them
- *       you can choose red item only if there are enemy creatures onboard - then use it on a random such creature
- *       for blue items there is 50% probability you hit face, otherwise like red items
+ * - while there are onboard friendly creatures and inhand green items with cost less then current mana
+ *      use random green item to a random friendly creature
+ * - each creature attacks one randomly chosen available target
+ * - if there are guards - target is chosen among them, otherwise it is any opponent creature or -1
+ * - while there are inhand creatures with cost less then current mana summons random such creature
+ * - while there are inhand red/blue items with cost less then current mana choose randomly one of them
+ *      you can choose red item only if there are enemy creatures onboard - then use it on a random such creature
+ *      for blue items there is 50% probability you hit face, otherwise like red items
  */
-public class PlayerRandomWItems
-{
-    private static class SimplifiedState
-    {
+public class PlayerRandomWItems {
+    private static class SimplifiedState {
         public HashMap<Integer, Integer> IdToCostMap = new HashMap<>();
         public ArrayList<Integer> HandCreaturesIds = new ArrayList<>();
         public ArrayList<Integer> HandGreenItemsIds = new ArrayList<>();
@@ -32,8 +30,7 @@ public class PlayerRandomWItems
 
         public int Mana;
 
-        SimplifiedState(Scanner scanner) // Warning: System.err.println from the class goes to Main error channel, and are not cached by the codingame
-        {
+        SimplifiedState(Scanner scanner) { // Warning: System.err.println from the class goes to Main error channel, and are not cached by the codingame
             NonGuardTargetIds.add(-1);
 
             int playerHealth = scanner.nextInt();
@@ -49,9 +46,9 @@ public class PlayerRandomWItems
             int opponentHand = scanner.nextInt();
             int opponentActions = scanner.nextInt();
             //System.err.format("oppA - " + opponentActions + "\n");
-            if (scanner.hasNextLine()) { scanner.nextLine(); }
-            for (int i = 0; i < opponentActions; i++)
-            {
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+            for (int i = 0; i < opponentActions; i++) {
                 String cardNumberAndAction = scanner.nextLine();
                 //System.err.format("OPPACTION: %s\n", cardNumberAndAction);
             }
@@ -70,53 +67,37 @@ public class PlayerRandomWItems
                 int cardDraw = scanner.nextInt();
                 int area = scanner.nextInt();
 
-                if (location==0) // hand
-                {
+                if (location == 0) { // hand
                     IdToCostMap.put(instanceId, cost);
-                    if (type==0) // card is creature
-                    {
+                    if (type == 0) // card is creature
                         HandCreaturesIds.add(instanceId);
-                    }
-                    else if (type==1) // card is a green item
-                    {
+                    else if (type == 1) // card is a green item
                         HandGreenItemsIds.add(instanceId);
-                    }
-                    else if (type==2) // card is a red item
-                    {
+                    else if (type == 2) // card is a red item
                         HandRedItemsIds.add(instanceId);
-                    }
-                    else if (type==3) // card is a blue item
-                    {
+                    else if (type == 3) // card is a blue item
                         HandBlueItemsIds.add(instanceId);
-                    }
                 }
-                if (location==1) // board
-                {
+                if (location == 1) { // board
                     FriendlyIds.add(instanceId);
                     CanAttackIds.add(instanceId);
                 }
-                if (location==-1) // opponent board
-                {
+                if (location == -1) { // opponent board
                     TargetCreaturesIds.add(instanceId);
-                    if (abilities.charAt(3)=='G')
-                    {
+                    if (abilities.charAt(3) == 'G')
                         GuardTargetIds.add(instanceId);
-                    }
                     else
-                    {
                         NonGuardTargetIds.add(instanceId);
-                    }
                 }
             }
         }
     }
 
-    private static String constructionPhase(Random random, Scanner scanner)
-    {
+    private static String constructionPhase(Random random, Scanner scanner) {
         SimplifiedState constructionState = new SimplifiedState(scanner);
 
         int candidates = constructionState.HandCreaturesIds.size() + constructionState.HandGreenItemsIds.size() +
-                         constructionState.HandRedItemsIds.size() + constructionState.HandBlueItemsIds.size();
+                constructionState.HandRedItemsIds.size() + constructionState.HandBlueItemsIds.size();
         int[] countTimesChosen = new int[candidates];
 
         for (int i = 0; i < 30; i++) {
@@ -128,30 +109,26 @@ public class PlayerRandomWItems
         }
 
         List<String> commands = new ArrayList<>();
-        for (int c = 0; c < candidates; c++) {
+        for (int c = 0; c < candidates; c++)
             for (int i = 0; i < countTimesChosen[c]; i++)
                 commands.add("PICK " + c);
-        }
         return String.join(" ; ", commands);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Random random = new Random();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println(constructionPhase(random, scanner));
 
-        while (true)
-        {
+        while (true) {
             SimplifiedState state = new SimplifiedState(scanner);
             StringBuilder sb = new StringBuilder();
             sb.append("; ");
-            boolean fullbonus = state.Mana==13;
+            boolean fullbonus = state.Mana == 13;
 
             // green items phase
-            while (true)
-            {
+            while (true) {
                 state.HandGreenItemsIds.removeIf(c -> state.IdToCostMap.get(c) > state.Mana);
                 System.err.println(String.format("GreenItems phase: %d items can be used on %d creatures.", state.HandGreenItemsIds.size(), state.FriendlyIds.size()));
                 if (state.HandGreenItemsIds.isEmpty() || state.FriendlyIds.isEmpty())
@@ -167,8 +144,7 @@ public class PlayerRandomWItems
             // attack phase
             List<Integer> targets = state.GuardTargetIds.isEmpty() ? state.NonGuardTargetIds : state.GuardTargetIds;
             System.err.println(String.format("Attack phase: %d creatures can attack %d targets.", state.CanAttackIds.size(), targets.size()));
-            while (!state.CanAttackIds.isEmpty())
-            {
+            while (!state.CanAttackIds.isEmpty()) {
                 Integer ida = state.CanAttackIds.get(random.nextInt(state.CanAttackIds.size()));
                 state.CanAttackIds.remove(ida);
 
@@ -177,8 +153,7 @@ public class PlayerRandomWItems
             }
 
             // summon phase
-            while (true)
-            {
+            while (true) {
                 state.HandCreaturesIds.removeIf(c -> state.IdToCostMap.get(c) > state.Mana);
                 System.err.println(String.format("Summon phase: %d creatures can be summoned with mana limit %d.", state.HandCreaturesIds.size(), state.Mana));
                 if (state.HandCreaturesIds.isEmpty())
@@ -191,34 +166,30 @@ public class PlayerRandomWItems
             }
 
             // red/blue items phase
-            while (true)
-            {
+            while (true) {
                 state.HandRedItemsIds.removeIf(c -> state.IdToCostMap.get(c) > state.Mana);
                 state.HandBlueItemsIds.removeIf(c -> state.IdToCostMap.get(c) > state.Mana);
                 System.err.println(String.format("RedBlueItems phase: %d red items and %d blue items can be used on %d creatures (+player).", state.HandRedItemsIds.size(), state.HandBlueItemsIds.size(), state.TargetCreaturesIds.size()));
 
-                if (state.TargetCreaturesIds.size()==0)
+                if (state.TargetCreaturesIds.size() == 0)
                     state.HandRedItemsIds.clear();
 
                 if (state.HandRedItemsIds.isEmpty() && state.HandBlueItemsIds.isEmpty())
                     break;
 
                 int num = random.nextInt(state.HandRedItemsIds.size() + state.HandBlueItemsIds.size());
-                if (num < state.HandRedItemsIds.size()) // red item use
-                {
+                if (num < state.HandRedItemsIds.size()) { // red item use
                     Integer id = state.HandRedItemsIds.get(num);
                     state.HandRedItemsIds.remove(id);
                     state.Mana -= state.IdToCostMap.get(id);
                     int idt = state.TargetCreaturesIds.get(random.nextInt(state.TargetCreaturesIds.size()));
                     sb.append(String.format("USE %d %d use; ", id, idt));
-                }
-                else // blue item use
-                {
+                } else { // blue item use
                     Integer id = state.HandBlueItemsIds.get(num - state.HandRedItemsIds.size());
                     state.HandBlueItemsIds.remove(id);
                     state.Mana -= state.IdToCostMap.get(id);
                     int idt = -1;
-                    if (random.nextInt(2) < 1 && state.TargetCreaturesIds.size()>0) // 50% to creature target
+                    if (random.nextInt(2) < 1 && state.TargetCreaturesIds.size() > 0) // 50% to creature target
                         idt = state.TargetCreaturesIds.get(random.nextInt(state.TargetCreaturesIds.size()));
                     sb.append(String.format("USE %d %d; ", id, idt));
                 }

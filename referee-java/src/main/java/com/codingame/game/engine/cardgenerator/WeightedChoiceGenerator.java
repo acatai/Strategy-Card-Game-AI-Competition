@@ -26,7 +26,7 @@ class WeightedChoiceGenerator<T> {
 
     T randomChoice() {
         double choice = RNG.nextDouble() * sumOfWeights;
-        for (int i=0; i<values.size(); i++) {
+        for (int i = 0; i < values.size(); i++) {
             choice -= weights.get(i);
             if (choice <= 0)
                 return values.get(i);

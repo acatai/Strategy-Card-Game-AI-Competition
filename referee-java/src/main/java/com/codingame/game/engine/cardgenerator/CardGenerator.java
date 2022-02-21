@@ -66,7 +66,7 @@ public class CardGenerator {
         CardBuilder builder = new CardBuilder(id, type, mana);
 
         for (String nextProperty : propertyOrderGenerator.shuffle()) {
-            switch (nextProperty){
+            switch (nextProperty) {
                 case "area":
                     builder.addProperty(nextProperty, areaGenerator.randomChoice());
                     break;
@@ -91,7 +91,7 @@ public class CardGenerator {
     }
 
     public void generateCardList() {
-        for (int i = 0; i< Constants.CARDS_IN_CONSTRUCTED; i++) {
+        for (int i = 0; i < Constants.CARDS_IN_CONSTRUCTED; i++) {
             Card c = this.generateCard(i);
             Constants.CARDSET.put(c.baseId, c);
         }

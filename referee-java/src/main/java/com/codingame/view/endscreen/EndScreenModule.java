@@ -23,6 +23,7 @@ public class EndScreenModule implements Module {
     @Override
     public final void onGameInit() {
     }
+
     @Override
     public final void onAfterGameTurn() {
     }
@@ -31,5 +32,4 @@ public class EndScreenModule implements Module {
     public final void onAfterOnEnd() {
         gameManager.setViewData("endScreen", scores);
     }
-
 }

@@ -21,6 +21,7 @@ class CardBuilder {
     private void changeMana(Property prop) {
         this.mana = this.mana * prop.getMultCost() - prop.getAddCost();
     }
+
     private void reverseChangeMana(Property prop) {
         this.mana = (this.mana + prop.getAddCost()) / prop.getMultCost();
     }
@@ -37,8 +38,8 @@ class CardBuilder {
     }
 
     void addAttackAndDefense(NormalDistributionGenerator bonusAttackGenerator, NormalDistributionGenerator bonusDefenseGenerator) {
-        int attack = (int)(mana+bonusAttackGenerator.next());
-        int defense = (int)(mana+bonusDefenseGenerator.next());
+        int attack = (int) (mana + bonusAttackGenerator.next());
+        int defense = (int) (mana + bonusDefenseGenerator.next());
         if (Objects.equals(properties.get("type"), "creature")) {
             attack = Math.max(attack, 0);
             defense = Math.max(defense, 1);
@@ -58,11 +59,11 @@ class CardBuilder {
     private String readKeywords() {
         return
                 (properties.containsKey("breakthrough") ? "B" : "-") +
-                        (properties.containsKey("charge") ? "C" : "-") +
-                        (properties.containsKey("drain") ? "D" : "-") +
-                        (properties.containsKey("guard") ? "G" : "-") +
-                        (properties.containsKey("lethal") ? "L" : "-") +
-                        (properties.containsKey("ward") ? "W" : "-");
+                (properties.containsKey("charge") ? "C" : "-") +
+                (properties.containsKey("drain") ? "D" : "-") +
+                (properties.containsKey("guard") ? "G" : "-") +
+                (properties.containsKey("lethal") ? "L" : "-") +
+                (properties.containsKey("ward") ? "W" : "-");
     }
 
     Card createCard() {

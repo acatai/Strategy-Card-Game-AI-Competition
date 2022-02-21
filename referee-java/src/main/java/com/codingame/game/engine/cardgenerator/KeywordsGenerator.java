@@ -15,7 +15,7 @@ class KeywordsGenerator {
     void generateKeywords(CardBuilder builder) {
         int count = Integer.parseInt(keywordCountGenerator.randomChoice());
         List<Property> keywordsPropertiesList = new ArrayList<>();
-        for (int i=0; i<count; i++) {
+        for (int i = 0; i < count; i++) {
             Property newKeyword = keywordGenerator.randomChoiceWithBlacklist(keywordsPropertiesList);
             if (!builder.addProperty(newKeyword.getName(), newKeyword))
                 break;

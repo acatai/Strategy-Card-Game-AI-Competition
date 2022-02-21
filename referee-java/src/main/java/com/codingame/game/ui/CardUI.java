@@ -32,144 +32,162 @@ public class CardUI {
         this.graphicEntityModule = graphicEntityModule;
         this.tooltipModule = tooltipModule;
 
-        attack = graphicEntityModule.createText("0")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(35)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(45 * 2 * 260 / 740)
-            .setY(210 * 2 * 260 / 740)
-            .setZIndex(3);
+        attack = graphicEntityModule
+                .createText("0")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(35)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(45 * 2 * 260 / 740)
+                .setY(210 * 2 * 260 / 740)
+                .setZIndex(3);
 
-        background = graphicEntityModule.createSprite()
-            .setBaseWidth(ConstantsUI.CARD_DIM.x)
-            .setBaseHeight(ConstantsUI.CARD_DIM.y)
-            .setZIndex(0);
-
-        image = graphicEntityModule.createSprite()
-            .setAnchor(0.5)
-            .setBaseWidth(163)
-            .setBaseHeight(93)
-            .setX((210)/2)
-            .setY(68)
-            .setZIndex(1);
-
-        cost = graphicEntityModule.createText("0")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(35)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(150 * 2 * 260 / 740)
-            .setY(220 * 2 * 260 / 740)
-            .setZIndex(3);
-
-        defense = graphicEntityModule.createText("0")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(35)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(4.0)
-            .setX(255 * 2 * 260 / 740)
-            .setY(210 * 2 * 260 / 740)
-            .setZIndex(3);
-
-        overlay = graphicEntityModule.createSprite()
-            .setAlpha(1)
-            .setBaseHeight(ConstantsUI.CARD_DIM.y)
-            .setBaseWidth(ConstantsUI.CARD_DIM.x)
-            .setImage("basic_overlay.png")
-            .setZIndex(2);
-
-        ward = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setBaseHeight(ConstantsUI.CARD_DIM.y)
-            .setBaseWidth(ConstantsUI.CARD_DIM.x)
-            .setImage("ward.png")
-            .setZIndex(4);
-
-        lethal = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setBaseWidth((int) (ConstantsUI.CARD_DIM.x * (28f/300)))
-            .setBaseHeight((int) (ConstantsUI.CARD_DIM.y * (66f/370)))
-            .setImage("lethal.png")
-            .setZIndex(5)
-            .setX((int) (ConstantsUI.CARD_DIM.x * (3f/300)))
-            .setY((int) (ConstantsUI.CARD_DIM.y * (170f/370)));
-
-
-        shadow = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setAnchor(-0.045) // (-0.035)
-            .setBaseHeight(ConstantsUI.CARD_DIM.y)
-            .setBaseWidth(ConstantsUI.CARD_DIM.x)
-            .setImage("shadow.png")
-            //.setTint(0x808080)
-            .setZIndex(-1);
-
-        impact = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setAnchor(.5)
-            .setImage("impact.png")
-            .setZIndex(1);
-
-        heal = graphicEntityModule.createSprite()
-            .setAlpha(0)
-            .setAnchor(.5)
-            .setImage("heal.png")
-            .setZIndex(1);
-
-        damageFloat = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(36)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(2.0)
-            .setZIndex(3);
-
-        healFloat = graphicEntityModule.createText("")
-            .setAnchor(0.5)
-            .setFillColor(0xffffff)
-            .setFontSize(36)
-            .setStrokeColor(0x000000)
-            .setStrokeThickness(2.0)
-            .setZIndex(3);
-
-        Group damageGroup = graphicEntityModule.createGroup(impact, damageFloat)
-            .setZIndex(7)
-            .setX(ConstantsUI.CARD_DIM.x / 2)
-            .setY(80);
-        Group healGroup = graphicEntityModule.createGroup(heal, healFloat)
-            .setZIndex(6)
-            .setX(ConstantsUI.CARD_DIM.x / 2)
-            .setY(80);
-
-
-        area = graphicEntityModule.createSprite()
-                .setAlpha(1)
-                .setBaseHeight(22*ConstantsUI.CARD_DIM.y/370)
+        background = graphicEntityModule
+                .createSprite()
                 .setBaseWidth(ConstantsUI.CARD_DIM.x)
-                .setX(0)
-                .setY(310*ConstantsUI.CARD_DIM.y/370)
+                .setBaseHeight(ConstantsUI.CARD_DIM.y)
+                .setZIndex(0);
+
+        image = graphicEntityModule
+                .createSprite()
+                .setAnchor(0.5)
+                .setBaseWidth(163)
+                .setBaseHeight(93)
+                .setX((210) / 2)
+                .setY(68)
                 .setZIndex(1);
 
-        group = graphicEntityModule.createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup, area)
+        cost = graphicEntityModule
+                .createText("0")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(35)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(150 * 2 * 260 / 740)
+                .setY(220 * 2 * 260 / 740)
+                .setZIndex(3);
+
+        defense = graphicEntityModule
+                .createText("0")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(35)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(4.0)
+                .setX(255 * 2 * 260 / 740)
+                .setY(210 * 2 * 260 / 740)
+                .setZIndex(3);
+
+        overlay = graphicEntityModule
+                .createSprite()
+                .setAlpha(1)
+                .setBaseHeight(ConstantsUI.CARD_DIM.y)
+                .setBaseWidth(ConstantsUI.CARD_DIM.x)
+                .setImage("basic_overlay.png")
+                .setZIndex(2);
+
+        ward = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setBaseHeight(ConstantsUI.CARD_DIM.y)
+                .setBaseWidth(ConstantsUI.CARD_DIM.x)
+                .setImage("ward.png")
+                .setZIndex(4);
+
+        lethal = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setBaseWidth((int) (ConstantsUI.CARD_DIM.x * (28f / 300)))
+                .setBaseHeight((int) (ConstantsUI.CARD_DIM.y * (66f / 370)))
+                .setImage("lethal.png")
+                .setZIndex(5)
+                .setX((int) (ConstantsUI.CARD_DIM.x * (3f / 300)))
+                .setY((int) (ConstantsUI.CARD_DIM.y * (170f / 370)));
+
+
+        shadow = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setAnchor(-0.045) // (-0.035)
+                .setBaseHeight(ConstantsUI.CARD_DIM.y)
+                .setBaseWidth(ConstantsUI.CARD_DIM.x)
+                .setImage("shadow.png")
+                //.setTint(0x808080)
+                .setZIndex(-1);
+
+        impact = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setAnchor(.5)
+                .setImage("impact.png")
+                .setZIndex(1);
+
+        heal = graphicEntityModule
+                .createSprite()
+                .setAlpha(0)
+                .setAnchor(.5)
+                .setImage("heal.png")
+                .setZIndex(1);
+
+        damageFloat = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(36)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(2.0)
+                .setZIndex(3);
+
+        healFloat = graphicEntityModule
+                .createText("")
+                .setAnchor(0.5)
+                .setFillColor(0xffffff)
+                .setFontSize(36)
+                .setStrokeColor(0x000000)
+                .setStrokeThickness(2.0)
+                .setZIndex(3);
+
+        Group damageGroup = graphicEntityModule
+                .createGroup(impact, damageFloat)
+                .setZIndex(7)
+                .setX(ConstantsUI.CARD_DIM.x / 2)
+                .setY(80);
+        Group healGroup = graphicEntityModule
+                .createGroup(heal, healFloat)
+                .setZIndex(6)
+                .setX(ConstantsUI.CARD_DIM.x / 2)
+                .setY(80);
+
+        area = graphicEntityModule
+                .createSprite()
+                .setAlpha(1)
+                .setBaseHeight(22 * ConstantsUI.CARD_DIM.y / 370)
+                .setBaseWidth(ConstantsUI.CARD_DIM.x)
+                .setX(0)
+                .setY(310 * ConstantsUI.CARD_DIM.y / 370)
+                .setZIndex(1);
+
+        group = graphicEntityModule
+                .createGroup(shadow, background, image, overlay, ward, lethal, attack, cost, defense, healGroup, damageGroup, area)
                 .setScale(1.0);
         for (int index = 0; index < 3; ++index) {
-            group.add(extraIcons[index] = graphicEntityModule.createSprite()
+            group.add(extraIcons[index] = graphicEntityModule
+                    .createSprite()
                     .setAnchorY(0.5)
                     .setScale(0.63)
                     .setX(ConstantsUI.CARD_EXTRAS[index].x + 15)
                     .setY(ConstantsUI.CARD_EXTRAS[index].y)
-            .setZIndex(1));
+                    .setZIndex(1));
         }
         extraIcons[0].setImage("heart_icon.png");
         extraIcons[1].setImage("heart_icon_rev.png");
         extraIcons[2].setImage("card_stat.png");
 
         for (int index = 0; index < 3; ++index) {
-            group.add(extras[index] = graphicEntityModule.createText("-")
+            group.add(extras[index] = graphicEntityModule
+                    .createText("-")
                     .setAnchor(0.5)
                     .setFillColor(0xffffff)
                     .setFontSize(25)
@@ -182,7 +200,8 @@ public class CardUI {
         }
 
         for (int index = 0; index < 6; ++index) {
-            group.add(keywords[index] = graphicEntityModule.createSprite()
+            group.add(keywords[index] = graphicEntityModule
+                    .createSprite()
                     .setAnchor(0.5)
                     .setImage(ConstantsUI.CARD_KEYWORDS_IMAGES[index])
                     .setScale(0.6)
@@ -241,18 +260,18 @@ public class CardUI {
         group.setX(x).setY(y);
 
         attack
-            .setText(formatAttDef(card.attack, base.type))
-            .setFillColor(colorAttDef(base.attack, card.attack), Curve.NONE);
+                .setText(formatAttDef(card.attack, base.type))
+                .setFillColor(colorAttDef(base.attack, card.attack), Curve.NONE);
         cost
-            .setText(Integer.toString(base.cost));
+                .setText(Integer.toString(base.cost));
         defense
-            .setText(formatAttDef(card.defense, base.type))
-            .setFillColor(colorAttDef(base.defense, card.defense), Curve.NONE);
+                .setText(formatAttDef(card.defense, base.type))
+                .setFillColor(colorAttDef(base.defense, card.defense), Curve.NONE);
 
         attack.setVisible(base.type == Card.Type.CREATURE || card.attack != 0);
         defense.setVisible(base.type == Card.Type.CREATURE || card.defense != 0);
 
-        switch(base.type){
+        switch (base.type) {
             case CREATURE:
                 background.setImage("Card_creature.png");
                 break;
@@ -265,40 +284,43 @@ public class CardUI {
             case ITEM_RED:
                 background.setImage("Card_item_red.png");
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + base.type);
         }
 
         int tint = 0;
         if (Math.abs(base.attack) <= 12)
-            tint += 0x010000 * (int)(22*(Math.pow(Math.abs(base.attack), 0.9) + 2));
+            tint += 0x010000 * (int) (22 * (Math.pow(Math.abs(base.attack), 0.9) + 2));
         else
             tint += 0xFF0000;
         if (Math.abs(base.defense) <= 12)
-            tint += 0x000100 * (int)(22*(Math.pow(Math.abs(base.defense), 0.9) + 2));
+            tint += 0x000100 * (int) (22 * (Math.pow(Math.abs(base.defense), 0.9) + 2));
         else
             tint += 0x00FF00;
         if (Math.abs(base.cost) <= 12)
-            tint += (int)(22*(Math.pow(Math.abs(base.cost), 0.9) + 2));
+            tint += (int) (22 * (Math.pow(Math.abs(base.cost), 0.9) + 2));
         else
             tint += 0x0000FF;
 
-        double scale = 1+(double)(base.attack+base.defense-12)/12/4;
-        double angle = ((double)(Objects.hash(base.baseId, 31, base.attack, base.defense))%25-12)/200
-                *(Math.PI*2)*((card.baseId%2)*2-1);
-        image.setImage("atlas-" + ((Objects.hash(base.baseId, base.cost)) % 160))
+        double scale = 1 + (double) (base.attack + base.defense - 12) / 12 / 4;
+        double angle = ((double) (Objects.hash(base.baseId, 31, base.attack, base.defense)) % 25 - 12) / 200
+                * (Math.PI * 2) * ((card.baseId % 2) * 2 - 1);
+        image
+                .setImage("atlas-" + ((Objects.hash(base.baseId, base.cost)) % 160))
                 .setTint(tint)
                 .setRotation(angle)
-                .setScaleX(scale * (card.baseId%2 == 0 ? 1 : -1))
-                .setScaleY(Math.abs(scale))
-        ;
+                .setScaleX(scale * (card.baseId % 2 == 0 ? 1 : -1))
+                .setScaleY(Math.abs(scale));
+
         overlay.setImage(isOnBoard && card.keywords.hasGuard ? "guard_overlay.png" : "basic_overlay.png");
         ward.setAlpha(isOnBoard && card.keywords.hasWard ? 1 : 0);
         lethal.setAlpha(isOnBoard && card.keywords.hasLethal ? 1 : 0);
         shadow.setAlpha(isOnBoard && card.canAttack ? 1 : 0);
 
-        int[] extraValues = new int[] {
-            base.myHealthChange,
-            base.oppHealthChange,
-            base.cardDraw
+        int[] extraValues = new int[]{
+                base.myHealthChange,
+                base.oppHealthChange,
+                base.cardDraw
         };
 
         for (int index = 0; index < 3; ++index) {
@@ -330,6 +352,8 @@ public class CardUI {
             case LANE2:
                 area.setImage("Area_lane2.png");
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + base.type);
         }
 
         this.tooltipModule.registerEntity(group, new HashMap<>());
@@ -339,13 +363,12 @@ public class CardUI {
     }
 
     private int colorAttDef(int baseValue, int cardValue) {
-        if (baseValue < cardValue) {
+        if (baseValue < cardValue)
             return 0x00B16A; // Green
-        } else if (baseValue > cardValue) {
+        else if (baseValue > cardValue)
             return 0xF22613; // Red
-        } else {
+        else
             return 0xFFFFFF; // White
-        }
     }
 
     private String formatAttDef(int val, Card.Type type) {
@@ -356,8 +379,10 @@ public class CardUI {
     }
 
     private String formatExtra(int val) {
-        if (val > 0) return "+" + val;
-        if (val < 0) return "" + val;
+        if (val > 0)
+            return "+" + val;
+        if (val < 0)
+            return "" + val;
         return "-";
     }
 
@@ -375,10 +400,10 @@ public class CardUI {
     public CardUI action(AttackResult result, int id) {
         int attack = 0;
         int defense = result.attacker != null && result.attacker.id == id
-            ? result.attackerDefenseChange
-            : result.defender != null && result.defender.id == id
-                ? result.defenderDefenseChange
-                : 0;
+                ? result.attackerDefenseChange
+                : result.defender != null && result.defender.id == id
+                    ? result.defenderDefenseChange
+                    : 0;
 
         if (defense < 0) {
             damageFloat.setText(Integer.toString(defense));
@@ -423,8 +448,8 @@ public class CardUI {
 
     public CardUI commitGroup(double state) {
         graphicEntityModule.commitEntityState(
-            state,
-            group
+                state,
+                group
         );
 
         return this;
@@ -432,30 +457,30 @@ public class CardUI {
 
     public CardUI commit(double state) {
         graphicEntityModule.commitEntityState(
-            state,
-            attack,
-            background,
-            cost,
-            defense,
-            extras[0],
-            extras[1],
-            extras[2],
-            extraIcons[0],
-            extraIcons[1],
-            extraIcons[2],
-            area,
-            group,
-            image,
-            overlay,
-            ward,
-            lethal,
-            keywords[0],
-            keywords[1],
-            keywords[2],
-            keywords[3],
-            keywords[4],
-            keywords[5],
-            shadow
+                state,
+                attack,
+                background,
+                cost,
+                defense,
+                extras[0],
+                extras[1],
+                extras[2],
+                extraIcons[0],
+                extraIcons[1],
+                extraIcons[2],
+                area,
+                group,
+                image,
+                overlay,
+                ward,
+                lethal,
+                keywords[0],
+                keywords[1],
+                keywords[2],
+                keywords[3],
+                keywords[4],
+                keywords[5],
+                shadow
         );
 
         return this;
