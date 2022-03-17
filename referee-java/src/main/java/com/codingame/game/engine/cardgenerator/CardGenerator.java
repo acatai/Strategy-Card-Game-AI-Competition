@@ -80,7 +80,8 @@ public class CardGenerator {
                     builder.addProperty(nextProperty, oppHealthChangeGenerator.randomChoice());
                     break;
                 case "keywords":
-                    keywordsGenerator.generateKeywords(builder);
+                    if (!type.equals("itemBlue"))
+                        keywordsGenerator.generateKeywords(builder);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + nextProperty);

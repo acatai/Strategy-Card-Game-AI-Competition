@@ -43,6 +43,9 @@ class CardBuilder {
         if (Objects.equals(properties.get("type"), "creature")) {
             attack = Math.max(attack, 0);
             defense = Math.max(defense, 1);
+        } else if (Objects.equals(properties.get("type"), "itemBlue")) {
+            attack = 0;
+            defense = Math.max(defense, 0);
         } else {
             attack = Math.max(attack, 0);
             defense = Math.max(defense, 0);
@@ -69,7 +72,7 @@ class CardBuilder {
     Card createCard() {
         return new Card(new String[]{
                 properties.getOrDefault("id", "-1"),
-                "very creative temporary name",
+                "#" + properties.getOrDefault("id", "-1"),
                 properties.getOrDefault("type", "creature"),
                 properties.getOrDefault("mana", "0"),
                 properties.getOrDefault("attack", "0.0"),
