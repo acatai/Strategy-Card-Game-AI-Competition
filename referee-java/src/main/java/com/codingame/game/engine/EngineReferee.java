@@ -77,7 +77,8 @@ public class EngineReferee {
         } else if (gameTurn < expectedConstructionFrames) {
             VisualTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
-        } else if (gameTurn <= Math.max(3, expectedConstructionFrames + 1)) {
+        } else if (gameTurn < expectedConstructionFrames + (expectedConstructionFrames % 2 == 1 ? 1 : 2)) {
+            // For some reason we require even number of rounds for constructed phase and cleanup after
             gameManager.setFrameDuration(10);
             VisualTurn(gameManager, () -> ui.cleanupAfterConstruction());
             return false;
