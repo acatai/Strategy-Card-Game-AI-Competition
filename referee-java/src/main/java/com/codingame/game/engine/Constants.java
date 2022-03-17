@@ -77,7 +77,7 @@ public final class Constants {
         }
     }
 
-    public static void GenerateCardlistHTML(String templatePath, String outHTMLPath) throws IOException {
+    public static void GenerateCardlistHTML(HashMap<Integer, Card> cardset, String templatePath, String outHTMLPath) throws IOException {
         Scanner s = new Scanner(new InputStreamReader(ClassLoader.getSystemResourceAsStream(templatePath), "UTF-8")).useDelimiter("\\A");
         String template = s.hasNext() ? s.next() : "";
         StringBuilder sb = new StringBuilder();
@@ -85,7 +85,7 @@ public final class Constants {
         HashMap<Integer, String> refs = new HashMap<>();
         // refs = GenerateTESLReferences();
 
-        for (Card c : CARDSET.values())
+        for (Card c : cardset.values())
             sb.append(c.toHTMLString(refs.get(c.baseId))).append("\n");
 
         template = String.format(template, sb.toString());

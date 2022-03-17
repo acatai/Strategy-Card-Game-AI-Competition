@@ -343,18 +343,22 @@ public class Card {
         return sb.toString();
     }
 
+    public String toPrettyStringWithoutId(String format) {
+        return String.format(format,
+                this.baseId,
+                this.type.ordinal(),
+                this.cost,
+                this.attack,
+                this.defense,
+                this.keywords,
+                this.myHealthChange,
+                this.oppHealthChange,
+                this.cardDraw,
+                this.area.ordinal());
+    }
+
     public String toStringWithoutId() {
-        return String.valueOf(this.baseId) + ' ' +
-//            this.type.getDescription() + ' ' +
-                this.type.ordinal() + ' ' + // todo test is it ok? 0, 1, 2, 3
-                this.cost + ' ' +
-                this.attack + ' ' +
-                this.defense + ' ' +
-                this.keywords + ' ' +
-                this.myHealthChange + ' ' +
-                this.oppHealthChange + ' ' +
-                this.cardDraw + ' ' +
-                this.area.ordinal() + ' ';
+        return toPrettyStringWithoutId("%s %s %s %s %s %s %s %s %s %s ");
     }
 
     public String toString() {
