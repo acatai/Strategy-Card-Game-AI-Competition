@@ -2,6 +2,7 @@ package com.codingame.game.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.codingame.game.Player;
 import com.codingame.game.engine.Action.Type;
@@ -9,6 +10,7 @@ import com.codingame.game.engine.cardgenerator.CardGenerator;
 import com.codingame.game.ui.RefereeUI;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.MultiplayerGameManager;
+import org.apache.commons.lang3.StringUtils;
 
 public class EngineReferee {
     //private MultiplayerGameManager<Player> gameManager; // @Inject ?
@@ -39,6 +41,8 @@ public class EngineReferee {
             CardGenerator cardGenerator = new CardGenerator(params.cardGenRNG, "cardWeights.json");
             cardGenerator.generateCardList();
         }
+        gameManager.addToGameSummary("Generated cards: " +
+                Constants.CARDSET.values().stream().map(Card::toString).collect(Collectors.joining(", ")));
 
         if (Constants.VERBOSE_LEVEL > 1)
             System.out.println("   CARDSET with " + Constants.CARDSET.size() + " cards loaded.");
