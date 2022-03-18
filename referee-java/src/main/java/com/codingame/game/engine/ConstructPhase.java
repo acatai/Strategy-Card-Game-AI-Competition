@@ -72,7 +72,7 @@ public class ConstructPhase {
             throw new InvalidActionHard("Invalid action argument. \"PICK\" argument should be between 0 and " + (Constants.CARDS_IN_CONSTRUCTED - 1) + ".");
         Card choice = cardsForConstruction.get(value);
         if (chosenQuantities[player][choice.baseId] >= Constants.CONSTRUCTED_MAX_COPY)
-            throw new InvalidActionHard("Invalid action argument. Card can be chosen maximally three times.");
+            throw new InvalidActionHard("Invalid action argument. Card can be chosen at most " + Constants.CONSTRUCTED_MAX_COPY + " times.");
         return choice;
     }
 
@@ -86,7 +86,7 @@ public class ConstructPhase {
             throw new InvalidActionHard("Invalid action format. \"CHOOSE\" argument should be valid card's base id.");
 
         if (chosenQuantities[player][choice.get().baseId] >= Constants.CONSTRUCTED_MAX_COPY)
-            throw new InvalidActionHard("Invalid action argument. Card can be chosen maximally three times.");
+            throw new InvalidActionHard("Invalid action argument. Card can be chosen at most " + Constants.CONSTRUCTED_MAX_COPY + " times.");
         return choice.get();
     }
 
