@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -251,7 +252,10 @@ public class Card {
     public String toTooltipText(CreatureOnBoard creatureOnBoard) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(this.name).append(" (#").append(baseId).append(")").append("\n\n");
+        sb.append(this.name);
+        if (!Objects.equals(this.name, "#" + baseId))
+            sb.append(" (#").append(baseId).append(")");
+        sb.append("\n\n");
 
         if (id >= 0)
             sb.append("instanceId: ").append(this.id).append("\n");
