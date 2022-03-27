@@ -95,5 +95,3 @@ fabric.properties
 \.idea/compiler\.xml
 
 src/test/java/julibot.py
-statement_en.html
-statement_fr.html
