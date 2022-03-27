@@ -1,0 +1,411 @@
+Baseline1;Baseline2;BinaryTree-baseline;BinaryTree-frombest;BinaryTree-standard;Chad;Coac;Linear-baseline;Linear-from-Linear-standard;Linear-frombest;Linear-standard;OneLaneIsEnough;ReinforcedGreediness;Tree-baseline;Tree-from-Linear-standard;Tree-frombest;Tree-standard
+ 44.19; 43.02; 40.94; 53.59; 47.69; 84.88; 96.51; 39.92; 42.05; 42.61; 51.30; 75.58; 90.70; 36.52; 47.73; 37.39; 38.74
+ 37.79; 44.19; 36.25; 52.95; 50.13; 84.88; 94.77; 41.77; 47.44; 42.17; 56.09; 61.63; 87.21; 33.91; 52.84; 40.00; 39.64
+ 29.84; 39.53; 38.85; 53.50; 48.89; 84.50; 91.47; 44.72; 48.48; 43.19; 54.49; 68.99; 80.62; 35.07; 51.33; 39.42; 40.84
+ 30.52; 40.12; 42.27; 50.19; 45.51; 85.47; 92.15; 50.62; 49.01; 41.52; 53.91; 69.77; 81.98; 36.74; 50.99; 37.39; 40.09
+ 30.25; 40.33; 42.27; 50.27; 45.97; 85.83; 92.10; 47.68; 50.11; 45.04; 57.51; 68.66; 82.83; 34.44; 51.91; 45.33; 43.73
+ 31.03; 42.05; 40.78; 49.66; 45.81; 84.10; 92.05; 47.10; 50.47; 48.86; 58.37; 64.62; 82.56; 36.42; 52.99; 46.75; 45.07
+ 30.51; 41.65; 39.97; 49.08; 45.93; 84.50; 92.01; 46.92; 51.83; 48.70; 58.33; 64.89; 83.05; 38.64; 52.87; 46.19; 47.08
+ 30.05; 40.83; 40.05; 48.27; 44.90; 82.34; 92.43; 48.91; 51.32; 49.15; 60.05; 63.99; 83.72; 40.05; 52.99; 45.45; 46.48
+ 29.50; 42.72; 39.17; 47.14; 44.08; 82.95; 92.42; 47.64; 54.12; 48.54; 59.15; 63.62; 83.84; 39.05; 56.65; 44.78; 45.95
+ 29.44; 44.57; 37.88; 46.21; 43.39; 83.88; 92.42; 46.71; 56.56; 47.63; 57.89; 62.24; 81.46; 37.85; 59.88; 43.63; 45.27
+ 29.37; 43.81; 37.83; 47.64; 43.88; 83.81; 92.63; 45.99; 56.12; 47.91; 57.14; 64.37; 83.04; 37.61; 59.47; 43.54; 45.32
+ 30.06; 44.02; 37.01; 47.58; 44.74; 83.90; 93.10; 45.82; 56.28; 48.15; 57.07; 60.58; 84.20; 37.32; 59.75; 43.46; 45.46
+ 30.22; 43.56; 36.89; 47.30; 44.59; 83.85; 93.04; 45.38; 55.61; 48.29; 57.38; 61.19; 84.44; 37.33; 59.69; 44.92; 46.87
+ 29.66; 43.98; 36.52; 47.02; 44.40; 83.81; 92.55; 45.39; 55.59; 48.74; 57.77; 60.32; 84.24; 37.37; 59.75; 45.54; 47.56
+ 28.95; 44.77; 36.07; 46.55; 43.87; 84.06; 92.47; 44.70; 56.38; 48.09; 56.99; 61.61; 85.33; 36.62; 59.83; 45.05; 46.59
+ 29.43; 45.98; 35.40; 45.85; 43.52; 84.25; 92.99; 44.05; 56.79; 47.34; 56.27; 60.57; 85.29; 35.92; 60.78; 44.19; 45.86
+ 30.16; 45.29; 36.16; 46.68; 43.94; 84.42; 92.83; 43.77; 56.69; 47.92; 56.31; 60.87; 85.65; 35.78; 60.78; 44.25; 45.81
+ 30.42; 45.08; 35.39; 47.13; 45.04; 84.68; 93.00; 43.76; 56.84; 48.74; 56.48; 60.18; 85.34; 35.53; 60.59; 44.44; 45.94
+ 30.63; 44.72; 35.12; 47.17; 44.97; 84.85; 93.17; 43.53; 56.94; 48.65; 56.30; 60.51; 85.27; 35.48; 60.52; 45.50; 46.40
+ 30.83; 45.21; 34.76; 46.76; 44.91; 85.10; 93.02; 43.72; 57.17; 48.30; 57.00; 60.00; 85.31; 35.68; 60.63; 45.45; 46.71
+ 29.92; 43.98; 34.69; 46.69; 44.81; 85.76; 93.00; 43.36; 57.62; 48.10; 56.55; 60.43; 85.54; 35.53; 60.17; 45.16; 46.78
+ 29.51; 43.02; 34.70; 46.30; 44.36; 85.25; 93.08; 43.57; 58.18; 47.98; 56.21; 60.14; 85.56; 35.34; 60.68; 44.69; 45.95
+ 29.80; 42.45; 34.83; 45.94; 44.20; 85.30; 92.99; 43.30; 58.03; 47.61; 55.59; 61.36; 85.96; 34.98; 60.98; 44.56; 45.47
+ 30.21; 43.48; 34.17; 45.62; 43.92; 85.66; 92.99; 43.05; 58.35; 47.15; 55.20; 60.02; 85.37; 34.53; 61.53; 44.25; 45.10
+ 30.09; 43.29; 34.50; 46.18; 43.82; 85.75; 92.26; 43.45; 58.29; 47.25; 54.94; 61.60; 85.10; 34.62; 61.17; 44.21; 45.26
+ 30.12; 43.25; 35.37; 45.85; 43.26; 85.31; 92.43; 45.09; 58.10; 47.43; 54.83; 62.24; 85.76; 34.80; 60.91; 43.90; 44.95
+ 30.44; 43.28; 35.49; 46.15; 43.69; 85.40; 92.41; 44.88; 58.02; 47.63; 55.10; 62.48; 85.84; 34.72; 60.68; 43.93; 44.94
+ 30.46; 43.39; 35.30; 46.08; 44.61; 85.34; 92.46; 45.02; 57.88; 47.76; 55.39; 62.00; 85.92; 34.65; 60.70; 43.85; 44.78
+ 30.53; 43.39; 35.11; 46.03; 44.53; 85.44; 92.58; 44.86; 57.87; 47.65; 55.51; 61.84; 86.01; 34.63; 60.59; 44.59; 45.39
+ 30.46; 43.74; 34.85; 45.90; 44.43; 85.12; 92.70; 44.69; 58.09; 47.56; 55.41; 61.13; 86.02; 35.02; 60.50; 44.90; 46.13
+ 30.45; 43.83; 34.99; 46.03; 44.12; 84.91; 92.85; 44.45; 57.98; 47.18; 55.14; 62.20; 86.09; 34.78; 60.65; 44.85; 45.79
+ 30.62; 44.16; 34.62; 45.96; 44.01; 85.09; 92.86; 44.26; 57.76; 47.08; 54.89; 61.61; 85.78; 34.66; 61.14; 44.66; 45.63
+ 30.39; 44.00; 34.72; 45.99; 44.29; 85.17; 92.77; 44.03; 57.69; 47.43; 55.23; 61.64; 85.91; 34.64; 61.04; 44.74; 45.50
+ 30.47; 43.77; 34.54; 45.97; 44.68; 84.95; 92.81; 44.14; 57.66; 47.84; 55.42; 61.12; 85.79; 34.70; 61.00; 44.63; 45.42
+ 30.71; 43.59; 34.38; 45.84; 44.70; 84.97; 92.90; 43.94; 58.07; 47.85; 55.16; 61.24; 85.99; 34.57; 60.93; 44.94; 45.67
+ 30.53; 44.06; 34.13; 45.64; 44.69; 84.82; 92.94; 43.89; 58.34; 47.61; 55.09; 60.53; 85.94; 34.72; 60.96; 45.17; 46.09
+ 31.13; 44.12; 34.23; 45.89; 44.57; 84.66; 93.00; 43.75; 58.15; 47.38; 54.79; 61.37; 86.06; 34.57; 61.07; 45.00; 45.86
+ 31.09; 44.93; 33.94; 45.86; 44.57; 84.67; 93.00; 43.64; 57.99; 47.32; 54.65; 60.74; 85.84; 34.60; 61.35; 44.82; 45.70
+ 30.71; 44.54; 33.89; 45.72; 44.51; 84.75; 92.72; 43.61; 57.89; 47.52; 55.09; 61.06; 85.80; 35.12; 61.06; 45.18; 45.93
+ 30.71; 44.32; 34.10; 45.51; 44.34; 84.46; 92.81; 43.84; 57.86; 47.64; 55.65; 60.90; 85.97; 35.62; 61.00; 44.92; 45.88
+ 30.86; 44.31; 34.08; 45.47; 44.60; 84.49; 92.84; 43.83; 57.81; 47.84; 55.88; 61.05; 85.98; 35.46; 60.98; 44.98; 45.92
+ 30.65; 44.35; 34.03; 45.40; 45.06; 84.47; 92.92; 44.02; 57.83; 48.12; 55.98; 60.54; 85.98; 35.43; 60.92; 44.95; 45.79
+ 30.10; 43.56; 33.96; 45.33; 44.90; 84.59; 92.20; 43.80; 57.94; 48.03; 55.81; 61.66; 85.40; 35.39; 60.76; 44.78; 45.60
+ 30.01; 43.31; 33.91; 45.07; 44.63; 84.36; 92.23; 43.81; 58.13; 47.87; 55.56; 62.08; 85.43; 35.24; 60.79; 44.48; 45.25
+ 29.84; 43.33; 33.90; 45.01; 44.56; 84.48; 92.22; 43.59; 58.27; 47.71; 55.37; 62.19; 85.49; 35.20; 60.74; 44.83; 45.30
+ 29.72; 43.49; 33.68; 44.75; 44.42; 84.40; 92.29; 43.52; 58.69; 47.67; 55.18; 61.83; 85.28; 35.05; 60.73; 44.89; 45.57
+ 30.36; 43.38; 33.61; 45.14; 44.49; 84.42; 92.14; 43.33; 58.49; 47.48; 55.03; 62.58; 85.66; 34.90; 60.81; 44.76; 45.53
+ 30.19; 43.71; 33.41; 45.39; 44.62; 84.57; 92.22; 43.31; 58.37; 47.35; 54.91; 61.52; 85.71; 34.80; 61.01; 44.71; 45.53
+ 30.19; 43.58; 33.46; 45.41; 44.73; 84.67; 92.25; 43.12; 58.34; 47.39; 55.31; 61.47; 85.73; 34.80; 60.94; 45.06; 45.46
+ 30.23; 43.66; 33.38; 45.38; 44.76; 84.65; 92.33; 43.06; 58.34; 47.56; 55.55; 61.05; 85.78; 35.08; 60.94; 45.07; 45.49
+ 30.29; 43.60; 33.25; 45.30; 44.67; 84.75; 92.40; 42.88; 58.38; 47.41; 55.40; 61.16; 85.87; 34.89; 61.14; 45.09; 45.52
+ 30.22; 43.78; 33.08; 45.09; 44.53; 84.64; 92.42; 42.77; 58.59; 47.19; 55.19; 60.85; 85.79; 34.75; 61.40; 44.99; 45.66
+ 30.50; 43.75; 33.05; 45.29; 44.76; 84.57; 92.56; 42.66; 58.46; 47.16; 55.09; 61.47; 86.04; 34.72; 61.38; 44.95; 45.54
+ 30.53; 43.99; 32.88; 45.45; 45.00; 84.66; 92.73; 42.77; 58.39; 47.08; 55.06; 61.13; 86.11; 34.72; 61.33; 44.89; 45.49
+ 30.34; 43.91; 32.88; 45.52; 44.95; 84.68; 92.68; 42.83; 58.37; 47.27; 55.24; 61.17; 86.20; 34.72; 61.33; 45.12; 45.45
+ 30.34; 44.06; 32.81; 45.49; 44.93; 84.51; 92.71; 43.00; 58.30; 47.47; 55.49; 60.75; 86.20; 34.78; 61.30; 45.34; 45.40
+ 30.20; 44.07; 33.01; 45.90; 45.16; 84.64; 92.51; 43.13; 58.22; 47.78; 55.39; 60.96; 86.17; 34.83; 61.11; 45.27; 45.43
+ 30.33; 44.05; 33.75; 45.80; 44.82; 84.58; 92.53; 43.93; 58.21; 47.91; 55.44; 60.84; 86.24; 34.90; 60.97; 45.11; 45.38
+ 30.48; 44.04; 33.70; 45.71; 44.70; 84.63; 92.59; 43.84; 58.21; 47.76; 55.27; 60.97; 86.35; 34.79; 61.12; 45.09; 45.43
+ 30.55; 44.45; 33.54; 45.55; 44.59; 84.64; 92.58; 43.73; 58.37; 47.62; 55.03; 60.74; 86.24; 34.65; 61.37; 44.99; 45.52
+ 30.48; 44.27; 33.61; 45.57; 44.55; 84.66; 92.46; 43.65; 58.39; 47.60; 55.14; 60.92; 86.21; 34.96; 61.25; 44.99; 45.68
+ 30.48; 44.12; 33.68; 45.49; 44.40; 84.32; 92.48; 43.77; 58.47; 47.52; 55.39; 60.77; 86.26; 35.54; 61.27; 44.81; 45.44
+ 30.45; 44.01; 33.77; 45.68; 44.43; 84.20; 92.60; 43.71; 58.44; 47.48; 55.34; 61.28; 86.39; 35.52; 61.19; 44.76; 45.44
+ 30.48; 43.86; 33.58; 45.78; 44.69; 84.12; 92.68; 43.83; 58.43; 47.46; 55.32; 60.69; 86.35; 35.49; 61.17; 44.74; 45.41
+ 30.44; 43.86; 33.56; 45.80; 44.71; 84.14; 92.71; 43.73; 58.35; 47.59; 55.44; 60.72; 86.45; 35.50; 61.14; 44.91; 45.56
+ 30.41; 43.96; 33.51; 45.68; 44.73; 84.13; 92.73; 43.67; 58.32; 47.79; 55.54; 60.39; 86.42; 35.65; 61.06; 45.01; 45.76
+ 30.61; 43.91; 33.44; 45.55; 44.57; 84.08; 92.80; 43.58; 58.31; 47.68; 55.39; 60.87; 86.42; 35.51; 61.20; 44.89; 45.57
+ 30.45; 44.31; 33.31; 45.41; 44.47; 84.16; 92.80; 43.47; 58.47; 47.58; 55.15; 60.25; 86.29; 35.40; 61.34; 44.75; 45.44
+ 30.48; 44.21; 33.46; 45.61; 44.56; 84.18; 92.82; 43.44; 58.45; 47.61; 55.08; 60.22; 86.47; 35.38; 61.37; 44.78; 45.48
+ 30.48; 44.33; 33.43; 45.69; 44.77; 84.01; 92.84; 43.53; 58.47; 47.81; 55.10; 59.94; 86.34; 35.30; 61.35; 44.77; 45.49
+ 30.45; 44.39; 33.44; 45.68; 44.73; 84.00; 92.86; 43.42; 58.43; 47.81; 55.17; 60.04; 86.40; 35.36; 61.33; 45.03; 45.61
+ 30.51; 44.53; 33.37; 45.60; 44.70; 83.90; 92.91; 43.39; 58.48; 47.74; 55.33; 59.77; 86.29; 35.50; 61.29; 45.12; 45.81
+ 30.54; 44.38; 33.33; 45.56; 44.58; 84.02; 92.86; 43.30; 58.50; 47.62; 55.24; 60.09; 86.48; 35.37; 61.23; 45.03; 45.69
+ 30.30; 44.49; 33.32; 45.47; 44.54; 84.04; 92.57; 43.20; 58.56; 47.47; 55.06; 60.19; 86.15; 35.27; 61.34; 44.95; 45.55
+ 29.93; 44.37; 33.48; 45.42; 44.44; 84.23; 92.38; 43.15; 58.50; 47.42; 54.99; 60.67; 85.89; 35.31; 61.21; 44.88; 45.48
+ 29.80; 44.14; 33.87; 45.24; 44.28; 84.13; 92.48; 43.12; 58.44; 47.30; 54.93; 60.78; 85.92; 35.26; 61.24; 44.74; 45.35
+ 29.86; 44.09; 33.87; 45.31; 44.58; 84.18; 92.34; 42.78; 58.43; 47.70; 54.91; 60.77; 85.88; 35.27; 61.22; 44.75; 45.33
+ 29.77; 43.99; 33.84; 45.54; 44.83; 84.11; 92.27; 42.93; 58.32; 47.98; 54.85; 60.76; 85.83; 35.31; 61.09; 44.80; 45.29
+ 29.67; 43.89; 33.88; 45.84; 44.90; 84.20; 92.07; 42.96; 58.25; 48.18; 54.92; 60.83; 85.80; 35.30; 60.97; 44.73; 45.27
+ 29.63; 43.90; 33.98; 45.72; 44.75; 84.03; 92.09; 43.52; 58.23; 48.21; 55.09; 60.82; 85.89; 35.38; 60.91; 44.63; 45.24
+ 29.58; 43.82; 33.88; 45.67; 44.72; 83.91; 91.93; 43.30; 58.32; 48.28; 55.18; 61.04; 85.79; 35.35; 60.89; 44.83; 45.47
+ 29.56; 43.87; 33.80; 45.62; 44.77; 83.96; 91.84; 43.25; 58.34; 48.26; 55.05; 60.93; 85.74; 35.44; 60.78; 45.06; 45.79
+ 29.55; 43.54; 33.81; 45.61; 44.75; 83.90; 91.84; 43.13; 58.29; 48.21; 54.95; 61.05; 85.70; 35.33; 60.92; 45.02; 45.69
+ 29.43; 43.53; 33.83; 45.70; 44.75; 83.79; 91.69; 43.10; 58.22; 48.16; 54.85; 61.34; 85.58; 35.30; 60.89; 44.93; 45.62
+ 29.40; 43.54; 33.72; 45.71; 45.16; 83.83; 91.54; 42.80; 58.12; 48.49; 54.99; 61.35; 85.61; 35.26; 60.88; 44.87; 45.53
+ 29.31; 43.62; 33.66; 45.77; 45.47; 83.82; 91.36; 42.82; 58.02; 48.76; 54.92; 61.37; 85.61; 35.29; 60.77; 44.85; 45.48
+ 29.39; 43.60; 33.58; 45.69; 45.46; 83.76; 91.10; 42.64; 58.15; 48.71; 54.87; 61.44; 85.64; 35.36; 60.73; 45.07; 45.70
+ 29.30; 43.65; 33.50; 45.64; 45.49; 83.73; 91.08; 42.58; 58.14; 48.70; 54.77; 61.39; 85.65; 35.51; 60.66; 45.30; 45.91
+ 29.46; 43.39; 33.52; 45.64; 45.42; 83.61; 91.02; 42.47; 58.03; 48.63; 54.69; 61.51; 85.66; 35.45; 60.87; 45.28; 45.86
+ 29.46; 43.50; 33.60; 45.74; 45.42; 83.42; 90.99; 42.43; 57.95; 48.61; 54.57; 61.49; 85.43; 35.44; 60.79; 45.31; 45.83
+ 29.40; 43.44; 33.52; 45.68; 45.71; 83.46; 90.80; 42.29; 57.92; 48.90; 54.75; 61.38; 85.43; 35.38; 60.74; 45.32; 45.80
+ 29.37; 43.41; 33.45; 45.65; 46.02; 83.40; 90.68; 42.48; 57.84; 49.14; 54.65; 61.27; 85.36; 35.40; 60.65; 45.28; 45.79
+ 29.26; 43.32; 33.44; 45.59; 46.02; 83.37; 90.55; 42.43; 57.89; 49.14; 54.63; 61.34; 85.42; 35.69; 60.59; 45.29; 45.91
+ 29.17; 43.35; 33.51; 45.51; 45.95; 83.30; 90.57; 42.51; 57.97; 49.10; 54.72; 61.38; 85.43; 35.91; 60.60; 45.12; 45.88
+ 29.16; 43.33; 33.48; 45.47; 45.95; 83.33; 90.52; 42.47; 57.97; 49.10; 54.71; 61.41; 85.38; 35.95; 60.59; 45.35; 45.90
+ 28.89; 42.92; 33.61; 45.54; 45.93; 83.45; 90.36; 42.44; 57.97; 49.06; 54.69; 61.82; 85.15; 35.94; 60.45; 45.30; 45.86
+ 28.98; 42.81; 33.92; 45.43; 45.83; 83.34; 90.53; 42.43; 57.92; 48.96; 54.65; 62.00; 85.16; 35.92; 60.47; 45.20; 45.74
+ 28.95; 42.73; 33.94; 45.48; 45.88; 83.38; 90.44; 42.56; 57.87; 49.07; 54.74; 62.10; 85.19; 35.94; 60.39; 45.11; 45.74
+ 28.98; 42.77; 33.99; 45.27; 45.73; 83.26; 90.44; 43.02; 57.88; 49.04; 54.93; 62.04; 85.22; 36.07; 60.36; 45.04; 45.67
+ 28.91; 42.76; 33.94; 45.23; 45.71; 83.34; 90.42; 42.97; 57.95; 49.03; 54.91; 62.11; 85.25; 36.22; 60.28; 45.03; 45.82
+ 28.89; 42.73; 33.94; 45.20; 45.63; 83.18; 90.42; 43.02; 58.12; 48.99; 54.92; 62.07; 85.23; 36.40; 60.27; 44.96; 45.76
+                      Baseline1                       Baseline2 wins= 40.28% errs=  0.00% alls=36
+                      Baseline1             BinaryTree-baseline wins= 43.40% errs=  0.00% alls=144
+                      Baseline1             BinaryTree-frombest wins= 32.50% errs=  0.00% alls=180
+                      Baseline1             BinaryTree-standard wins= 38.33% errs=  0.00% alls=180
+                      Baseline1                            Chad wins=  2.78% errs=  0.00% alls=36
+                      Baseline1                            Coac wins=  0.00% errs=  0.00% alls=36
+                      Baseline1                 Linear-baseline wins= 45.83% errs=  0.00% alls=144
+                      Baseline1     Linear-from-Linear-standard wins= 16.99% errs=  0.00% alls=279
+                      Baseline1                 Linear-frombest wins= 29.44% errs=  0.00% alls=180
+                      Baseline1                 Linear-standard wins= 16.11% errs=  0.00% alls=180
+                      Baseline1                 OneLaneIsEnough wins=  6.94% errs=  0.00% alls=36
+                      Baseline1            ReinforcedGreediness wins=  2.78% errs=  0.00% alls=36
+                      Baseline1                   Tree-baseline wins= 36.97% errs=  0.00% alls=178
+                      Baseline1       Tree-from-Linear-standard wins= 21.69% errs=  0.00% alls=272
+                      Baseline1                   Tree-frombest wins= 34.37% errs=  0.00% alls=177
+                      Baseline1                   Tree-standard wins= 37.32% errs=  0.00% alls=175
+                      Baseline2                       Baseline1 wins= 59.72% errs=  0.00% alls=36
+                      Baseline2             BinaryTree-baseline wins= 34.03% errs=  0.00% alls=144
+                      Baseline2             BinaryTree-frombest wins= 45.56% errs=  0.00% alls=180
+                      Baseline2             BinaryTree-standard wins= 57.50% errs=  0.00% alls=180
+                      Baseline2                            Chad wins=  4.17% errs=  0.00% alls=36
+                      Baseline2                            Coac wins=  0.00% errs=  0.00% alls=36
+                      Baseline2                 Linear-baseline wins= 17.01% errs=  0.00% alls=144
+                      Baseline2     Linear-from-Linear-standard wins= 39.89% errs=  0.00% alls=279
+                      Baseline2                 Linear-frombest wins= 48.61% errs=  0.00% alls=180
+                      Baseline2                 Linear-standard wins= 35.56% errs=  0.00% alls=180
+                      Baseline2                 OneLaneIsEnough wins=  0.00% errs=  0.00% alls=36
+                      Baseline2            ReinforcedGreediness wins=  2.78% errs=  0.00% alls=36
+                      Baseline2                   Tree-baseline wins= 43.98% errs=  0.00% alls=178
+                      Baseline2       Tree-from-Linear-standard wins= 51.47% errs=  0.00% alls=272
+                      Baseline2                   Tree-frombest wins= 53.24% errs=  0.00% alls=177
+                      Baseline2                   Tree-standard wins= 63.53% errs=  0.00% alls=175
+            BinaryTree-baseline                       Baseline1 wins= 56.60% errs=  0.00% alls=144
+            BinaryTree-baseline                       Baseline2 wins= 65.97% errs=  0.00% alls=144
+            BinaryTree-baseline             BinaryTree-frombest wins= 35.07% errs=  0.00% alls=720
+            BinaryTree-baseline             BinaryTree-standard wins= 38.89% errs=  0.00% alls=720
+            BinaryTree-baseline                            Chad wins= 16.67% errs=  0.00% alls=144
+            BinaryTree-baseline                            Coac wins= 10.07% errs=  0.00% alls=144
+            BinaryTree-baseline                 Linear-baseline wins= 43.06% errs=  0.00% alls=576
+            BinaryTree-baseline     Linear-from-Linear-standard wins= 23.43% errs=  0.00% alls=1118
+            BinaryTree-baseline                 Linear-frombest wins= 36.81% errs=  0.00% alls=720
+            BinaryTree-baseline                 Linear-standard wins= 26.53% errs=  0.00% alls=720
+            BinaryTree-baseline                 OneLaneIsEnough wins= 46.18% errs=  0.00% alls=144
+            BinaryTree-baseline            ReinforcedGreediness wins= 11.11% errs=  0.00% alls=144
+            BinaryTree-baseline                   Tree-baseline wins= 49.30% errs=  0.07% alls=714
+            BinaryTree-baseline       Tree-from-Linear-standard wins= 27.11% errs=  0.00% alls=1088
+            BinaryTree-baseline                   Tree-frombest wins= 36.69% errs=  0.00% alls=710
+            BinaryTree-baseline                   Tree-standard wins= 33.19% errs=  0.00% alls=702
+            BinaryTree-frombest                       Baseline1 wins= 67.50% errs=  0.00% alls=180
+            BinaryTree-frombest                       Baseline2 wins= 54.44% errs=  0.00% alls=180
+            BinaryTree-frombest             BinaryTree-baseline wins= 64.93% errs=  0.00% alls=720
+            BinaryTree-frombest             BinaryTree-standard wins= 47.00% errs=  0.00% alls=900
+            BinaryTree-frombest                            Chad wins= 13.89% errs=  0.00% alls=180
+            BinaryTree-frombest                            Coac wins=  8.61% errs=  0.00% alls=180
+            BinaryTree-frombest                 Linear-baseline wins= 57.57% errs=  0.00% alls=720
+            BinaryTree-frombest     Linear-from-Linear-standard wins= 38.57% errs=  0.00% alls=1397
+            BinaryTree-frombest                 Linear-frombest wins= 47.83% errs=  0.00% alls=900
+            BinaryTree-frombest                 Linear-standard wins= 40.39% errs=  0.00% alls=900
+            BinaryTree-frombest                 OneLaneIsEnough wins= 35.83% errs=  0.00% alls=180
+            BinaryTree-frombest            ReinforcedGreediness wins=  5.83% errs=  0.00% alls=180
+            BinaryTree-frombest                   Tree-baseline wins= 56.97% errs=  0.06% alls=892
+            BinaryTree-frombest       Tree-from-Linear-standard wins= 35.22% errs=  0.00% alls=1360
+            BinaryTree-frombest                   Tree-frombest wins= 49.92% errs=  0.00% alls=887
+            BinaryTree-frombest                   Tree-standard wins= 46.04% errs=  0.00% alls=877
+            BinaryTree-standard                       Baseline1 wins= 61.67% errs=  0.00% alls=180
+            BinaryTree-standard                       Baseline2 wins= 42.50% errs=  0.00% alls=180
+            BinaryTree-standard             BinaryTree-baseline wins= 61.11% errs=  0.07% alls=720
+            BinaryTree-standard             BinaryTree-frombest wins= 53.00% errs=  0.00% alls=900
+            BinaryTree-standard                            Chad wins= 10.56% errs=  0.00% alls=180
+            BinaryTree-standard                            Coac wins=  7.78% errs=  0.00% alls=180
+            BinaryTree-standard                 Linear-baseline wins= 48.26% errs=  0.00% alls=720
+            BinaryTree-standard     Linear-from-Linear-standard wins= 40.00% errs=  0.00% alls=1397
+            BinaryTree-standard                 Linear-frombest wins= 45.39% errs=  0.00% alls=900
+            BinaryTree-standard                 Linear-standard wins= 40.28% errs=  0.00% alls=900
+            BinaryTree-standard                 OneLaneIsEnough wins= 34.17% errs=  0.00% alls=180
+            BinaryTree-standard            ReinforcedGreediness wins= 11.11% errs=  0.00% alls=180
+            BinaryTree-standard                   Tree-baseline wins= 61.85% errs=  0.00% alls=892
+            BinaryTree-standard       Tree-from-Linear-standard wins= 37.68% errs=  0.04% alls=1360
+            BinaryTree-standard                   Tree-frombest wins= 50.93% errs=  0.00% alls=887
+            BinaryTree-standard                   Tree-standard wins= 50.11% errs=  0.06% alls=877
+                           Chad                       Baseline1 wins= 97.22% errs=  0.00% alls=36
+                           Chad                       Baseline2 wins= 95.83% errs=  0.00% alls=36
+                           Chad             BinaryTree-baseline wins= 83.33% errs=  0.00% alls=144
+                           Chad             BinaryTree-frombest wins= 86.11% errs=  0.00% alls=180
+                           Chad             BinaryTree-standard wins= 89.44% errs=  0.00% alls=180
+                           Chad                            Coac wins= 31.94% errs=  0.00% alls=36
+                           Chad                 Linear-baseline wins= 79.86% errs=  0.00% alls=144
+                           Chad     Linear-from-Linear-standard wins= 81.75% errs=  0.00% alls=279
+                           Chad                 Linear-frombest wins= 86.11% errs=  0.00% alls=180
+                           Chad                 Linear-standard wins= 74.17% errs=  0.00% alls=180
+                           Chad                 OneLaneIsEnough wins= 59.72% errs=  0.00% alls=36
+                           Chad            ReinforcedGreediness wins=100.00% errs=  0.00% alls=36
+                           Chad                   Tree-baseline wins= 82.35% errs=  0.00% alls=178
+                           Chad       Tree-from-Linear-standard wins= 83.09% errs=  0.00% alls=272
+                           Chad                   Tree-frombest wins= 88.17% errs=  0.00% alls=177
+                           Chad                   Tree-standard wins= 87.18% errs=  0.00% alls=175
+                           Coac                       Baseline1 wins=100.00% errs=  0.00% alls=36
+                           Coac                       Baseline2 wins=100.00% errs=  0.00% alls=36
+                           Coac             BinaryTree-baseline wins= 89.93% errs=  0.00% alls=144
+                           Coac             BinaryTree-frombest wins= 91.39% errs=  0.00% alls=180
+                           Coac             BinaryTree-standard wins= 92.22% errs=  0.00% alls=180
+                           Coac                            Chad wins= 68.06% errs=  0.00% alls=36
+                           Coac                 Linear-baseline wins= 84.03% errs=  0.00% alls=144
+                           Coac     Linear-from-Linear-standard wins= 90.88% errs=  0.00% alls=279
+                           Coac                 Linear-frombest wins= 90.28% errs=  0.00% alls=180
+                           Coac                 Linear-standard wins= 90.83% errs=  0.00% alls=180
+                           Coac                 OneLaneIsEnough wins= 55.56% errs=  0.00% alls=36
+                           Coac            ReinforcedGreediness wins= 69.44% errs=  0.00% alls=36
+                           Coac                   Tree-baseline wins= 93.28% errs=  0.00% alls=178
+                           Coac       Tree-from-Linear-standard wins= 93.20% errs=  0.00% alls=272
+                           Coac                   Tree-frombest wins= 95.21% errs=  0.00% alls=177
+                           Coac                   Tree-standard wins= 92.31% errs=  0.00% alls=175
+                Linear-baseline                       Baseline1 wins= 54.17% errs=  0.00% alls=144
+                Linear-baseline                       Baseline2 wins= 82.99% errs=  0.00% alls=144
+                Linear-baseline             BinaryTree-baseline wins= 56.94% errs=  0.00% alls=576
+                Linear-baseline             BinaryTree-frombest wins= 42.43% errs=  0.00% alls=720
+                Linear-baseline             BinaryTree-standard wins= 51.74% errs=  0.00% alls=720
+                Linear-baseline                            Chad wins= 20.14% errs=  0.00% alls=144
+                Linear-baseline                            Coac wins= 15.97% errs=  0.00% alls=144
+                Linear-baseline     Linear-from-Linear-standard wins= 31.14% errs=  0.00% alls=1117
+                Linear-baseline                 Linear-frombest wins= 51.46% errs=  0.00% alls=720
+                Linear-baseline                 Linear-standard wins= 33.26% errs=  0.00% alls=720
+                Linear-baseline                 OneLaneIsEnough wins= 44.79% errs=  0.00% alls=144
+                Linear-baseline            ReinforcedGreediness wins= 10.76% errs=  0.00% alls=144
+                Linear-baseline                   Tree-baseline wins= 47.55% errs=  0.00% alls=714
+                Linear-baseline       Tree-from-Linear-standard wins= 39.06% errs=  0.00% alls=1088
+                Linear-baseline                   Tree-frombest wins= 49.30% errs=  0.00% alls=710
+                Linear-baseline                   Tree-standard wins= 44.71% errs=  0.00% alls=700
+    Linear-from-Linear-standard                       Baseline1 wins= 83.01% errs=  0.00% alls=279
+    Linear-from-Linear-standard                       Baseline2 wins= 60.11% errs=  0.00% alls=279
+    Linear-from-Linear-standard             BinaryTree-baseline wins= 76.57% errs=  0.04% alls=1118
+    Linear-from-Linear-standard             BinaryTree-frombest wins= 61.43% errs=  0.00% alls=1397
+    Linear-from-Linear-standard             BinaryTree-standard wins= 60.00% errs=  0.04% alls=1397
+    Linear-from-Linear-standard                            Chad wins= 18.25% errs=  0.00% alls=279
+    Linear-from-Linear-standard                            Coac wins=  9.12% errs=  0.00% alls=279
+    Linear-from-Linear-standard                 Linear-baseline wins= 68.86% errs=  0.00% alls=1117
+    Linear-from-Linear-standard                 Linear-frombest wins= 56.85% errs=  0.00% alls=1395
+    Linear-from-Linear-standard                 Linear-standard wins= 56.42% errs=  0.00% alls=1395
+    Linear-from-Linear-standard                 OneLaneIsEnough wins= 39.36% errs=  0.00% alls=279
+    Linear-from-Linear-standard            ReinforcedGreediness wins= 17.17% errs=  0.00% alls=279
+    Linear-from-Linear-standard                   Tree-baseline wins= 71.72% errs=  0.11% alls=1379
+    Linear-from-Linear-standard       Tree-from-Linear-standard wins= 44.36% errs=  0.00% alls=2100
+    Linear-from-Linear-standard                   Tree-frombest wins= 61.96% errs=  0.00% alls=1375
+    Linear-from-Linear-standard                   Tree-standard wins= 60.44% errs=  0.07% alls=1355
+                Linear-frombest                       Baseline1 wins= 70.56% errs=  0.00% alls=180
+                Linear-frombest                       Baseline2 wins= 51.39% errs=  0.00% alls=180
+                Linear-frombest             BinaryTree-baseline wins= 63.19% errs=  0.00% alls=720
+                Linear-frombest             BinaryTree-frombest wins= 52.17% errs=  0.00% alls=900
+                Linear-frombest             BinaryTree-standard wins= 54.61% errs=  0.06% alls=900
+                Linear-frombest                            Chad wins= 13.89% errs=  0.00% alls=180
+                Linear-frombest                            Coac wins=  9.72% errs=  0.00% alls=180
+                Linear-frombest                 Linear-baseline wins= 48.54% errs=  0.00% alls=720
+                Linear-frombest     Linear-from-Linear-standard wins= 43.15% errs=  0.00% alls=1395
+                Linear-frombest                 Linear-standard wins= 46.50% errs=  0.00% alls=900
+                Linear-frombest                 OneLaneIsEnough wins= 40.00% errs=  0.00% alls=180
+                Linear-frombest            ReinforcedGreediness wins= 10.83% errs=  0.00% alls=180
+                Linear-frombest                   Tree-baseline wins= 62.77% errs=  0.06% alls=890
+                Linear-frombest       Tree-from-Linear-standard wins= 40.29% errs=  0.00% alls=1360
+                Linear-frombest                   Tree-frombest wins= 52.90% errs=  0.11% alls=887
+                Linear-frombest                   Tree-standard wins= 56.06% errs=  0.00% alls=875
+                Linear-standard                       Baseline1 wins= 83.89% errs=  0.00% alls=180
+                Linear-standard                       Baseline2 wins= 64.44% errs=  0.00% alls=180
+                Linear-standard             BinaryTree-baseline wins= 73.47% errs=  0.00% alls=720
+                Linear-standard             BinaryTree-frombest wins= 59.61% errs=  0.00% alls=900
+                Linear-standard             BinaryTree-standard wins= 59.72% errs=  0.06% alls=900
+                Linear-standard                            Chad wins= 25.83% errs=  0.00% alls=180
+                Linear-standard                            Coac wins=  9.17% errs=  0.00% alls=180
+                Linear-standard                 Linear-baseline wins= 66.74% errs=  0.00% alls=720
+                Linear-standard     Linear-from-Linear-standard wins= 43.58% errs=  0.00% alls=1395
+                Linear-standard                 Linear-frombest wins= 53.50% errs=  0.00% alls=900
+                Linear-standard                 OneLaneIsEnough wins= 39.44% errs=  0.00% alls=180
+                Linear-standard            ReinforcedGreediness wins= 15.28% errs=  0.00% alls=180
+                Linear-standard                   Tree-baseline wins= 66.69% errs=  0.11% alls=890
+                Linear-standard       Tree-from-Linear-standard wins= 41.07% errs=  0.00% alls=1360
+                Linear-standard                   Tree-frombest wins= 61.69% errs=  0.00% alls=887
+                Linear-standard                   Tree-standard wins= 61.26% errs=  0.06% alls=875
+                OneLaneIsEnough                       Baseline1 wins= 93.06% errs=  4.17% alls=36
+                OneLaneIsEnough                       Baseline2 wins=100.00% errs=  0.00% alls=36
+                OneLaneIsEnough             BinaryTree-baseline wins= 53.82% errs=  1.04% alls=144
+                OneLaneIsEnough             BinaryTree-frombest wins= 64.17% errs=  0.56% alls=180
+                OneLaneIsEnough             BinaryTree-standard wins= 65.83% errs=  0.28% alls=180
+                OneLaneIsEnough                            Chad wins= 40.28% errs=  5.56% alls=36
+                OneLaneIsEnough                            Coac wins= 44.44% errs=  1.39% alls=36
+                OneLaneIsEnough                 Linear-baseline wins= 55.21% errs=  3.12% alls=144
+                OneLaneIsEnough     Linear-from-Linear-standard wins= 60.64% errs=  3.04% alls=279
+                OneLaneIsEnough                 Linear-frombest wins= 60.00% errs=  0.28% alls=180
+                OneLaneIsEnough                 Linear-standard wins= 60.56% errs=  3.33% alls=180
+                OneLaneIsEnough            ReinforcedGreediness wins= 59.72% errs=  5.56% alls=36
+                OneLaneIsEnough                   Tree-baseline wins= 57.42% errs=  1.40% alls=178
+                OneLaneIsEnough       Tree-from-Linear-standard wins= 63.24% errs=  1.84% alls=272
+                OneLaneIsEnough                   Tree-frombest wins= 66.20% errs=  1.13% alls=177
+                OneLaneIsEnough                   Tree-standard wins= 67.52% errs=  0.57% alls=175
+           ReinforcedGreediness                       Baseline1 wins= 97.22% errs=  0.00% alls=36
+           ReinforcedGreediness                       Baseline2 wins= 97.22% errs=  0.00% alls=36
+           ReinforcedGreediness             BinaryTree-baseline wins= 88.89% errs=  0.69% alls=144
+           ReinforcedGreediness             BinaryTree-frombest wins= 94.17% errs=  0.00% alls=180
+           ReinforcedGreediness             BinaryTree-standard wins= 88.89% errs=  0.00% alls=180
+           ReinforcedGreediness                            Chad wins=  0.00% errs=  0.00% alls=36
+           ReinforcedGreediness                            Coac wins= 30.56% errs=  0.00% alls=36
+           ReinforcedGreediness                 Linear-baseline wins= 89.24% errs=  0.35% alls=144
+           ReinforcedGreediness     Linear-from-Linear-standard wins= 82.83% errs=  0.00% alls=279
+           ReinforcedGreediness                 Linear-frombest wins= 89.17% errs=  0.28% alls=180
+           ReinforcedGreediness                 Linear-standard wins= 84.72% errs=  0.00% alls=180
+           ReinforcedGreediness                 OneLaneIsEnough wins= 40.28% errs=  0.00% alls=36
+           ReinforcedGreediness                   Tree-baseline wins= 89.08% errs=  0.00% alls=178
+           ReinforcedGreediness       Tree-from-Linear-standard wins= 85.85% errs=  0.00% alls=272
+           ReinforcedGreediness                   Tree-frombest wins= 89.01% errs=  0.28% alls=177
+           ReinforcedGreediness                   Tree-standard wins= 90.60% errs=  0.00% alls=175
+                  Tree-baseline                       Baseline1 wins= 63.03% errs=  0.00% alls=178
+                  Tree-baseline                       Baseline2 wins= 56.02% errs=  0.00% alls=178
+                  Tree-baseline             BinaryTree-baseline wins= 50.70% errs=  0.07% alls=714
+                  Tree-baseline             BinaryTree-frombest wins= 43.03% errs=  0.11% alls=892
+                  Tree-baseline             BinaryTree-standard wins= 38.15% errs=  0.00% alls=892
+                  Tree-baseline                            Chad wins= 17.65% errs=  0.00% alls=178
+                  Tree-baseline                            Coac wins=  6.72% errs=  0.00% alls=178
+                  Tree-baseline                 Linear-baseline wins= 52.45% errs=  0.00% alls=714
+                  Tree-baseline     Linear-from-Linear-standard wins= 28.28% errs=  0.00% alls=1379
+                  Tree-baseline                 Linear-frombest wins= 37.23% errs=  0.00% alls=890
+                  Tree-baseline                 Linear-standard wins= 33.31% errs=  0.00% alls=890
+                  Tree-baseline                 OneLaneIsEnough wins= 42.58% errs=  0.00% alls=178
+                  Tree-baseline            ReinforcedGreediness wins= 10.92% errs=  0.00% alls=178
+                  Tree-baseline       Tree-from-Linear-standard wins= 23.29% errs=  0.00% alls=1344
+                  Tree-baseline                   Tree-frombest wins= 42.17% errs=  0.00% alls=877
+                  Tree-baseline                   Tree-standard wins= 36.88% errs=  0.00% alls=865
+      Tree-from-Linear-standard                       Baseline1 wins= 78.31% errs=  0.00% alls=272
+      Tree-from-Linear-standard                       Baseline2 wins= 48.53% errs=  0.00% alls=272
+      Tree-from-Linear-standard             BinaryTree-baseline wins= 72.89% errs=  0.00% alls=1088
+      Tree-from-Linear-standard             BinaryTree-frombest wins= 64.78% errs=  0.00% alls=1360
+      Tree-from-Linear-standard             BinaryTree-standard wins= 62.32% errs=  0.04% alls=1360
+      Tree-from-Linear-standard                            Chad wins= 16.91% errs=  0.00% alls=272
+      Tree-from-Linear-standard                            Coac wins=  6.80% errs=  0.00% alls=272
+      Tree-from-Linear-standard                 Linear-baseline wins= 60.94% errs=  0.00% alls=1088
+      Tree-from-Linear-standard     Linear-from-Linear-standard wins= 55.64% errs=  0.00% alls=2100
+      Tree-from-Linear-standard                 Linear-frombest wins= 59.71% errs=  0.00% alls=1360
+      Tree-from-Linear-standard                 Linear-standard wins= 58.93% errs=  0.00% alls=1360
+      Tree-from-Linear-standard                 OneLaneIsEnough wins= 36.76% errs=  0.00% alls=272
+      Tree-from-Linear-standard            ReinforcedGreediness wins= 14.15% errs=  0.00% alls=272
+      Tree-from-Linear-standard                   Tree-baseline wins= 76.71% errs=  0.00% alls=1344
+      Tree-from-Linear-standard                   Tree-frombest wins= 63.62% errs=  0.00% alls=1340
+      Tree-from-Linear-standard                   Tree-standard wins= 64.73% errs=  0.04% alls=1320
+                  Tree-frombest                       Baseline1 wins= 65.63% errs=  0.00% alls=177
+                  Tree-frombest                       Baseline2 wins= 46.76% errs=  0.00% alls=177
+                  Tree-frombest             BinaryTree-baseline wins= 63.31% errs=  0.00% alls=710
+                  Tree-frombest             BinaryTree-frombest wins= 50.08% errs=  0.00% alls=887
+                  Tree-frombest             BinaryTree-standard wins= 49.07% errs=  0.06% alls=887
+                  Tree-frombest                            Chad wins= 11.83% errs=  0.00% alls=177
+                  Tree-frombest                            Coac wins=  4.79% errs=  0.00% alls=177
+                  Tree-frombest                 Linear-baseline wins= 50.70% errs=  0.00% alls=710
+                  Tree-frombest     Linear-from-Linear-standard wins= 38.04% errs=  0.00% alls=1375
+                  Tree-frombest                 Linear-frombest wins= 47.10% errs=  0.00% alls=887
+                  Tree-frombest                 Linear-standard wins= 38.31% errs=  0.00% alls=887
+                  Tree-frombest                 OneLaneIsEnough wins= 33.80% errs=  0.00% alls=177
+                  Tree-frombest            ReinforcedGreediness wins= 10.99% errs=  0.00% alls=177
+                  Tree-frombest                   Tree-baseline wins= 57.83% errs=  0.00% alls=877
+                  Tree-frombest       Tree-from-Linear-standard wins= 36.38% errs=  0.00% alls=1340
+                  Tree-frombest                   Tree-standard wins= 51.25% errs=  0.06% alls=862
+                  Tree-standard                       Baseline1 wins= 62.68% errs=  0.00% alls=175
+                  Tree-standard                       Baseline2 wins= 36.47% errs=  0.00% alls=175
+                  Tree-standard             BinaryTree-baseline wins= 66.81% errs=  0.00% alls=702
+                  Tree-standard             BinaryTree-frombest wins= 53.96% errs=  0.00% alls=877
+                  Tree-standard             BinaryTree-standard wins= 49.89% errs=  0.00% alls=877
+                  Tree-standard                            Chad wins= 12.82% errs=  0.00% alls=175
+                  Tree-standard                            Coac wins=  7.69% errs=  0.00% alls=175
+                  Tree-standard                 Linear-baseline wins= 55.29% errs=  0.00% alls=700
+                  Tree-standard     Linear-from-Linear-standard wins= 39.56% errs=  0.00% alls=1355
+                  Tree-standard                 Linear-frombest wins= 43.94% errs=  0.00% alls=875
+                  Tree-standard                 Linear-standard wins= 38.74% errs=  0.00% alls=875
+                  Tree-standard                 OneLaneIsEnough wins= 32.48% errs=  0.00% alls=175
+                  Tree-standard            ReinforcedGreediness wins=  9.40% errs=  0.00% alls=175
+                  Tree-standard                   Tree-baseline wins= 63.12% errs=  0.00% alls=865
+                  Tree-standard       Tree-from-Linear-standard wins= 35.27% errs=  0.00% alls=1320
+                  Tree-standard                   Tree-frombest wins= 48.75% errs=  0.00% alls=862
+                           Coac wins= 90.42% errs=  0.00% alls=2271 avg= 19.49± 30.68ms
+           ReinforcedGreediness wins= 85.23% errs=  0.11% alls=2271 avg= 89.29± 73.40ms
+                           Chad wins= 83.18% errs=  0.00% alls=2271 avg=169.93± 56.93ms
+                OneLaneIsEnough wins= 62.07% errs=  1.72% alls=2271 avg=  7.86± 20.47ms
+      Tree-from-Linear-standard wins= 60.27% errs=  0.01% alls=15352 avg=  3.20±  1.18ms
+    Linear-from-Linear-standard wins= 58.12% errs=  0.02% alls=15706 avg=  3.03±  1.03ms
+                Linear-standard wins= 54.92% errs=  0.02% alls=10627 avg=  3.03±  0.98ms
+                Linear-frombest wins= 48.99% errs=  0.02% alls=10628 avg=  3.04±  0.98ms
+                  Tree-standard wins= 45.76% errs=  0.00% alls=10362 avg=  3.02±  1.00ms
+            BinaryTree-standard wins= 45.63% errs=  0.01% alls=10634 avg=  3.00±  0.96ms
+            BinaryTree-frombest wins= 45.20% errs=  0.00% alls=10635 avg=  3.03±  0.95ms
+                  Tree-frombest wins= 44.96% errs=  0.01% alls=10490 avg=  3.04±  0.93ms
+                Linear-baseline wins= 43.02% errs=  0.00% alls=8649 avg=  3.02±  0.82ms
+                      Baseline2 wins= 42.73% errs=  0.00% alls=2271 avg=  3.73±  0.86ms
+                  Tree-baseline wins= 36.40% errs=  0.01% alls=10530 avg=  3.04±  1.07ms
+            BinaryTree-baseline wins= 33.94% errs=  0.01% alls=8652 avg=  3.01±  0.90ms
+                      Baseline1 wins= 28.89% errs=  0.00% alls=2271 avg=  3.00±  0.88ms
+        & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Baseline1}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Baseline2}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Chad}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Coac}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{OneLaneIsEnough}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{ReinforcedGreediness}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{BinaryTree-baseline}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{BinaryTree-frombest}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{BinaryTree-standard}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Linear-baseline}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Linear-frombest}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Linear-standard}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Tree-baseline}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Tree-frombest}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Tree-standard}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Linear-from-Linear-standard}}} & \multicolumn{1}{c}{\rotatebox{90}{\texttt{Tree-from-Linear-standard}}} & \multicolumn{1}{c}{\rotatebox{90}{\textbf{Global average}}} \\
+        \midrule
+        \hspace{0.2cm} \texttt{Baseline1} \hspace{0.2cm} & \multicolumn{1}{c}{--} & 40.28 & 2.78 & 0.00 & 6.94 & 2.78 & 43.40 & 32.50 & 38.33 & 45.83 & 29.44 & 16.11 & 36.97 & 34.37 & 37.32 & 16.99 & 21.69 & \hspace{0.2cm} 28.89 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Baseline2} \hspace{0.2cm} & 59.72 & \multicolumn{1}{c}{--} & 4.17 & 0.00 & 0.00 & 2.78 & 34.03 & 45.56 & 57.50 & 17.01 & 48.61 & 35.56 & 43.98 & 53.24 & 63.53 & 39.89 & 51.47 & \hspace{0.2cm} 42.73 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Chad} \hspace{0.2cm} & 97.22 & 95.83 & \multicolumn{1}{c}{--} & 31.94 & 59.72 & 100.00 & 83.33 & 86.11 & 89.44 & 79.86 & 86.11 & 74.17 & 82.35 & 88.17 & 87.18 & 81.75 & 83.09 & \hspace{0.2cm} 83.18 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Coac} \hspace{0.2cm} & 100.00 & 100.00 & 68.06 & \multicolumn{1}{c}{--} & 55.56 & 69.44 & 89.93 & 91.39 & 92.22 & 84.03 & 90.28 & 90.83 & 93.28 & 95.21 & 92.31 & 90.88 & 93.20 & \hspace{0.2cm} 90.42 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{OneLaneIsEnough} \hspace{0.2cm} & 93.06 & 100.00 & 40.28 & 44.44 & \multicolumn{1}{c}{--} & 59.72 & 53.82 & 64.17 & 65.83 & 55.21 & 60.00 & 60.56 & 57.42 & 66.20 & 67.52 & 60.64 & 63.24 & \hspace{0.2cm} 62.07 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{ReinforcedGreediness} \hspace{0.2cm} & 97.22 & 97.22 & 0.00 & 30.56 & 40.28 & \multicolumn{1}{c}{--} & 88.89 & 94.17 & 88.89 & 89.24 & 89.17 & 84.72 & 89.08 & 89.01 & 90.60 & 82.83 & 85.85 & \hspace{0.2cm} 85.23 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{BinaryTree-baseline} \hspace{0.2cm} & 56.60 & 65.97 & 16.67 & 10.07 & 46.18 & 11.11 & \multicolumn{1}{c}{--} & 35.07 & 38.89 & 43.06 & 36.81 & 26.53 & 49.30 & 36.69 & 33.19 & 23.43 & 27.11 & \hspace{0.2cm} 33.94 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{BinaryTree-frombest} \hspace{0.2cm} & 67.50 & 54.44 & 13.89 & 8.61 & 35.83 & 5.83 & 64.93 & \multicolumn{1}{c}{--} & 47.00 & 57.57 & 47.83 & 40.39 & 56.97 & 49.92 & 46.04 & 38.57 & 35.22 & \hspace{0.2cm} 45.20 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{BinaryTree-standard} \hspace{0.2cm} & 61.67 & 42.50 & 10.56 & 7.78 & 34.17 & 11.11 & 61.11 & 53.00 & \multicolumn{1}{c}{--} & 48.26 & 45.39 & 40.28 & 61.85 & 50.93 & 50.11 & 40.00 & 37.68 & \hspace{0.2cm} 45.63 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Linear-baseline} \hspace{0.2cm} & 54.17 & 82.99 & 20.14 & 15.97 & 44.79 & 10.76 & 56.94 & 42.43 & 51.74 & \multicolumn{1}{c}{--} & 51.46 & 33.26 & 47.55 & 49.30 & 44.71 & 31.14 & 39.06 & \hspace{0.2cm} 43.02 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Linear-frombest} \hspace{0.2cm} & 70.56 & 51.39 & 13.89 & 9.72 & 40.00 & 10.83 & 63.19 & 52.17 & 54.61 & 48.54 & \multicolumn{1}{c}{--} & 46.50 & 62.77 & 52.90 & 56.06 & 43.15 & 40.29 & \hspace{0.2cm} 48.99 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Linear-standard} \hspace{0.2cm} & 83.89 & 64.44 & 25.83 & 9.17 & 39.44 & 15.28 & 73.47 & 59.61 & 59.72 & 66.74 & 53.50 & \multicolumn{1}{c}{--} & 66.69 & 61.69 & 61.26 & 43.58 & 41.07 & \hspace{0.2cm} 54.92 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Tree-baseline} \hspace{0.2cm} & 63.03 & 56.02 & 17.65 & 6.72 & 42.58 & 10.92 & 50.70 & 43.03 & 38.15 & 52.45 & 37.23 & 33.31 & \multicolumn{1}{c}{--} & 42.17 & 36.88 & 28.28 & 23.29 & \hspace{0.2cm} 36.40 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Tree-frombest} \hspace{0.2cm} & 65.63 & 46.76 & 11.83 & 4.79 & 33.80 & 10.99 & 63.31 & 50.08 & 49.07 & 50.70 & 47.10 & 38.31 & 57.83 & \multicolumn{1}{c}{--} & 51.25 & 38.04 & 36.38 & \hspace{0.2cm} 44.96 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Tree-standard} \hspace{0.2cm} & 62.68 & 36.47 & 12.82 & 7.69 & 32.48 & 9.40 & 66.81 & 53.96 & 49.89 & 55.29 & 43.94 & 38.74 & 63.12 & 48.75 & \multicolumn{1}{c}{--} & 39.56 & 35.27 & \hspace{0.2cm} 45.76 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Linear-from-Linear-standard} \hspace{0.2cm} & 83.01 & 60.11 & 18.25 & 9.12 & 39.36 & 17.17 & 76.57 & 61.43 & 60.00 & 68.86 & 56.85 & 56.42 & 71.72 & 61.96 & 60.44 & \multicolumn{1}{c}{--} & 44.36 & \hspace{0.2cm} 58.12 \hspace{0.2cm} \\
+        \hspace{0.2cm} \texttt{Tree-from-Linear-standard} \hspace{0.2cm} & 78.31 & 48.53 & 16.91 & 6.80 & 36.76 & 14.15 & 72.89 & 64.78 & 62.32 & 60.94 & 59.71 & 58.93 & 76.71 & 63.62 & 64.73 & 55.64 & \multicolumn{1}{c}{--} & \hspace{0.2cm} 60.27 \hspace{0.2cm} \\
+        \bottomrule

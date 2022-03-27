@@ -2,7 +2,7 @@ import std / [random, times]
 import Shared / MCTSNode
 import .. / .. / Engine / [Action, Config, Search, State]
 
-proc playerAlgorithmMCTSP * (config: Config, state: State): SearchResult =
+proc playerAlgorithmMCTSP*(config: Config, state: State): SearchResult =
   proc evaluate (node: MCTSNode): void =
     var score = config.evalState(node.state)
 
@@ -29,9 +29,9 @@ proc playerAlgorithmMCTSP * (config: Config, state: State): SearchResult =
         if action.actionType != pass and node.move != nil:
           let valid = case node.move.actionType:
             of attack: action.actionType == attack
-            of use:    action.actionType == attack or action.actionType == use
+            of use: action.actionType == attack or action.actionType == use
             of summon: true
-            else:      false
+            else: false
 
           if not valid:
             continue

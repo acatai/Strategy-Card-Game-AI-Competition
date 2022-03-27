@@ -1,0 +1,13 @@
+[package]
+name = "locm"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+arrayvec = { version = "0.5.2", features = ["array-sizes-33-128"] }
+lazy_static = "1.4.0"
+rand = { version = "0.8.0", features = ["small_rng"] }
+rayon = "1.5.0"
+
+[profile.release]
+debug = true

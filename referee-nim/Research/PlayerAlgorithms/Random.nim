@@ -1,7 +1,7 @@
 import std / random
 import .. / .. / Engine / [Config, Search, State]
 
-proc playerAlgorithmRandom * (config: Config, root: State): SearchResult =
+proc playerAlgorithmRandom*(config: Config, root: State): SearchResult =
   result = SearchResult()
 
   var state = root.copy

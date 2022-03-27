@@ -1,8 +1,8 @@
-import std / [random, times]
+import std / times
 import Shared / MCTSNode
-import .. / .. / Engine / [Action, Config, Search, State]
+import .. / .. / Engine / [Config, Search, State]
 
-proc playerAlgorithmMCTS0 * (config: Config, state: State): SearchResult =
+proc playerAlgorithmMCTS0*(config: Config, state: State): SearchResult =
   proc evaluate (node: MCTSNode): void =
     node.propagate(config.evalState(node.state))
 

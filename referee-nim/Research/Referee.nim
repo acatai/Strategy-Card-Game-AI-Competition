@@ -18,7 +18,7 @@ proc doDraw (gamer: var Gamer, deck: var seq[Card], turn: int): void =
     gamer.decksize -= 1
   gamer.nextTurnDraw = 1
 
-proc newDraft * (cards: openArray[Card]): Draft =
+proc newDraft*(cards: openArray[Card]): Draft =
   var indexes = newSeq[int](cards.len)
   for index in indexes.low .. indexes.high:
     indexes[index] = index
@@ -28,10 +28,10 @@ proc newDraft * (cards: openArray[Card]): Draft =
     for card in 0 ..< 3:
       result[pick][card] = cards[indexes[pick * 3 + card]]
 
-proc newDraft * (): Draft {.inline.} =
+proc newDraft*(): Draft {.inline.} =
   newDraft(getCards())
 
-proc play * (a, b: Config, draft: Draft, verbose: bool = false): bool =
+proc play*(a, b: Config, draft: Draft, verbose: bool = false): bool =
   var state = newState()
   var deck1: seq[Card]
   var deck2: seq[Card]

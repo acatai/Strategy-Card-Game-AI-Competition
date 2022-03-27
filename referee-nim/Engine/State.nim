@@ -1,13 +1,12 @@
-import std / strformat
 import Action, Card, Constants, Gamer, Input
 
 type
-  State * = ref object
-    halt *: bool
-    me   *: Gamer
-    op   *: Gamer
+  State* = ref object
+    halt*: bool
+    me*: Gamer
+    op*: Gamer
 
-func applyAction * (state: var State, action: Action): void =
+func applyAction*(state: var State, action: Action): void =
   var me = state.me
   var op = state.op
 
@@ -51,7 +50,7 @@ func applyAction * (state: var State, action: Action): void =
 
         var damageGiven = if defender.hasWard: 0 else: attacker.attack
         var damageTaken = if attacker.hasWard: 0 else: defender.attack
-        var healthGain  = 0
+        var healthGain = 0
         var healthTaken = 0
 
         # attacking
@@ -177,7 +176,7 @@ func applyAction * (state: var State, action: Action): void =
         else:
           targetOwner.boards[targetBoard][targetIndex] = targetAfter
 
-proc computeActions * (state: State): seq[Action] =
+proc computeActions*(state: State): seq[Action] =
   if state.halt:
     return
 
@@ -222,33 +221,33 @@ proc computeActions * (state: State): seq[Action] =
           for creature in board:
             result.add(newActionUse(card.instanceId, creature.instanceId))
 
-func copy * (state: State): State {.inline.} =
+func copy*(state: State): State {.inline.} =
   State(halt: state.halt, me: state.me.copy, op: state.op.copy)
 
-func isGameOver * (state: State): bool {.inline.} =
+func isGameOver*(state: State): bool {.inline.} =
   state.me.health <= 0 or state.op.health <= 0
 
-func newState * (): State {.inline.} =
+func newState*(): State {.inline.} =
   result = State(me: newGamer(), op: newGamer())
   result.op.bonusMana = true
 
-func rechargeMana * (state: var State, turn: int): void =
+func rechargeMana*(state: var State, turn: int): void =
   var player = state.me
   player.bonusMana = player.bonusMana and (turn == 1 or player.currentMana > 0)
   player.maxMana = min(turn, 12) + (if player.bonusMana: 1 else: 0)
   player.currentMana = player.maxMana
 
-func rechargeCreatures * (state: var State): void =
+func rechargeCreatures*(state: var State): void =
   for player in [state.me, state.op]:
     for lane in mitems(player.boards):
       for card in mitems(lane):
         card = card.copy
         card.attackState = canAttack
 
-func swap * (state: State): State {.inline.} =
+func swap*(state: State): State {.inline.} =
   State(me: state.op, op: state.me)
 
-proc readState * (input: Input): State =
+proc readState*(input: Input): State =
   var state = State()
   state.halt = false
   state.me = input.readGamer

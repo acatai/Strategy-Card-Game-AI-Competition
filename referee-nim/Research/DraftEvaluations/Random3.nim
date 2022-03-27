@@ -1,5 +1,5 @@
 import std / random
-import .. / .. / Engine / [Card, Config, Draft, State]
+import .. / .. / Engine / [Config, Draft, State]
 
-proc evaluateDraftRandom3 * (config: Config, state: State): DraftResult =
+proc evaluateDraftRandom3*(config: Config, state: State): DraftResult =
   DraftResult(index: rand(2))

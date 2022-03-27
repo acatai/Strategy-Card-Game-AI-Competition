@@ -1,7 +1,7 @@
 import std / math
 import .. / .. / Engine / [Card, Config, Draft, State]
 
-func evaluateDraftIcebox * (config: Config, state: State): DraftResult =
+func evaluateDraftIcebox*(config: Config, state: State): DraftResult =
   state.evaluateDraftWith(func (card: Card): float =
     let healthDiff = card.myHealthChange - card.opHealthChange
 
@@ -19,9 +19,9 @@ func evaluateDraftIcebox * (config: Config, state: State): DraftResult =
     result -= 7.751401869 * 0.01
 
     if card.hasBreakthrough: result += 0.0
-    if card.hasCharge:       result += 0.26015517
-    if card.hasDrain:        result += 0.15241379
-    if card.hasGuard:        result += 0.04418965
-    if card.hasLethal:       result += 0.15313793
-    if card.hasWard:         result += 0.16238793
+    if card.hasCharge: result += 0.26015517
+    if card.hasDrain: result += 0.15241379
+    if card.hasGuard: result += 0.04418965
+    if card.hasLethal: result += 0.15313793
+    if card.hasWard: result += 0.16238793
   )
