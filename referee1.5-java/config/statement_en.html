@@ -1,0 +1,567 @@
+<div class="statement-body">
+  <div style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:20px;margin-right:15px;margin-left:15px;margin-bottom:10px;text-align:left">
+      <p style="text-align:center;font-weight:700;margin-bottom:6px">
+        Constructed mode version
+      </p>
+      <span class="statement-league-alert-content">
+        In this version, we further extend <a href="https://www.codingame.com/multiplayer/bot-programming/legends-of-code-magic" target="_blank" rel="nofollow noopener noreferrer">LOCM 1.0</a> and <a href="https://www.codingame.com/contribute/view/162759566f5a132f64b4de78ed637a2f309a" target="_blank" rel="nofollow noopener noreferrer">LOCM 1.2</a> by completely revamping the way players are building decks.
+        <br>
+        <br>
+        Instead of choosing one card from each of 30 sets, now a new, bigger set of <const>120</const> cards is generated every game. And player gets to freely build his deck out of the presented cards.
+        <br>
+        <br>
+        Additionally, <const>Area</const> effect has been added.
+      </span>
+  </div>
+      
+  <div class="statement-section statement-goal">
+    <h2>
+      <span class="icon icon-goal">&nbsp;</span>
+      <span>The Goal</span>
+    </h2>
+    <div class="statement-goal-content">
+      Construct a deck of cards, battle an opponent with those cards and reduce their Health Points (HP) from 30 to 0. 
+    </div>
+  </div>
+
+
+  <div class="statement-section statement-rules">
+    <h2>
+      <span class="icon icon-rules">&nbsp;</span>
+      <span>Rules</span>
+    </h2>
+    <div class="statement-rules-content"> 
+      This game is a two-player card game which is played in two phases: the <const>Constructed</const> phase and the <const>Battle</const> phase.
+        <ul style="padding-bottom:0">
+          <li>
+            <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+              During the <const>Constructed</const> phase, both players must create a deck of <const>30</const> cards.
+            </span>
+          </li><li>
+            <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+              Once the <const>Constructed</const> phase is over, both decks are shuffled.
+            </span>
+          </li><li>
+            During the <const>Battle</const>, the board is divided in two parts: each player plays cards from their hand on their side of the board.
+          </li><li>
+            Each player starts with <const>30</const> HP. Some cards can increase this number.
+          </li><li>
+            To reduce the health points of an opponent, the player must make use of cards to deal <strong>damage</strong>.
+          </li>
+        </ul>
+
+      <h2 style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); margin-top:30px">
+        <span class="icon icon-example">&nbsp;</span>
+        <span>Constructed Phase</span>
+      </h2>
+      <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding-bottom:0">
+        <li>
+          Each player is presented with <const>120</const> cards. From them, each player chooses <const>30</const> cards for their deck.
+        </li><li>
+          Each card can be chosen by each of the players up to <const>2</const> times. Players will receive copies of that card, each with its own <var>instanceId</var>.
+        </li><li>
+          By default, the <action>PASS</action> command will pick the first still available card.
+        </li>
+      </ul>
+
+
+      <h2 style="margin-top:30px">
+        <span class="icon icon-example">&nbsp;</span>
+        <span>Battle Phase</span>
+      </h2>
+      <br><strong>Card Draw</strong>
+      <ul style="padding-bottom:0">
+        <li>
+          First player starts with <const>4</const> cards in hand whereas the second player starts with <const>5</const>.
+        </li><li>
+          Each turn, the active player draws one additional card from their deck.
+        </li><li>
+          Some cards can make players draw additional cards at the beginning of the next turn when played.
+        </li><li>
+          <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+            Player draws an additional card for every <const>5</const> HP lost due to opponent dealing damage to player in last round.
+          </span>
+        </li>
+      </ul>
+
+      <br><strong>Mana</strong>
+      <ul style="padding-bottom:0">
+        <li>
+          Mana is necessary to play cards from the hand.
+        </li><li>
+          The first player starts with <const>1 max mana</const>, the second with <const>2 max mana</const>.
+        </li><li>
+          Each player can spend as much mana per turn as they have max mana.
+        </li><li>
+          The second player receives his <const>+1 max mana bonus</const> until he spends all his mana during a turn.
+        </li><li>
+          Each turn, the active player is granted one additional max mana, unless they already have <const>12</const> max mana (<const>13</const> for the second player who didn't spend his bonus).
+        </li>
+      </ul>
+
+      <h2 style="margin-top:30px">
+        <span class="icon icon-example">&nbsp;</span>
+        <span>Card Types</span>
+      </h2>
+        There are two different types of cards: <const>Creatures</const> and <const>Items</const>.
+      <br>
+      <br>
+      <strong>Creatures</strong><br>
+      <ul style="padding-bottom:0">
+        <li>
+          Placing a creature card from the hand to the board is called <b>summoning</b>.<br>
+          A player summons <const>creatures</const> to their side of the board by paying their cost in <strong>mana</strong>.
+          They are used to attack the opponent and also serve as a defense against the creatures of the opposing player.
+        </li><li>
+          Creatures have a cost in mana, attack points and defense points.
+          Some creatures start with certain abilities.
+        </li><li>
+          By default, creatures can't attack the turn they are summoned. They can attack once per turn only.
+        </li><li>
+          When a creature attacks another one, they both deal <strong>damage</strong> equals to their attack to the defense of the other creature. When a creature attacks the opponent, it deals <strong>damage</strong> equals to its attack to the HP of the opponent.
+        </li><li> 
+          Creatures are removed from play when their defense reaches <const>0</const> or less.
+        </li><li>
+          Creatures can have an effect on the player's health, the opponent's health or the card draw of the player when played.
+        </li><li>
+          Creatures can have different abilities:
+          <ul style="padding-top:0;padding-bottom:0">
+            <li>
+              <const>Breakthrough</const>: Creatures with Breakthrough can deal extra <strong>damage</strong> to the opponent when they attack enemy creatures. If their attack <strong>damage</strong> is greater than the defending creature's defense, the excess <strong>damage</strong> is dealt to the opponent.
+            </li><li>
+              <const>Charge</const>: Creatures with Charge can attack the turn they are summoned.
+            </li><li>
+              <const>Drain</const>: Creatures with Drain heal the player of the amount of the <strong>damage</strong> they deal (when attacking only).
+            </li><li style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+              <const>Guard</const>: Enemy creatures from the same lane must attack creatures with Guard first.
+            </li><li>
+              <const>Lethal</const>: Creatures with Lethal kill the creatures they deal <strong>damage</strong> to.
+            </li><li>
+              <const>Ward</const>: Creatures with Ward ignore once the next <strong>damage</strong> they would receive from any source. The "shield" given by the Ward ability is then lost.
+          </ul>
+        </li><li>
+          <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+            Single card with <const>Area</const> effect can summon multiple copies with single summon:
+          </span>
+          <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding-top:0;padding-bottom:0">
+            <li>
+              <const>Target</const>: During summoning a single copy of that creature is created.
+            </li><li>
+              <const>Lane1</const>: During summoning creature is cloned, and additional copy appears on the <strong>same</strong> lane (if there is free space).
+            </li><li>
+              <const>Lane2</const>: During summoning creature is cloned, and additional copy appears on the <strong>other</strong> lane (if there is free space).
+            </li>
+          </ul>
+        </li><li>
+          <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+            Effects of <var>myHealthChange</var>, <var>opponentHealthChange</var> and <var>cardDraw</var> are applied for every clone of creature summoned. 
+          </span>
+        </li>
+      </ul>
+
+
+      <div>
+        <strong>Items</strong><br>
+        <br>
+        <ul style="padding-top:0;padding-bottom:0">
+          <li>
+            When played, <const>items</const> have an immediate and permanent effect on the board or on the players. They are then removed from play.
+          </li><li>
+            Items have a cost in mana and one or multiple effects out of the following:
+            <ul style="padding-bottom:0">
+              <li>
+                Permanent modifier of a creature's attack and/or defense characteristics. Example: +0/+2 or -1/-1.
+              </li><li>
+                The addition or removal of one or more abilities to one creature.
+              </li><li>
+                Additional card draw the next turn they're played.
+              </li><li>
+                Health gain for the player or health loss for the opponent.
+              </li>
+            </ul>
+          </li><li>
+            There are three types of <const>items</const>:
+            <ul style="padding-bottom:0">
+              <li>
+                <const>Green items</const> should target the active player's creatures. They have a positive effect on them.
+              </li><li>
+                <const>Red items</const> should target the opponent's creatures. They have a negative effect on them.
+              </li><li>
+                <const>Blue items</const> can be played with the "no creature" target identifier (<const>-1</const>) to give the active player a positive effect or cause <strong>damage</strong> to the opponent, depending on the card. Blue items with negative defense points can also target enemy creatures.
+              </li>
+            </ul>
+          </li><li>
+            <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+              Items with <const>Area</const> effect have effect on multiple creatures:
+            </span>
+            <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding-bottom:0">
+              <li>
+                <const>Target</const>: affects only target creature.
+              </li><li>
+                <const>Lane1</const>: affects all creatures on the same lane and side of board as the original target.
+              </li><li>
+                <const>Lane2</const>: affects all creatures on all lanes and same side of the board as the original target.
+              </li>
+            </ul>
+          </li><li>
+            <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+              Effects of <var>myHealthChange</var>, <var>opponentHealthChange</var> and <var>cardDraw</var> are applied for every creature affected by item. 
+            </span>
+          </li>
+        </ul>
+      </div>
+      <h2 style="margin-top:30px">
+          <span class="icon icon-example">&nbsp;</span>
+          <span>Gameplay</span>
+      </h2>
+      <br><strong>Possible Actions</strong>
+      <ul style="padding-bottom:0">
+        <li style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+          <action>SUMMON id lane</action> to summon the creature <const>id</const> from your hand to the lane <const>lane</const> (0 - left, 1 - right).
+        </li><li>
+          <action>ATTACK id1 id2</action> to attack creature <const>id2</const> with creature <const>id1</const> <span style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px"> that has to be on the same lane</span>.
+        </li><li>
+          <action>ATTACK id -1</action> to attack the opponent directly with creature <const>id</const>.
+        </li><li>
+          <action>USE id1 id2</action> to use item <const>id1</const> on creature <const>id2</const>.
+        </li><li>
+          <action>USE id -1</action> to use item <const>id</const>.
+        </li><li>
+          <action>PASS</action> to do nothing this turn.
+        </li>
+      </ul>
+      A player can do any number of valid actions during one turn. Actions must be separated by a semi-colon <action>;</action>.<br>
+      <br>
+      <strong>Game End</strong>
+      <ul style="padding-bottom:0">
+        <li>
+          The game is over once any player reaches <const>0</const> or less HP.
+        </li>
+      </ul>
+
+    </div>
+  </div>
+          
+  <div class="statement-victory-conditions">
+    <div class="icon victory"></div>
+    <div class="blk">
+      <div class="title">Victory Conditions</div>
+      <div class="text">
+        <ul style="padding-bottom:0">
+          <li>
+            Reduce your opponent Health Points (HP) from <const>30</const> to <const>0</const> or less.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+          
+  <div class="statement-lose-conditions">
+    <div class="icon lose"></div>
+    <div class="blk">
+      <div class="title">Loss Conditions</div>
+      <div class="text">
+        <ul style="padding-bottom:0">
+          <li>
+            Your HP gets reduced to <const>0</const> or less.
+          </li><li>
+            You do not respond in time or output an unrecognized command.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br>
+      
+  <div class="statement-section statement-expertrules">
+    <h2>
+      <span class="icon icon-expertrules">&nbsp;</span>
+      <span>Advanced Details</span>
+    </h2>
+    <div class="statement-expert-rules-content">
+      <span style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+        You can see the game's source code on <a href="https://github.com/acatai/Strategy-Card-Game-AI-Competition" target="_blank" rel="nofollow noopener noreferrer">https://github.com/acatai/Strategy-Card-Game-AI-Competition</a>.
+      </span>
+      <br>
+      <br>
+      <strong>Constraints</strong>
+      <ul style="padding-bottom:0">
+        <li>
+          If a player already has the maximum number of <const>8</const> cards in hand and must draw, the draw is cancelled.
+        </li><li>
+          <span style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+            If a player already has the maximum number of <const>3</const> creatures on a lane and tries summoning a new one on this lane, the summoning action is cancelled.
+          </span>
+        </li><li>
+          If a player tries to attack an untargetable target (wrong instance id or presence of other defensive creatures with Guard) with one of his creatures, the attack action is cancelled.
+        </li><li>
+          Once a player has played over <const>50</const> turns, their deck is considered empty.
+        </li><li>
+          <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+            When player has empty deck and has to draw a card, then that player is dealt <const>10</const> damage.
+          </span>
+        </li>
+      </ul>
+      <strong>Abilities special cases</strong>
+      <ul style="padding-bottom:0">
+        <li>
+          Giving an ability to a creature with that same ability has no effect.
+        </li><li>
+          Attacking a creature with Ward with a creature with Lethal does not kill the creature (since no <strong>damage</strong> is dealt to the creature).
+        </li><li>
+          Attacking a creature with Ward with a creature with Breakthrough never deals excess <strong>damage</strong> to the opponent (since no <strong>damage</strong> is dealt to the creature).
+        </li><li>
+          Attacking a creature with Ward with a creature with Drain does no heal the player (since no <strong>damage</strong> is dealt to the creature).
+        </li>
+      </ul>
+
+      <strong>Changes from <a href="https://www.codingame.com/contribute/view/162759566f5a132f64b4de78ed637a2f309a" target="_blank" rel="nofollow noopener noreferrer">1.2 version</a></strong>
+      <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding-bottom:0">
+        <li>
+          Replaced <const>Draw</const> phase with <const>Constructed</const> phase.
+        </li><li>
+          New ability <const>Area</const> has been added. It allows creatures to summon two copies at once, and items to affect several targets at once.
+        </li><li>
+          Runes have been completely removed.
+        </li><li>
+          Player gets to draw additional card for every <const>5</const> health lost in previous round.
+        </li><li>
+          Response time for Constructed round has been extended to <const>4000</const> ms.
+        </li>
+      </ul>
+
+      <strong>Changes from <a href="https://www.codingame.com/multiplayer/bot-programming/legends-of-code-magic" target="_blank" rel="nofollow noopener noreferrer">1.0 version</a></strong>
+      <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding-bottom:0">
+        <li>
+          Creatures can now be placed on <const>two</const> lanes.
+        </li><li>
+          Number of creatures per lane has been limited to <const>3</const>.
+        </li><li>
+          Creature can only attack creature, if it is on the same lane.
+        </li><li>
+          <const>Guard</const> works only for creatures on the same lane.
+        </li><li>
+          Response time per Battle round has been extended to <const>200</const> ms.
+        </li><li>
+          All the changes from 1.2.
+        </li>
+      </ul>
+    </div>
+  </div>
+      
+  <div class="statement-section statement-protocol">
+    <h2>
+      <span class="icon icon-protocol">&nbsp;</span>
+      <span>Game Input</span>
+    </h2>
+
+    <div class="blk">
+      <div class="title">Input for one game turn</div>
+      <div class="text">
+        <span class="statement-lineno">First 2 lines</span>: for each player, <var>playerHealth</var>, <var>playerMana</var>, <var>playerDeck</var> and <var>playerDraw</var>:
+        <ul style="padding-bottom:0">
+          <li>
+            Integer <var>playerHealth</var>: the remaining HP of the player.
+          </li><li>
+            Integer <var>playerMana</var>: the current maximum mana of the player.
+          </li><li>
+            Integer <var>playerDeck</var>: the number of cards in the player's deck.
+          </li><li>
+            <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+              ---- NO RUNES ---
+            </span>
+          </li><li>
+            Integer <var>playerDraw</var>:
+            the additional number of drawn cards - this turn draw for the player, next turn draw (without reward for damage received) for the opponent.
+          </li>
+        </ul>
+        The player's input comes first, the opponent's input comes second.<br>
+        <br>
+        During the Constructed phase, <var>playerMana</var> is always <const>0</const>.<br>
+        <br>
+
+        <span class="statement-lineno">Next line</span>:
+        <ul style="padding-bottom:0">
+          <li>
+            Integer <var>opponentHand</var>, the total number of cards in the opponent's hand. These cards are hidden until they're played.
+          </li><li>
+            Integer <var>opponentActions</var>, the number of actions performed by the opponent during his last turn.
+          </li>
+        </ul>
+        <span class="statement-lineno">Next <var>opponentActions</var> lines</span>: for each opponent's action, string <var>cardNumberAndAction</var> containing the <var>cardNumber</var> of the played card, followed by a space, followed by the action associated with this card (see <strong>Possible Actions</strong> section).<br>
+        <br>
+
+        <span class="statement-lineno">Next line</span>: Integer <var>cardCount</var>: during the Battle phase, the total number of cards on the board and in the player's hand. During the Constructed phase, always <const>80</const>.
+        <br>
+        <br>
+
+        <span class="statement-lineno">Next <var>cardCount</var> lines</span>: for each card, <var>cardNumber</var>, <var>instanceId</var>, <var>location</var>, <var>cardType</var>, <var>cost</var>, <var>attack</var>, <var>defense</var>, <var>abilities</var>, <var>myHealthChange</var>, <var>opponentHealthChange</var>, <var>cardDraw</var>, <var>area</var> and <var>lane</var>:
+        <ul style="padding-bottom:0">
+          <li>
+            Integer <var>cardNumber</var>: the identifier of a card.
+          </li><li>
+            Integer <var>instanceId</var>: the identifier representing the instance of the card (there can be multiple instances of the same card in a game).
+          </li><li>
+            Integer <var>location</var>, during the Battle phase: 
+            <ul style="padding-bottom:0;padding-top:0;margin-bottom:10px">
+              <li>
+                <const>0</const>: in the player's hand
+              </li><li>
+                <const>1</const>: on the player's side of the board
+              </li><li>
+                <const>-1</const>: on the opponent's side of the board
+              </li>
+            </ul>
+            Always <const>0</const> during the Constructed phase.
+          </li><li>
+            Integer <var>cardType</var>: 
+            <ul style="padding-bottom:0;padding-top:0">
+              <li>
+                <const>0</const>: Creature
+              </li><li>
+                <const>1</const>: Green item
+              </li><li>
+                <const>2</const>: Red item
+              </li><li>
+                <const>3</const>: Blue item
+              </li></ul>
+          </li><li>
+            Integer <var>cost</var>: the mana cost of the card,
+          </li><li> 
+            Integer <var>attack</var>:
+            <ul style="padding-bottom:0">
+              <li>
+                Creature: its attack points
+              </li><li>
+                Item: its attack modifier
+              </li>
+            </ul>
+          </li><li> 
+            Integer <var>defense</var>:
+            <ul style="padding-bottom:0">
+              <li>
+                Creature: its defense points
+              </li><li>
+                Item: its defense modifier. Negative values mean this causes damage.
+              </li>
+            </ul>
+          </li><li>
+            String <var>abilities</var> of size <const>6</const>: the abilities of a card. Each letter representing an ability (<const>B</const> for Breakthrough, <const>C</const> for Charge and <const>G</const> for Guard, <const>D</const> for Drain, <const>L</const> for Lethal and <const>W</const> for Ward).
+          </li><li>
+            Integer <var>myHealthChange</var>:
+            the health change for the player.
+          </li><li>
+            Integer <var>opponentHealthChange</var>:
+            the health change for the opponent.
+          </li><li>
+            Integer <var>cardDraw</var>:
+            the additional number of cards drawn next turn for the player.
+          </li><li>
+
+            <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+              Integer <var>area</var>:
+            </span>
+              <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding-bottom:0;padding-top:0">
+                <li>
+                  <const>0</const>: Target
+                </li><li>
+                  <const>1</const>: Lane1
+                </li><li>
+                  <const>2</const>: Lane2
+                </li>
+              </ul>
+          </li><li style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+            Integer <var>lane</var>:
+            <ul style="padding-bottom:0">
+              <li>
+                Creature on board: 0 - left, 1 - right
+              </li><li>
+                Other: -1
+              </li>
+            </ul>
+          </li>
+        </ul>          
+      </div>
+    </div>
+    
+    <div class="blk">
+      <div class="title">
+        <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding:2px">
+          Output for only game turn of the Constructed phase
+        </span>
+      </div>
+      <div class="text">
+        <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding:2px">
+          Series of <const>30</const> actions separated by semi-colon <action>;</action>:
+        </span>
+        <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding-bottom:0">
+          <li>
+            <action>PICK nb</action> where <var>nb</var> is position, at which chosen card was presented.
+          </li><li>
+            <action>PASS</action> to do nothing (picks the 1st available card).
+          </li>
+        </ul>
+      </div>
+      <div class="title">Output for one game turn of the Battle phase</div>
+      <div class="text">
+        The available actions are:
+        <ul style="padding-bottom:0">
+          <li>
+            <span style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+              <action>SUMMON <var>id</var> <var>lane</var></action> to summon the <const>creature</const> of instanceId <var>id</var> from the player's hand to the lane <var>lane</var> (0 - left, 1 - right).
+            </span>
+          </li><li>
+            <action>ATTACK <var>idAttacker</var> <var>idTarget</var></action> to attack an opposing creature or opposing player of instanceId <var>idTarget</var> with a creature on the board of instanceId <var>idAttacker</var>.<br>
+            <var>idTarget</var> can be the "no-creature" identifier <action>-1</action>. It is used to attack the opponent directly.
+          </li><li>
+            <action>USE <var>idCard</var> <var>idTarget</var></action> to use an <const>item</const> of instanceId <var>idCard</var> on a creature of instanceId <var>idTarget</var> or without a target with the "no-creature" identifier <action>-1</action>.
+          </li><li>
+            <action>PASS</action> to do nothing. 
+          </li>
+        </ul>
+        Players may use several actions by using a semi-colon <action>;</action>. 
+        <br>
+        Players may append text to each of their actions, it will be displayed in the viewer. <br> <br>
+        Example: <action>SUMMON 3 1;ATTACK 4 5 yolo; ATTACK 8 -1 no fear</action>.
+      </div>
+    </div>
+          
+    <div class="blk">
+      <div class="title">Constraints</div>
+      <div class="text">
+        <const>0</const> ≤ <var>cost</var> ≤ <const>12</const><br>
+        <span style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+          <const>0</const> ≤ <b>creatures on each lane of the board (per player)</b> ≤ <const>3</const><br>
+        </span>
+        <const>0</const> ≤ <b>cards in hand</b> ≤ <const>8</const><br>
+        <br>
+
+        <span style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 );padding:2px">
+          Response time for the Constructed turn ≤ <const>4000</const>ms<br>
+        </span>
+        Response time for the first Battle turn ≤ <const>1000</const>ms<br>
+        <span style="color:#7cc576;background-color:rgba( 124 , 197 , 118 , 0.1 );padding:2px">
+          Response time per turn ≤ <const>200</const>ms<br>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div style="color: #7cc576;
+                    background-color: rgba(124, 197, 118,.1);
+                    padding: 2px;">
+    <p style="text-align:center"><b>Acknowledgments</b></p>
+    <p>
+      Created as a part of the master's thesis <i><b>Developing New Track for Strategy Card Game AI Competition: Constructed Mode</b>, University of Wrocław, 2022</i>
+      by <i><b>Krzysztof Bednarek</b></i> (<a target="_blank" href="https://www.codingame.com/profile/db2e3f0916f9b0e74f4ae3971b2e6df0835705">@Krzybe</a>).
+    </p>
+    <p>
+      Supervised by <i><b>Jakub Kowalski</b></i> (<a target="_blank" href="https://www.codingame.com/profile/b528dd3b279d7578674a1129305918e0400484">@aCat</a>)
+      and (informally) <i><b>Radosław Miernik</b></i> (<a target="_blank" href="https://www.codingame.com/profile/2b872a07bc65786f280864cadc2f635c0763881">@radekmie</a>).
+    </p>
+    <p>
+      Part of the <b><i><a target="_blank" href="https://legendsofcodeandmagic.com/">Strategy Card Game AI Competition</a></i></b>
+      supported by <b><a target="_blank" href="https://cis.ieee.org/">IEEE CIS</a></b>.
+    </p>
+  </div>
+</div>

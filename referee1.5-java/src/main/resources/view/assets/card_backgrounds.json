@@ -1,0 +1,94 @@
+{
+  "frames": {
+    "Card_creature.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 300,
+        "h": 370
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 300,
+        "h": 370
+      },
+      "sourceSize": {
+        "w": 300,
+        "h": 370
+      }
+    },
+    "Card_item_green.png": {
+      "frame": {
+        "x": 301,
+        "y": 0,
+        "w": 300,
+        "h": 370
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 300,
+        "h": 370
+      },
+      "sourceSize": {
+        "w": 300,
+        "h": 370
+      }
+    },
+    "Card_item_red.png": {
+      "frame": {
+        "x": 0,
+        "y": 371,
+        "w": 300,
+        "h": 370
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 300,
+        "h": 370
+      },
+      "sourceSize": {
+      "w": 300,
+      "h": 370
+      }
+    },
+    "Card_item_blue.png": {
+      "frame": {
+        "x": 301,
+        "y": 371,
+        "w": 300,
+        "h": 370
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 300,
+        "h": 370
+      },
+      "sourceSize": {
+        "w": 300,
+        "h": 370
+      }
+    }
+  },
+  "meta": {
+    "app": "https: //www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "card_backgrounds.png",
+    "size": {
+      "w": 601,
+      "h": 741
+    },
+    "scale": 1
+  }
+}
