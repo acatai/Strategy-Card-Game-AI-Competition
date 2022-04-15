@@ -1,4 +1,9 @@
-# Legends of Code and Magic 1.2 Codingame-based referee
+# Legends of Code and Magic 1.5 Codingame-based referee
+
+
+## Documentation not updated since ver. 1.2!
+
+Work in progress.
 
 ## Basic usage
 
