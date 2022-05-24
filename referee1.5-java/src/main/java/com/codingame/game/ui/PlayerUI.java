@@ -302,4 +302,24 @@ public class PlayerUI {
     public Text getNick() {
         return nick;
     }
+
+    public PlayerUI commit(double state) {
+        graphicEntityModule.commitEntityState(
+                state,
+                avatar,
+                frame[0],
+                frame[1],
+                draw,
+                deck,
+                health,
+                mana,
+                nick,
+                damageFloat, healFloat,
+                impact, heal,
+                bubble,
+                bubbleText,
+                bubbleSprite
+        );
+        return this;
+    }
 }

@@ -26,6 +26,7 @@ public class EngineReferee {
     private boolean showConstructStart = true;
     private boolean showBattleStart = true;
     public int expectedConstructionFrames = 0;
+    public int expectedCleanupFrames = 0;
 
     static final int ILLEGAL_ACTION_SUMMARY_LIMIT = 3;
 
@@ -53,6 +54,7 @@ public class EngineReferee {
         expectedConstructionFrames = (int) Math.ceil(
                 (double) Math.min(Constants.CARDS_IN_CONSTRUCTED, constr.cardsForConstruction.size())
                         / Constants.MAX_CARDS_IN_FRAME);
+        expectedCleanupFrames = (expectedConstructionFrames % 2 == 1 ? 1 : 2);
 
         if (Constants.VERBOSE_LEVEL > 1)
             System.out.println("   Construction Phase Prepared. ");
@@ -81,7 +83,7 @@ public class EngineReferee {
         } else if (gameTurn < expectedConstructionFrames) {
             VisualTurn(gameManager, () -> ui.constructPhase(gameTurn));
             return false;
-        } else if (gameTurn < expectedConstructionFrames + (expectedConstructionFrames % 2 == 1 ? 1 : 2)) {
+        } else if (gameTurn < expectedConstructionFrames + expectedCleanupFrames) {
             // For some reason we require even number of rounds for constructed phase and cleanup after
             gameManager.setFrameDuration(10);
             VisualTurn(gameManager, () -> ui.cleanupAfterConstruction());
@@ -188,7 +190,7 @@ public class EngineReferee {
                 gameManager.setFrameDuration(Constants.FRAME_DURATION_SUMMON);
         } else { // it's time to actually call a player
             if (Constants.VERBOSE_LEVEL > 2)
-                System.out.print("      Game turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - 1) / 2) + ", player " + gamePlayer);
+                System.out.print("      Game turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - expectedCleanupFrames + 1) / 2) + ", player " + gamePlayer);
 
             if (Constants.IS_HUMAN_PLAYING)
                 gameManager.setTurnMaxTime(200 * Constants.TIMELIMIT_GAMETURN);
@@ -264,7 +266,7 @@ public class EngineReferee {
         //gameManager.addToGameSummary("!\n" + state.toString());
 
         if (Constants.VERBOSE_LEVEL > 1)
-            System.out.println("   Game finished in turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - 1) / 2) + ".");
+            System.out.println("   Game finished in turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - expectedCleanupFrames + 1) / 2) + ".");
         if (Constants.VERBOSE_LEVEL > 1)
             System.out.print("   Scores: ");
         if (Constants.VERBOSE_LEVEL > 0)

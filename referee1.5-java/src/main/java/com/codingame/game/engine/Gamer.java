@@ -41,9 +41,9 @@ public class Gamer {
         this.nextTurnDraw = 1;
         this.drawValueToShow = this.nextTurnDraw;
 
-        bonusManaTurns = id == 1 ? Constants.SECOND_PLAYER_MANA_BONUS_TURNS : 0;
+        this.bonusManaTurns = id == 1 ? Constants.SECOND_PLAYER_MANA_BONUS_TURNS : 0;
 
-        handLimit = Constants.MAX_CARDS_IN_HAND + (id == 0 ? 0 : Constants.SECOND_PLAYER_MAX_CARD_BONUS);
+        this.handLimit = Constants.MAX_CARDS_IN_HAND + (id == 0 ? 0 : Constants.SECOND_PLAYER_MAX_CARD_BONUS);
         DrawCards(INITIAL_HAND_SIZE + (id == 0 ? 0 : Constants.SECOND_PLAYER_CARD_BONUS), 0);
     }
 
@@ -71,7 +71,9 @@ public class Gamer {
         health += mod;
         if (mod >= 0)
             return;
-        healthLostThisTurn += mod;
+        nextTurnDraw -= healthLostThisTurn / 5;
+        healthLostThisTurn -= mod;
+        nextTurnDraw += healthLostThisTurn / 5;
     }
 
     public void removeFromBoard(int creatureIndex) {

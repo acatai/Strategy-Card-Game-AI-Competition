@@ -67,9 +67,15 @@ public class ConstructPhase {
     }
 
     private Card handlePickCommand(String[] command, int player) throws InvalidActionHard {
-        int value = Integer.parseInt(command[1]);
+        int value;
+        try {
+            value = Integer.parseInt(command[1]);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new InvalidActionHard("Invalid \"PICK\" argument. Expected integer (card position in presented list).");
+        }
+
         if (value < 0 || value >= Constants.CARDS_IN_CONSTRUCTED)
-            throw new InvalidActionHard("Invalid action argument. \"PICK\" argument should be between 0 and " + (Constants.CARDS_IN_CONSTRUCTED - 1) + ".");
+            throw new InvalidActionHard("Invalid action argument. \"PICK\" argument should be an integer between 0 and " + (Constants.CARDS_IN_CONSTRUCTED - 1) + ".");
         Card choice = cardsForConstruction.get(value);
         if (chosenQuantities[player][choice.baseId] >= Constants.CONSTRUCTED_MAX_COPY)
             throw new InvalidActionHard("Invalid action argument. Card can be chosen at most " + Constants.CONSTRUCTED_MAX_COPY + " times.");
@@ -77,7 +83,12 @@ public class ConstructPhase {
     }
 
     private Card handleChooseCommand(String[] command, int player) throws InvalidActionHard {
-        int value = Integer.parseInt(command[1]);
+        int value;
+        try {
+            value = Integer.parseInt(command[1]);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new InvalidActionHard("Invalid \"CHOOSE\" argument. Expected integer (card base id).");
+        }
         Optional<Card> choice = cardsForConstruction.stream()
                 .filter(c -> value == c.baseId)
                 .findAny();

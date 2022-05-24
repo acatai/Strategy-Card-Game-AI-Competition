@@ -175,7 +175,6 @@ public class GameState {
             //c.defense = c.lastTurnDefense;
             c.lastTurnDefense = c.defense; // for all creatures (just in case)
         }
-        player.nextTurnDraw += player.healthLostThisTurn / 5;
         player.DrawCards(player.nextTurnDraw, turn / 2);
         player.drawValueToShow = player.nextTurnDraw;
         player.nextTurnDraw = 1;

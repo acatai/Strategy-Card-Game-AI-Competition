@@ -365,7 +365,8 @@ public class RefereeUI {
             // Update player.
             players[playerIndex]
                     .setActive(turn % 2 == playerIndex)
-                    .updateStats(gamer);
+                    .updateStats(gamer)
+                    .commit(0.2);
 
             updateBoard(playerIndex, gamer.board);
             updateHand(playerIndex, gamer.hand);
@@ -409,7 +410,7 @@ public class RefereeUI {
                     .setAlpha(1);
 
             newTurn
-                    .setText("Turn " + Integer.toString((turn - engine.expectedConstructionFrames) / 2))
+                    .setText("Turn " + Integer.toString((int) Math.ceil(((float) turn - engine.expectedConstructionFrames - engine.expectedCleanupFrames + 1) / 2)))
                     .setAnchor(0.5)
                     .setFontSize(50)
                     .setFillColor(gameManager.getPlayers().get(turn % 2).getColorToken())

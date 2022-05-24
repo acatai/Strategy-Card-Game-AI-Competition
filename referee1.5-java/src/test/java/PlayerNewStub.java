@@ -40,7 +40,7 @@ class Player {
                 int opponentHealthChange = in.nextInt();
                 int cardDraw = in.nextInt();
                 int area = in.nextInt();
-//                int lane = in.nextInt();
+                int lane = in.nextInt();
             }
 
             // Write an action using System.out.println()

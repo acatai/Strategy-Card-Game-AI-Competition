@@ -124,6 +124,8 @@
         </li><li>
           Creatures can have an effect on the player's health, the opponent's health or the card draw of the player when played.
         </li><li>
+          Creatures can be placed on one of two lanes. Creatures on different lanes can not interact with each other.
+        </li><li>
           Creatures can have different abilities:
           <ul style="padding-top:0;padding-bottom:0">
             <li>
@@ -391,7 +393,7 @@
         <span class="statement-lineno">Next <var>opponentActions</var> lines</span>: for each opponent's action, string <var>cardNumberAndAction</var> containing the <var>cardNumber</var> of the played card, followed by a space, followed by the action associated with this card (see <strong>Possible Actions</strong> section).<br>
         <br>
 
-        <span class="statement-lineno">Next line</span>: Integer <var>cardCount</var>: during the Battle phase, the total number of cards on the board and in the player's hand. During the Constructed phase, always <const>80</const>.
+        <span class="statement-lineno">Next line</span>: Integer <var>cardCount</var>: during the Battle phase, the total number of cards on the board and in the player's hand. During the Constructed phase, always <const>120</const>.
         <br>
         <br>
 
@@ -496,11 +498,14 @@
         </span>
         <ul style="color:#00ff00;background-color:rgba( 255, 0 , 255 , 0.2 ); padding-bottom:0">
           <li>
+            <action>CHOOSE id</action> where <var>id</var> is id of chosen card.
+          </li><li>
             <action>PICK nb</action> where <var>nb</var> is position, at which chosen card was presented.
           </li><li>
-            <action>PASS</action> to do nothing (picks the 1st available card).
+            <action>PASS</action> to do nothing (fills rest of the deck with subsequent available cards).
           </li>
         </ul>
+        <action>CHOOSE id</action> and <action>PICK nb</action> have same effect, but they use different indexing.
       </div>
       <div class="title">Output for one game turn of the Battle phase</div>
       <div class="text">

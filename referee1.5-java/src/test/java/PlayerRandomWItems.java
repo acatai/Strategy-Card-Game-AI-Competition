@@ -104,7 +104,7 @@ public class PlayerRandomWItems {
             int c;
             do {
                 c = random.nextInt(candidates);
-            } while (countTimesChosen[c] >= 3);
+            } while (countTimesChosen[c] >= 2);
             countTimesChosen[c]++;
         }
 

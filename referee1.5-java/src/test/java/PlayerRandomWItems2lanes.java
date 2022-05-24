@@ -108,7 +108,7 @@ public class PlayerRandomWItems2lanes {
             int c;
             do {
                 c = random.nextInt(candidates);
-            } while (countTimesChosen[c] >= 3);
+            } while (countTimesChosen[c] >= 2);
             countTimesChosen[c]++;
         }
 

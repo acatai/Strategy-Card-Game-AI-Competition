@@ -4,7 +4,7 @@
 
 	<groupId>com.codingame.game</groupId>
 	<artifactId>LegendsOfCodeAndMagic</artifactId>
-	<version>1.2</version>
+	<version>1.5</version>
 
 	<properties>
 		<gamengine.version>3.15.6</gamengine.version>
