@@ -10,12 +10,15 @@ class CardBuilder {
     private double mana;
     private final Map<String, String> properties;
 
-    CardBuilder(int id, String type, double mana) {
+    CardBuilder(String type, double mana) {
         this.mana = mana;
         this.properties = new HashMap<>();
-        properties.put("id", Integer.toString(id));
         properties.put("type", type);
         properties.put("mana", Integer.toString((int) mana));
+    }
+
+    public double getCost() {
+        return Double.parseDouble(properties.get("mana"));
     }
 
     private void changeMana(Property prop) {
@@ -24,6 +27,10 @@ class CardBuilder {
 
     private void reverseChangeMana(Property prop) {
         this.mana = (this.mana + prop.getAddCost()) / prop.getMultCost();
+    }
+
+    void addBaseId(int id) {
+        properties.put("id", Integer.toString(id));
     }
 
     boolean addProperty(String name, Property prop) {

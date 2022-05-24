@@ -17,6 +17,7 @@ import java.util.*;
 class Player {
     private static class SimplifiedState {
         public HashMap<Integer, Integer> IdToCostMap = new HashMap<>();
+        public ArrayList<Integer> HandCardsBaseIds = new ArrayList<>();
         public ArrayList<Integer> HandCreaturesIds = new ArrayList<>();
         public ArrayList<Integer> HandGreenItemsIds = new ArrayList<>();
         public ArrayList<Integer> HandRedItemsIds = new ArrayList<>();
@@ -71,6 +72,7 @@ class Player {
 
                 if (location == 0) { // hand
                     IdToCostMap.put(instanceId, cost);
+                    HandCardsBaseIds.add(cardName);
                     if (type == 0) // card is creature
                         HandCreaturesIds.add(instanceId);
                     else if (type == 1) // card is a green item
@@ -114,7 +116,7 @@ class Player {
         List<String> commands = new ArrayList<>();
         for (int c = 0; c < candidates; c++)
             for (int i = 0; i < countTimesChosen[c]; i++)
-                commands.add("PICK " + c);
+                commands.add("CHOOSE " + constructionState.HandCardsBaseIds.get(c));
         return String.join(" ; ", commands);
     }
 

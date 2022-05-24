@@ -66,6 +66,10 @@ public class ConstructPhase {
         throw new InvalidActionHard("Something went horrible wrong. No card available to choose.");
     }
 
+    /**
+     * @deprecated because it was confusing for users.
+     */
+    @Deprecated
     private Card handlePickCommand(String[] command, int player) throws InvalidActionHard {
         int value;
         try {
@@ -111,14 +115,11 @@ public class ConstructPhase {
             case "PASS":
                 choice = handlePassCommand(player);
                 break;
-            case "PICK":
-                choice = handlePickCommand(command, player);
-                break;
             case "CHOOSE":
                 choice = handleChooseCommand(command, player);
                 break;
             default:
-                throw new InvalidActionHard("Invalid action. Expected  \"PICK [0...n]\", \"CHOOSE id\" or \"PASS\".");
+                throw new InvalidActionHard("Invalid action. Expected  \"CHOOSE id\" or \"PASS\".");
         }
         chosenCards[player].add(choice);
         chosenQuantities[player][choice.baseId] += 1;

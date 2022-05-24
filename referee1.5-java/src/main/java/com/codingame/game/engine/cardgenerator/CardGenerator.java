@@ -59,11 +59,11 @@ public class CardGenerator {
                 Double.parseDouble(root.getAsJsonObject("bonusDefenseDistribution").get("std").getAsString()));
     }
 
-    public Card generateCard(int id) {
+    public CardBuilder generateCardWithoutId() {
         String type = typeGenerator.randomChoice();
         double mana = Integer.parseInt(manaGenerator.randomChoice());
 
-        CardBuilder builder = new CardBuilder(id, type, mana);
+        CardBuilder builder = new CardBuilder(type, mana);
 
         for (String nextProperty : propertyOrderGenerator.shuffle()) {
             switch (nextProperty) {
@@ -88,12 +88,25 @@ public class CardGenerator {
             }
         }
         builder.addAttackAndDefense(bonusAttackGenerator, bonusDefenseGenerator);
-        return builder.createCard();
+        return builder;
+    }
+
+    public Card generateCard(int id) {
+        CardBuilder cb = generateCardWithoutId();
+        cb.addBaseId(id);
+        return cb.createCard();
     }
 
     public void generateCardList() {
+        List<CardBuilder> cardDrafts = new ArrayList<>();
+        for (int i = 0; i < Constants.CARDS_IN_CONSTRUCTED; i++)
+            cardDrafts.add(this.generateCardWithoutId());
+
+        cardDrafts.sort(Comparator.comparing(CardBuilder::getCost));
+
         for (int i = 0; i < Constants.CARDS_IN_CONSTRUCTED; i++) {
-            Card c = this.generateCard(i);
+            cardDrafts.get(i).addBaseId(i);
+            Card c = cardDrafts.get(i).createCard();
             Constants.CARDSET.put(c.baseId, c);
         }
     }

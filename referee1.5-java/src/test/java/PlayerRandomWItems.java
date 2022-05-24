@@ -17,6 +17,7 @@ import java.util.*;
 public class PlayerRandomWItems {
     private static class SimplifiedState {
         public HashMap<Integer, Integer> IdToCostMap = new HashMap<>();
+        public ArrayList<Integer> HandCardsBaseIds = new ArrayList<>();
         public ArrayList<Integer> HandCreaturesIds = new ArrayList<>();
         public ArrayList<Integer> HandGreenItemsIds = new ArrayList<>();
         public ArrayList<Integer> HandRedItemsIds = new ArrayList<>();
@@ -69,6 +70,7 @@ public class PlayerRandomWItems {
 
                 if (location == 0) { // hand
                     IdToCostMap.put(instanceId, cost);
+                    HandCardsBaseIds.add(cardName);
                     if (type == 0) // card is creature
                         HandCreaturesIds.add(instanceId);
                     else if (type == 1) // card is a green item
@@ -96,8 +98,7 @@ public class PlayerRandomWItems {
     private static String constructionPhase(Random random, Scanner scanner) {
         SimplifiedState constructionState = new SimplifiedState(scanner);
 
-        int candidates = constructionState.HandCreaturesIds.size() + constructionState.HandGreenItemsIds.size() +
-                constructionState.HandRedItemsIds.size() + constructionState.HandBlueItemsIds.size();
+        int candidates = constructionState.HandCardsBaseIds.size();
         int[] countTimesChosen = new int[candidates];
 
         for (int i = 0; i < 30; i++) {
@@ -111,7 +112,7 @@ public class PlayerRandomWItems {
         List<String> commands = new ArrayList<>();
         for (int c = 0; c < candidates; c++)
             for (int i = 0; i < countTimesChosen[c]; i++)
-                commands.add("PICK " + c);
+                commands.add("CHOOSE " + constructionState.HandCardsBaseIds.get(c));
         return String.join(" ; ", commands);
     }
 
