@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Objects;
 
 class CardBuilder {
-    private double mana;
+    private double budget;
     private final Map<String, String> properties;
 
     CardBuilder(String type, double mana) {
-        this.mana = mana;
+        this.budget = mana;
         this.properties = new HashMap<>();
         properties.put("type", type);
         properties.put("mana", Integer.toString((int) mana));
@@ -22,11 +22,11 @@ class CardBuilder {
     }
 
     private void changeMana(Property prop) {
-        this.mana = this.mana * prop.getMultCost() - prop.getAddCost();
+        this.budget = this.budget * prop.getMultCost() - prop.getAddCost();
     }
 
     private void reverseChangeMana(Property prop) {
-        this.mana = (this.mana + prop.getAddCost()) / prop.getMultCost();
+        this.budget = (this.budget + prop.getAddCost()) / prop.getMultCost();
     }
 
     void addBaseId(int id) {
@@ -35,7 +35,7 @@ class CardBuilder {
 
     boolean addProperty(String name, Property prop) {
         changeMana(prop);
-        if (mana < 0) {
+        if (budget < 0) {
             reverseChangeMana(prop);
             return false;
         } else {
@@ -45,8 +45,8 @@ class CardBuilder {
     }
 
     void addAttackAndDefense(NormalDistributionGenerator bonusAttackGenerator, NormalDistributionGenerator bonusDefenseGenerator) {
-        int attack = (int) (mana + bonusAttackGenerator.next());
-        int defense = (int) (mana + bonusDefenseGenerator.next());
+        int attack = (int) (budget + bonusAttackGenerator.next());
+        int defense = (int) (budget + bonusDefenseGenerator.next());
         if (Objects.equals(properties.get("type"), "creature")) {
             attack = Math.max(attack, 0);
             defense = Math.max(defense, 1);
