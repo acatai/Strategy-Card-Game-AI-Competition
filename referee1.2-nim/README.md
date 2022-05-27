@@ -41,7 +41,7 @@ nim c -d:release Runner.nim
 nim c -d:release Player.nim
 nim c -d:release Tester.nim
 ./Tester \
-  --referee="java --add-opens java.base/java.lang=ALL-UNNAMED -jar LoCM.jar" \
+  --referee="java --add-opens java.base/java.lang=ALL-UNNAMED -jar ../referee1.2-java/LoCM1.2.jar" \
   --player1="./Player --draft=Icebox --player=DFS --time=100" \
   --player2="./Player --draft=ClosetAI --player=FMC --time=150" \
   --games=16 \
