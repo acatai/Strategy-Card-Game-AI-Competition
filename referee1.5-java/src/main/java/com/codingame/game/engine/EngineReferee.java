@@ -114,11 +114,7 @@ public class EngineReferee {
             System.out.println("      Construct turn");
 
         gameManager.setFrameDuration(Constants.FRAME_DURATION_CONSTRUCTED);
-
-        if (Constants.IS_HUMAN_PLAYING)
-            gameManager.setTurnMaxTime(20 * Constants.TIMELIMIT_CONSTRUCTPHASE);
-        else
-            gameManager.setTurnMaxTime(Constants.TIMELIMIT_CONSTRUCTPHASE);
+        gameManager.setFirstTurnMaxTime(Constants.TIMELIMIT_CONSTRUCTPHASE);
 
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
@@ -192,10 +188,7 @@ public class EngineReferee {
             if (Constants.VERBOSE_LEVEL > 2)
                 System.out.print("      Game turn " + (int) Math.ceil(((float) gameTurn - expectedConstructionFrames - expectedCleanupFrames + 1) / 2) + ", player " + gamePlayer);
 
-            if (Constants.IS_HUMAN_PLAYING)
-                gameManager.setTurnMaxTime(200 * Constants.TIMELIMIT_GAMETURN);
-            else
-                gameManager.setTurnMaxTime(gameTurn <= expectedConstructionFrames ? Constants.TIMELIMIT_FIRSTGAMETURN : Constants.TIMELIMIT_GAMETURN);
+            gameManager.setTurnMaxTime(gameTurn <= expectedConstructionFrames + expectedCleanupFrames + 1 ? Constants.TIMELIMIT_FIRSTGAMETURN : Constants.TIMELIMIT_GAMETURN);
 
             state.AdvanceState();
 
