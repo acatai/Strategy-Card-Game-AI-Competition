@@ -52,17 +52,17 @@ public class Gamer {
     }
 
     public void DrawCards(int n, int playerturn) {
+        if (playerturn >= Constants.PLAYER_TURNLIMIT)
+            DamagePlayerWithEmptyDeck();
         for (int i = 0; i < n; i++) {
-            if (deck.isEmpty() || playerturn >= Constants.PLAYER_TURNLIMIT) {
+            if (hand.size() == handLimit) {
+                continue; // additional draws are simply wasted
+            } else if (deck.isEmpty()) {
                 DamagePlayerWithEmptyDeck();
-                continue;
+            } else {
+                Card c = deck.remove(0);
+                hand.add(c);
             }
-
-            if (hand.size() == handLimit)
-                break; // additional draws are simply wasted
-
-            Card c = deck.remove(0);
-            hand.add(c);
         }
     }
 
