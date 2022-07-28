@@ -116,13 +116,17 @@ public class EngineReferee {
         gameManager.setFrameDuration(Constants.FRAME_DURATION_CONSTRUCTED);
         gameManager.setFirstTurnMaxTime(Constants.TIMELIMIT_CONSTRUCTPHASE);
 
+        long[] timeDiffs = new long[2];
+
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
             for (String line : constr.getMockPlayersInput(player))
                 sdkplayer.sendInputLine(line);
             for (Card card : constr.cardsForConstruction)
                 sdkplayer.sendInputLine(card.getAsInput());
+            long time = System.nanoTime();
             sdkplayer.execute();
+            timeDiffs[player] = System.nanoTime() - time;
         }
         for (int player = 0; player < 2; player++) {
             Player sdkplayer = gameManager.getPlayer(player);
@@ -143,6 +147,7 @@ public class EngineReferee {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " didn't choose correct number of cards!");
                 return;
             }
+            gameManager.addToGameSummary(sdkplayer.getNicknameToken() + " " + timeDiffs[player] + "ns at turn " + gameTurn);
         }
 
         if (Constants.HANDLE_UI)
@@ -196,7 +201,10 @@ public class EngineReferee {
                 sdkplayer.sendInputLine(line);
             for (String line : state.getCardsInput())
                 sdkplayer.sendInputLine(line);
+
+            long time = System.nanoTime();
             sdkplayer.execute();
+            long timeDiff = System.nanoTime() - time;
 
             try {
                 String output = sdkplayer.getOutputs().get(0);
@@ -208,6 +216,7 @@ public class EngineReferee {
             } catch (TimeoutException e) {
                 HandleError(gameManager, sdkplayer, sdkplayer.getNicknameToken() + " timeout!");
             }
+            gameManager.addToGameSummary(sdkplayer.getNicknameToken() + " " + timeDiff + "ns at turn " + (gameTurn - expectedConstructionFrames - expectedCleanupFrames));
         }
 
         // now we roll-out actions until next legal is found

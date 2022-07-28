@@ -122,7 +122,7 @@ public class CommandLineInterface {
 
                 if (cmd.hasOption("l")) {
                     Files.asCharSink(Paths.get(cmd.getOptionValue("l")).toFile(), Charset.defaultCharset())
-                            .write((String) new Gson().toJson(gameResult));
+                            .write((String) new Gson().toJson(gameResult) + System.lineSeparator());
                 }
 
                 System.out.println(gameResult.scores.get(0));
