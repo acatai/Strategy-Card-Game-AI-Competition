@@ -236,18 +236,18 @@ public class GameState {
         creatures.add(creature);
 
         if (Constants.LANES > 1 && c.area == Card.Area.LANE1 && players[currentPlayer].board.stream().filter(c2 -> c2.lane == action.arg2).count() < maxCreaturesPerLane) {
-            Card cardCopy = new Card(c, true);
-            CreatureOnBoard secondCopy = new CreatureOnBoard(cardCopy, action.arg2);
+            Card cardCopy = new Card(c, countSummons);
+            CreatureOnBoard creatureCopy = new CreatureOnBoard(cardCopy, action.arg2);
             cardIdMap.put(cardCopy.id, cardCopy);
-            players[currentPlayer].board.add(secondCopy);
+            players[currentPlayer].board.add(creatureCopy);
 
-            creatures.add(secondCopy);
+            creatures.add(creatureCopy);
             countSummons += 1;
         } else if (Constants.LANES > 1 && c.area == Card.Area.LANE2 && players[currentPlayer].board.stream().filter(c2 -> (1 - c2.lane) == action.arg2).count() < maxCreaturesPerLane) {
             for (int i = 0; i < Constants.LANES; i++) {
                 if (i == action.arg2)
                     continue;
-                Card cardCopy = new Card(c, true);
+                Card cardCopy = new Card(c, countSummons);
                 CreatureOnBoard creatureCopy = new CreatureOnBoard(cardCopy, i);
                 cardIdMap.put(cardCopy.id, cardCopy);
                 players[currentPlayer].board.add(creatureCopy);

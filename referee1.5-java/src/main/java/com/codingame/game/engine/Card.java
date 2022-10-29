@@ -77,15 +77,15 @@ public class Card {
     private String tooltipTextBase;
     public final String comment;
 
-    private static int lastID = 1;
+    private static int lastID = 0;
 
 
     // todo copy constructor with id; ?
     // todo constructor with text (id-based)
 
     // copy constructor
-    public Card(Card card, boolean newID) {
-        this.id = newID ? lastID : card.id;
+    private Card(Card card, boolean newID, int copyID) {
+        this.id = (newID ? lastID : card.id) + copyID;
         this.baseId = card.baseId;
         this.name = card.name;
         this.type = card.type;
@@ -102,11 +102,19 @@ public class Card {
         this.tooltipTextBase = card.tooltipTextBase;
 
         if (newID)
-            lastID += 1;
+            lastID += Math.max(2, Constants.LANES);
+    }
+
+    public Card(Card card, int copyID) {
+        this(card, false, copyID);
+    }
+
+    public Card(Card card, boolean newID) {
+        this(card, newID, 0);
     }
 
     public Card(Card card) {
-        this(card, false);
+        this(card, false, 0);
     }
 
     // data = {baseId, name, type, cost, attack, defense, keywords, myHealthChange, oppHealthChange, cardDraw, comment}

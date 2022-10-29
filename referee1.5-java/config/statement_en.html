@@ -158,6 +158,10 @@
           <span style="color:#7c76c5;background-color:rgba(124 , 118 , 197 , 0.1 );padding:2px">
             Effects of <var>myHealthChange</var>, <var>opponentHealthChange</var> and <var>cardDraw</var> are applied for every clone of creature summoned. 
           </span>
+        </li><li>
+          <span style="color:#7c76c5;background-color:rgba(124 , 118 , 197 , 0.1 );padding:2px">
+            The main summon gets ID of the original card, while additional copies are given IDs following ID of the original card. For example, if the player uses the command "SUMMON 5 1" on a card with <const>Lane2</const> effect, the game will summon the creature with ID 5 on lane 1 and the creature with ID 6 on lane 0.
+          </span>
         </li>
       </ul>
 
