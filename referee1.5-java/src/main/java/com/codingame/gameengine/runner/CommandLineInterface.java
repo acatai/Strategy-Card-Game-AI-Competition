@@ -54,7 +54,7 @@ public class CommandLineInterface {
     static void printHelp(Options generateOptions, Options playOptions) {
         HelpFormatter hf = new HelpFormatter();
         hf.printHelp(
-                "generate [-html <File for output html>] [-n <Number of cards>] [{-h | --help}]",
+                "generate [--html <File for output html>] [-n <Number of cards>] [{-h | --help}]",
                 "Generate example cardset using build-in generator",
                 generateOptions,
                 ""
