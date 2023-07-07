@@ -1,9 +1,19 @@
 # Strategy Card Game AI Competition
 
+## **The competition is no longer organized**
 
-- **[COG22 Competition website](https://jakubkowalski.tech/Projects/LOCM/COG22/index.html)**
-- Submission deadline: **1st August 2022, 23:59 GMT**
-- [Play online](https://www.codingame.com/ide/demo/91983909e545c8369f4d57cc14132829d23262) 
+<br>
+
+**Article about the SCGAI competition history:**
+
+**[Summarizing Strategy Card Game AI Competition](https://arxiv.org/pdf/2305.11814.pdf)**
+
+Jakub Kowalski, Radosław Miernik; IEEE Conference on Games, 2023 [[cite]](https://jakubkowalski.tech/Publications/Kowalski2023SummarizingStrategy.bib)
+
+<br>
+
+**We are organizing a new cardgame-related contest: [Tales of Tribute AI Competition](https://github.com/ScriptsOfTribute)**
+<br><br>
 
 ![/game artwork/](https://jakubkowalski.tech/Projects/LOCM/CEC19/artwork_small.jpg)
 
